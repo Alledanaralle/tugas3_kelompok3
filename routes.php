@@ -7,12 +7,14 @@ $controller = new UserController();
 $url = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-if ($url == '/user/index' || $url == '/') {
-    $controller->index();
+if ($url == '/dashboard' || $url == '/') {
+    $controller->dashboard();
 } elseif ($url == '/user/create' && $requestMethod == 'GET') {
     $controller->create();
 } elseif ($url == '/user/store' && $requestMethod == 'POST') {
     $controller->store();
+} elseif ($url == '/user/index' && $requestMethod == 'GET') {
+    $controller->index();
 } elseif (preg_match('/\/user\/edit\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $userId = $matches[1];
     $controller->edit($userId);
