@@ -35,7 +35,7 @@ class TrainerController
         $specialization = $_POST['spesialisasi']; // Mengambil data spesialisasi dari form
         $schedule = $_POST['jadwal']; // Mengambil data jadwal dari form
         $this->trainerModel->add($name, $specialization, $schedule); // Menambahkan data trainer ke database melalui model
-        header('Location: /trainer/index_trainer'); // Mengarahkan kembali ke halaman daftar trainer
+        header('Location: /trainers/index_trainer'); // Mengarahkan kembali ke halaman daftar trainer
     }
 
     // Menampilkan form edit dengan data trainer berdasarkan ID
@@ -55,7 +55,7 @@ class TrainerController
         ];
         $updated = $this->trainerModel->update($id, $data); // Mengupdate data trainer melalui model
         if ($updated) {
-            header("Location: /trainer/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
+            header("Location: /trainers/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
         } else {
             echo "Failed to update trainer."; // Menampilkan pesan error jika gagal
         }
@@ -66,7 +66,7 @@ class TrainerController
     {
         $deleted = $this->trainerModel->delete($id); // Menghapus data trainer berdasarkan ID melalui model
         if ($deleted) {
-            header("Location: /trainer/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
+            header("Location: /trainers/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
         } else {
             echo "Failed to delete trainer."; // Menampilkan pesan error jika gagal
         }

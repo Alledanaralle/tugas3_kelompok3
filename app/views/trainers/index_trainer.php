@@ -101,7 +101,7 @@
         <!-- Card Body -->
         <div class="card-body">
             <!-- Tombol Tambah Pelatih Baru -->
-            <a href="/trainer/create_trainer" class="btn btn-success mb-3">
+            <a href="/trainers/create_trainer" class="btn btn-success mb-3">
                 <i class="fas fa-user-plus"></i> Tambah Pelatih Baru
             </a>
 
@@ -124,10 +124,10 @@
                             <td><?= htmlspecialchars($trainer['spesialisasi']) ?></td>
                             <td><?= htmlspecialchars($trainer['jadwal']) ?></td>
                             <td>
-                                <a href="/trainer/edit_trainer/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info me-2">
+                                <a href="/trainers/edit/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info me-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="/trainer/delete_trainer/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                                <a href="/trainers/delete/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>

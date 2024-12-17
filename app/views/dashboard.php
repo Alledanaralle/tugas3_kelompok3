@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amba Gym</title>
+    <title>Aplikasi Gym</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,6 @@
 
 <body class="bg-white text-black min-h-dvh">
     <header class="w-full px-[7%] py-3 z-20 fixed top-0 left-0 shadow border-b-[1px] border-[#3b3b3b2e] flex justify-between items-center bg-white">
-        <!--<button type="button" onclick="openSidebar()" class="ri-menu-line"></button>-->
         <h2 class="text-2xl sm:text-3xl font-medium">
             Amba Gym
         </h2>
@@ -25,7 +24,7 @@
         <?php
         $menuDash = [
             ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => '#'],
-            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => '#'],
+            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => './trainers/index_trainer'],
             ['title' => 'Kelas Tersedia', 'value' => $totalClasses, 'icon' => 'ri-calendar-line', 'link' => './user/index'],
             ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => '#'],
         ];
