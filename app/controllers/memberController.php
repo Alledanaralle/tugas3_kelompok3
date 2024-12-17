@@ -11,12 +11,12 @@ class MemberController {
 
     public function index() {
         $member = $this->memberModel->getAllMember();
-        require_once '../app/views/member/index.php';
+        require_once '../app/views/member/index_member.php';
 
     }
 
     public function create() {
-        require_once '../app/views/member/create.php';
+        require_once '../app/views/member/create_member.php';
     }
 
     public function store() {
@@ -26,19 +26,19 @@ class MemberController {
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $paket_langganan = $_POST['paket_langganan'];
         $this->memberModel->add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan);
-        header('Location: /member/index');
+        header('Location: /member/index_member');
     }
     // Show the edit form with the member data
     public function edit($id_member) {
         $member = $this->memberModel->find($id_member); // Assume find() gets member by ID
-        require_once __DIR__ . '/../views/member/edit.php';
+        require_once __DIR__ . '/../views/member/edit_member.php';
     }
 
     // Process the update request
     public function update($id_member, $data) {
         $updated = $this->memberModel->update($id_member, $data);
         if ($updated) {
-            header("Location: /member/index"); // Redirect to member list
+            header("Location: /member/index_member"); // Redirect to member list
         } else {
             echo "Failed to update member.";
         }
@@ -48,7 +48,7 @@ class MemberController {
     public function delete($id_member) {
         $deleted = $this->memberModel->delete($id_member);
         if ($deleted) {
-            header("Location: /member/index"); // Redirect to member list
+            header("Location: /member/index_member"); // Redirect to member list
         } else {
             echo "Failed to delete member.";
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pengguna</title>
+    <title>Daftar Member</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -13,11 +13,11 @@
             background-color: #f8f9fa;
         }
         .card-header {
-            background: linear-gradient(to right, #8b0000, #a9a9a9);
+            background:rgb(0, 0, 0);
             color: white;
         }
-        .table thead {
-            background-color: #a9a9a9;
+        .table thead th {
+            background-color:rgb(120, 125, 131); /* Warna navy muda */
             color: white;
         }
         .table-hover tbody tr:hover {
@@ -36,11 +36,11 @@
     <div class="container mt-5">
         <div class="card shadow">
             <div class="card-header">
-                <h2 class="text-center">Daftar Pengguna</h2>
+                <h2 class="text-center">Daftar Member</h2>
             </div>
             <div class="card-body">
-                <a href="/member/create" class="btn btn-success mb-3">
-                    <i class="fas fa-user-plus"></i> Tambah Pengguna Baru
+                <a href="/member/create_member" class="btn btn-success mb-3">
+                    <i class="fas fa-user-plus"></i> Tambah Member Baru
                 </a>
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -62,10 +62,10 @@
                                 <td><?= htmlspecialchars((string)($member['jenis_kelamin'] ?? '')) ?></td>
                                 <td><?= htmlspecialchars((string)($member['paket_langganan'] ?? '')) ?></td>
                                 <td>
-                                    <a href="/member/edit/<?php echo $member['id_member']; ?>" class="btn btn-info me-2">
+                                    <a href="/member/edit_member/<?php echo $member['id_member']; ?>" class="btn btn-info me-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="/member/delete/<?php echo $member['id_member']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                                    <a href="/member/delete_member/<?php echo $member['id_member']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
