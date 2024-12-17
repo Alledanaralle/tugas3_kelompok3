@@ -24,10 +24,10 @@
     <section class="pt-20 gap-4 grid px-[2%] z-10 h-auto grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
         <?php
         $menuDash = [
-            ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line'],
-            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line'],
-            ['title' => 'Kelas Tersedia', 'value' => $totalClasses, 'icon' => 'ri-calendar-line'],
-            ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill'],
+            ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => '#'],
+            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => '#'],
+            ['title' => 'Kelas Tersedia', 'value' => $totalClasses, 'icon' => 'ri-calendar-line', 'link' => './user/index'],
+            ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => '#'],
         ];
 
         foreach ($menuDash as $menu) {
@@ -35,6 +35,7 @@
                 <div class="border-[1px] py-6 px-8 border-[#3b3b3b2e] rounded-md w-full">
                     <p class="w-full flex justify-between">' . $menu['title'] . ' <i class="' . $menu['icon'] . '"></i></p>
                     <p class="font-[500] mt-3 text-2xl sm:text-3xl">' . $menu['value'] . '</p>
+                    <a class="bg-black p-2 text-white rounded mt-3 w-1/2 flex justify-center" href='.$menu['link'].'>Kelola</a>
                 </div>
             ';
         }
