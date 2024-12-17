@@ -15,16 +15,16 @@ $url = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 // Routing permintaan berdasarkan URL dan metode HTTP
-if ($url == '/trainer/index' || $url == '/') {
+if ($url == '/trainer/index_trainer' || $url == '/') {
     // Menampilkan halaman daftar pelatih
     $controller->index();
-} elseif ($url == '/trainer/create' && $requestMethod == 'GET') {
+} elseif ($url == '/trainer/create_trainer' && $requestMethod == 'GET') {
     // Menampilkan form untuk menambahkan pelatih baru
     $controller->create();
 } elseif ($url == '/trainer/store' && $requestMethod == 'POST') {
     // Memproses data dari form untuk menyimpan pelatih baru
     $controller->store();
-} elseif (preg_match('/\/trainer\/edit\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+} elseif (preg_match('/\/trainer\/edit_trainer\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     // Menampilkan form edit berdasarkan ID pelatih
     $trainerId = $matches[1]; // Mengambil ID pelatih dari URL
     $controller->edit($trainerId);
@@ -32,7 +32,7 @@ if ($url == '/trainer/index' || $url == '/') {
     // Memproses data untuk memperbarui pelatih berdasarkan ID
     $trainerId = $matches[1]; // Mengambil ID pelatih dari URL
     $controller->update($trainerId, $_POST);
-} elseif (preg_match('/\/trainer\/delete\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+} elseif (preg_match('/\/trainer\/delete_trainer\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     // Memproses permintaan untuk menghapus pelatih berdasarkan ID
     $trainerId = $matches[1]; // Mengambil ID pelatih dari URL
     $controller->delete($trainerId);
