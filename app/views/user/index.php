@@ -50,7 +50,7 @@
             </table>
         </div>
     </div>
-    <a class="bg-black p-2 mt-4 text-white rounded" href="./../dashboard">Back To Dashboard</a>
+    <a class="bg-black p-2 mt-4 text-white rounded" href="./../dashboard">Back to Dashboard</a>
 </body>
 
 </html>
