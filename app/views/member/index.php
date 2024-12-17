@@ -10,15 +10,11 @@
     <style>
         /* Tema warna merah abu-abu */
         body {
-            background: linear-gradient(to bottom, #ff4d4d, #a9a9a9);
-            background-attachment: fixed;
+            background-color: #f8f9fa;
         }
         .card-header {
             background: linear-gradient(to right, #8b0000, #a9a9a9);
             color: white;
-        }
-        .card-body {
-            background: #ffffff;
         }
         .table thead {
             background-color: #a9a9a9;
