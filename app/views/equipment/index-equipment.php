@@ -150,8 +150,8 @@
                             <td><?= htmlspecialchars((string)($item['jenis_alat'] ?? '')) ?></td>
                             <td><?= htmlspecialchars((string)($item['kondisi'] ?? '')) ?></td>
                             <td>
-                                <a href="/equipment/edit-equipment/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" class="btn btn-info me-2"><i class="fas fa-edit"></i></a>
-                                <a href="/equipment/delete-equipment/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                <a href="/equipment/edit/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" class="btn btn-info me-2"><i class="fas fa-edit"></i></a>
+                                <a href="/equipment/delete/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

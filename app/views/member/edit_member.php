@@ -14,7 +14,7 @@
                 <h5 class="text-center">Edit Member</h5>
             </div>
             <div class="card-body">
-    <form action="/member/update_member/<?php echo $member['id_member']; ?>" method="POST">
+    <form action="/member/update/<?php echo $member['id_member']; ?>" method="POST">
     <table class="table table-borderless">
         <tr>
         <td>Nama </td>

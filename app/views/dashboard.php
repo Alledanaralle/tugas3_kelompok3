@@ -23,10 +23,10 @@
     <section class="pt-20 gap-4 grid px-[2%] z-10 h-auto grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
         <?php
         $menuDash = [
-            ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => '#'],
+            ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => './member/index_member'],
             ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => './trainers/index_trainer'],
             ['title' => 'Kelas Tersedia', 'value' => $totalClasses, 'icon' => 'ri-calendar-line', 'link' => './user/index'],
-            ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => '#'],
+            ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => './equipment/index-equipment'],
         ];
 
         foreach ($menuDash as $menu) {
