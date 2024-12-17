@@ -1,6 +1,7 @@
 <?php
 // routes.php
 
+
 // Memuat file TrainerController untuk menangani permintaan terkait pelatih
 require_once 'app/controllers/TrainerController.php';
 
@@ -39,4 +40,5 @@ if ($url == '/trainer/index' || $url == '/') {
     // Menangani permintaan yang tidak dikenali dengan menampilkan pesan 404
     http_response_code(404); // Mengatur kode respons HTTP menjadi 404
     echo "404 Not Found"; // Menampilkan pesan bahwa halaman tidak ditemukan
+
 }

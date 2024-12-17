@@ -27,4 +27,3 @@ class Database
         return $this->conn; // Mengembalikan objek koneksi
     }
 }
-
