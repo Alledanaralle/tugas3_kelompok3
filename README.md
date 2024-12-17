@@ -7,7 +7,7 @@ Proyek ini merupakan bagian dari Tugas Praktikum Pemrograman Web 2 pada mata kul
 Proyek ini merupakan bagian aplikasi web sederhana yang menerapkan arsitektur Model-View-Controller (MVC) dengan menggunakan konsep Pemrograman Berorientasi Objek (OOP). Bagian ini merupakan bagian trainer dimana trainer meng inputkan jadwal mereka pada Aplikasi Pengelolaan Fasilitas Kebugaran.
 
 ## Tujuan
-Tujuan dari praktikum ini adalah untuk memberikan pemahaman yang lebih baik tentang arsitektur MVC dalam pengembangan aplikasi web dan untuk meningkatkan kemampuan mahasiswa dalam menerapkan konsep OOP serta melakukan operasi CRUD (Create, Read, Update, Delete) pada data.
+Tujuan dari praktikum ini adalah untuk memenuhi tugas matakuliah Praktikum Pemrograman Web 2 dan memenuhi tugas UAS Praktikum Web 2 dalam penerapkan konsep OOP serta melakukan operasi CRUD (Create, Read, Update, Delete) pada data dan penerapan MVC.
 
 ## Tech Stack
 - **Bahasa Pemrograman:** PHP
@@ -41,11 +41,10 @@ mvc-sample/
 ## Cara Menjalankan Proyek
 1. **Clone Repository:**
    ```bash
-   git clone https://gitlab.com/praktisi-mengajar/politeknik-negeri-cilacap/pemrograman-web/mvc-sample.git
-   cd mvc-sample
+   git clone https://github.com/Alledanaralle/tugas3_kelompok3.git
    ```
 2. **Jika menggunakan virtual host pada apache xampp:**
-   Untuk menjalankan proyek ini pada Apache XAMPP, Anda perlu membuat virtual host:
+   Untuk menjalankan proyek ini pada Apache Laragon, Anda perlu membuat virtual host:
 
    - Edit File Konfigurasi Apache: Buka file httpd-vhosts.conf di lokasi berikut:
         ```php 
@@ -69,12 +68,12 @@ mvc-sample/
 
     - Tambahkan baris berikut di bagian bawah:
         ```php 
-        127.0.0.1 mvc-sample.local
+        127.0.0.1 tugas3_kelompok3.local
         ```
 
     - Restart Apache: Setelah konfigurasi selesai, restart Apache melalui XAMPP Control Panel.
 
-    - Akses Proyek: Buka browser dan akses aplikasi di http://mvc-sample.local.
+    - Akses Proyek: Buka browser dan akses aplikasi di http://tugas3_kelompok3.local.
 
 3. **Jika menggunakan perintah php -S localhost:8080:**
     Saat menjalankan aplikasi PHP dengan perintah ```php -S localhost:8080```

@@ -34,56 +34,73 @@
         }
 
         /* Tabel dengan warna biru kalem dan abu-abu */
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: linear-gradient(135deg, #B0C4DE, #778899); /* Biru kalem ke abu-abu */
-            color: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
+        /* Tabel dengan kombinasi biru dan mustard */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #FDF8E4; /* Warna dasar mustard pucat */
+    color: #333;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-        /* Header tabel */
-        th, td {
-            text-align: center;
-            padding: 12px 15px;
-        }
+/* Header tabel */
+th {
+    background-color: #2C3E50; /* Warna biru tua */
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
 
-        th {
-            background-color: rgba(0, 0, 0, 0.2);
-            color: #fff;
-        }
+/* Sel tabel */
+td {
+    background-color: #FDF8E4; /* Warna mustard pucat */
+    color: #2C3E50; /* Warna teks biru tua */
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
 
-        /* Baris dengan warna berbeda */
-        tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+/* Efek zebra striping pada baris */
+tr:nth-child(even) {
+    background-color: #E8E6D1; /* Warna mustard yang sedikit lebih gelap */
+}
 
-        tr:nth-child(odd) {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
+tr:nth-child(odd) {
+    background-color: #FDF8E4; /* Warna mustard pucat */
+}
 
-        /* Efek hover pada baris tabel */
-        tr:hover {
-            background-color: rgba(255, 255, 255, 0.4); /* Perubahan warna lebih jelas saat hover */
-            cursor: pointer; /* Ubah kursor menjadi pointer */
-            transition: background-color 0.3s ease; /* Tambahkan transisi halus */
-        }
+/* Efek hover pada baris tabel */
+tr:hover {
+    background-color: #3498DB; /* Warna biru terang */
+    color: #fff; /* Warna teks putih */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-        /* Link Aksi (Edit dan Delete) */
-        a.action-link {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 5px;
-            padding: 5px 8px;
-            border-radius: 3px;
-        }
+/* Link Aksi (Edit dan Delete) */
+a.action-link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 5px 8px;
+    border-radius: 3px;
+}
 
-        a.action-link:hover {
-            background-color: #555;
-        }
+a.edit {
+    background-color: #F39C12; /* Warna mustard/oranye */
+}
+
+a.delete {
+    background-color: #C0392B; /* Warna merah */
+}
+
+a.action-link:hover {
+    background-color: #2C3E50; /* Warna biru tua saat hover */
+}
+
 
         a.edit {
             background-color: #f39c12; /* Warna oranye */
@@ -96,8 +113,8 @@
     </style>
 </head>
 <body>
-    <h2><big>Daftar Pelatih</big></h2>
-    <a href="/trainer/create" class="tambah-pelatih">++ Tambah Pelatih Baru ++</a>
+    <h2>Daftar Pelatih</h2>
+    <a href="/trainer/create" class="tambah-pelatih">Tambah Pelatih Baru</a>
     
     <!-- Tabel Daftar Pelatih -->
     <table border="0" cellpadding="10" cellspacing="0">
