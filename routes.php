@@ -26,11 +26,11 @@ if ($url == '/dashboard' || $url == '/') {
 } elseif (preg_match('/\/user\/delete\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $userId = $matches[1];
     $controller->delete($userId);
-} elseif ($url == '/trainers/create' && $requestMethod == 'GET') {
+} elseif ($url == '/trainers/create_trainer' && $requestMethod == 'GET') {
     $controllerTrainer->create();
 } elseif ($url == '/trainers/store' && $requestMethod == 'POST') {
     $controllerTrainer->store();
-} elseif ($url == '/trainers/index' && $requestMethod == 'GET') {
+} elseif ($url == '/trainers/index_trainer' && $requestMethod == 'GET') {
     $controllerTrainer->index();
 } elseif (preg_match('/\/trainers\/edit\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $userId = $matches[1];

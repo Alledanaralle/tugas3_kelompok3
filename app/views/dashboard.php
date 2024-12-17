@@ -24,7 +24,7 @@
         <?php
         $menuDash = [
             ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => '#'],
-            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => './trainers/index'],
+            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => './trainers/index_trainer'],
             ['title' => 'Kelas Tersedia', 'value' => $totalClasses, 'icon' => 'ri-calendar-line', 'link' => './user/index'],
             ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => '#'],
         ];
