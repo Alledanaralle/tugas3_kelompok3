@@ -13,12 +13,12 @@ class EquipmentController {
         // Mengambil semua data alat dari model
         $equipment = $this->equipmentModel->getAllEquipment();
         // Menampilkan view index
-        require_once '../app/views/equipment/index.php';
+        require_once '../app/views/equipment/index-equipment.php';
     }
 
     public function create() {
         // Menampilkan form untuk menambah alat
-        require_once '../app/views/equipment/create.php';
+        require_once '../app/views/equipment/create-equipment.php';
     }
 
     public function store() {
@@ -30,20 +30,20 @@ class EquipmentController {
         // Menyimpan data alat ke database
         $this->equipmentModel->add($nama_alat, $jenis_alat, $kondisi);
         // Redirect ke daftar alat setelah berhasil disimpan
-        header('Location: /equipment/index');
+        header('Location: /equipment/index-equipment');
     }
 
     // Menampilkan form edit dengan data alat berdasarkan ID
     public function edit($id_equipment) {
         $equipment = $this->equipmentModel->find($id_equipment); // Ambil data alat berdasarkan ID
-        require_once __DIR__ . '/../views/equipment/edit.php';
+        require_once __DIR__ . '/../views/equipment/edit-equipment.php';
     }
 
         // Update data alat berdasarkan ID
     public function update($id_equipment, $data) {
         $updated = $this->equipmentModel->update($id_equipment, $data);
         if ($updated) {
-            header("Location: /equipment/index"); // Redirect to member list
+            header("Location: /equipment/index-equipment"); // Redirect to member list
         } else {
             echo "Failed to update equipment.";
         }
@@ -53,7 +53,7 @@ class EquipmentController {
     public function delete($id_equipment) {
         $deleted = $this->equipmentModel->delete($id_equipment);
         if ($deleted) {
-            header("Location: /equipment/index"); // Redirect ke daftar alat
+            header("Location: /equipment/index-equipment"); // Redirect ke daftar alat
         } else {
             echo "Failed to delete equipment.";
         }

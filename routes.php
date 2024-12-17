@@ -7,19 +7,19 @@ $controller = new EquipmentController();
 $url = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-if ($url == '/equipment/index' || $url == '/') {
+if ($url == '/equipment/index-equipment' || $url == '/') {
     $controller->index();
-} elseif ($url == '/equipment/create' && $requestMethod == 'GET') {
+} elseif ($url == '/equipment/create-equipment' && $requestMethod == 'GET') {
     $controller->create();
 } elseif ($url == '/equipment/store' && $requestMethod == 'POST') {
     $controller->store();
-} elseif (preg_match('/\/equipment\/edit\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+} elseif (preg_match('/\/equipment\/edit-equipment\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $equipmentId = $matches[1];
     $controller->edit($equipmentId);
 } elseif (preg_match('/\/equipment\/update\/(\d+)/', $url, $matches) && $requestMethod == 'POST') {
     $equipmentId = $matches[1];
     $controller->update($equipmentId, $_POST);
-} elseif (preg_match('/\/equipment\/delete\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+} elseif (preg_match('/\/equipment\/delete-equipment\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $equipmentId = $matches[1];
     $controller->delete($equipmentId);
 } else {
