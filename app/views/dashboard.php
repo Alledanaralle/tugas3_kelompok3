@@ -16,7 +16,6 @@
 
 <body class="bg-white text-black min-h-dvh">
     <header class="w-full px-[7%] py-3 z-20 fixed top-0 left-0 shadow border-b-[1px] border-[#3b3b3b2e] flex justify-between items-center bg-white">
-        <!--<button type="button" onclick="openSidebar()" class="ri-menu-line"></button>-->
         <h2 class="text-2xl sm:text-3xl font-medium">
             Amba Gym
         </h2>
