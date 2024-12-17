@@ -4,7 +4,7 @@
 Proyek ini merupakan bagian dari Tugas Praktikum Pemrograman Web 2 pada mata kuliah Praktikum Pemgrograman Web 2
 
 ## Deskripsi Proyek
-Proyek ini merupakan bagian aplikasi web sederhana yang menerapkan arsitektur Model-View-Controller (MVC) dengan menggunakan konsep Pemrograman Berorientasi Objek (OOP). Bagian ini merupakan bagian trainer dimana trainer meng inputkan jadwal mereka pada Aplikasi Pengelolaan Fasilitas Kebugaran.
+Proyek ini merupakan bagian aplikasi web sederhana yang menerapkan arsitektur Model-View-Controller (MVC) dengan menggunakan konsep Pemrograman Berorientasi Objek (OOP). Bagian ini merupakan bagian user dimana user meng inputkan jadwal mereka pada Aplikasi Pengelolaan Fasilitas Kebugaran.
 
 ## Tujuan
 Tujuan dari praktikum ini adalah untuk memenuhi tugas matakuliah Praktikum Pemrograman Web 2 dan memenuhi tugas UAS Praktikum Web 2 dalam penerapkan konsep OOP serta melakukan operasi CRUD (Create, Read, Update, Delete) pada data dan penerapan MVC.
@@ -21,11 +21,11 @@ Tujuan dari praktikum ini adalah untuk memenuhi tugas matakuliah Praktikum Pemro
 mvc-sample/
 ├── app/
 │   ├── controllers/
-│   │   └── TrainerController.php         # Controller untuk mengelola logika pengguna
+│   │   └── UserController.php         # Controller untuk mengelola logika pengguna
 │   ├── models/
-│   │   └── Trainer.php                   # Model untuk mengelola data pengguna
+│   │   └── User.php                   # Model untuk mengelola data pengguna
 │   └── views/
-│       └── trainer/
+│       └── user/
 │           ├── index.php              # View untuk menampilkan daftar dan manajemen pengguna
 │           ├── edit.php               # Edit untuk menampilkan halaman edit pengguna            
 │           └── create.php             # View untuk menampilkan form pembuatan pengguna baru

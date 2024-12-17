@@ -114,7 +114,7 @@ a.action-link:hover {
 </head>
 <body>
     <h2>Daftar Pelatih</h2>
-    <a href="/trainer/create" class="tambah-pelatih">Tambah Pelatih Baru</a>
+    <a href="/trainers/create" class="tambah-pelatih">Tambah Pelatih Baru</a>
     
     <!-- Tabel Daftar Pelatih -->
     <table border="0" cellpadding="10" cellspacing="0">
@@ -135,8 +135,8 @@ a.action-link:hover {
                     <td><?= htmlspecialchars($trainer['spesialisasi']) ?></td>
                     <td><?= htmlspecialchars($trainer['jadwal']) ?></td>
                     <td>
-                        <a href="/trainer/edit/<?php echo $trainer['id_trainer']; ?>" class="action-link edit">Edit</a>
-                        <a href="/trainer/delete/<?php echo $trainer['id_trainer']; ?>" class="action-link delete" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="/trainers/edit/<?php echo $trainer['id_trainer']; ?>" class="action-link edit">Edit</a>
+                        <a href="/trainers/delete/<?php echo $trainer['id_trainer']; ?>" class="action-link delete" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

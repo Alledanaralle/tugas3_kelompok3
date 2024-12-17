@@ -93,7 +93,7 @@
     <h2>Edit Trainer</h2>
 
     <!-- Formulir untuk mengedit data pelatih -->
-    <form action="/trainer/update/<?php echo $trainer['id_trainer']; ?>" method="POST">
+    <form action="/trainers/update/<?php echo $trainer['id_trainer']; ?>" method="POST">
 
         <!-- Input untuk nama pelatih dengan nilai yang sudah ada -->
         <tr>

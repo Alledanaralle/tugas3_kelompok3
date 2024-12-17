@@ -78,7 +78,7 @@
     <h2>Tambah Pelatih Baru</h2>
 
     <!-- Formulir untuk memasukkan data pelatih -->
-    <form action="/trainer/store" method="POST">
+    <form action="/trainers/store" method="POST">
         <table class="table table-borderless">
             <!-- Input untuk nama pelatih -->
             <tr>
