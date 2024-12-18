@@ -28,7 +28,6 @@
             width: 100%;
             max-width: 900px;
             margin: 20px auto;
-            overflow: hidden;
         }
 
         .card-header {
@@ -45,20 +44,9 @@
             background-color: #FDFEFE;
         }
 
-        a.tambah-pelatih {
-            display: inline-block;
-            background-color: #e74c3c;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        a.tambah-pelatih:hover {
-            background-color: #c0392b;
+        .table-container {
+            max-height: 400px; /* Set tinggi maksimal */
+            overflow-y: auto; /* Aktifkan scroll secara vertikal */
         }
 
         table {
@@ -69,7 +57,6 @@
             border-radius: 8px;
             overflow: hidden;
             text-align: center;
-            margin-bottom: 20px;
         }
 
         th {
@@ -98,33 +85,10 @@
             background-color: rgb(210, 213, 216);
             color: #fff;
             cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        a.action-link {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 5px;
-            padding: 5px 8px;
-            border-radius: 3px;
-            transition: background-color 0.3s ease;
-        }
-
-        a.edit {
-            background-color: #F39C12;
-        }
-
-        a.delete {
-            background-color: #C0392B;
-        }
-
-        a.action-link:hover {
-            background-color: #2C3E50;
         }
     </style>
 </head>
 <body>
-  
     <!-- Card Container -->
     <div class="card">
         <div class="card-header">Daftar Alat Kebugaran</div>
@@ -132,32 +96,33 @@
             <a href="/equipment/create-equipment" class="btn btn-success mb-3">
                 <i class="fas fa-user-plus"></i> Tambah Alat Baru
             </a>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID Equipment</th>
-                        <th>Nama Alat</th>
-                        <th>Jenis Alat</th>
-                        <th>Kondisi</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($equipment as $item): ?>
+            <div class="table-container table-responsive">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars((string)($item['id_equipment'] ?? '')) ?></td>
-                            <td><?= htmlspecialchars((string)($item['nama_alat'] ?? '')) ?></td>
-                            <td><?= htmlspecialchars((string)($item['jenis_alat'] ?? '')) ?></td>
-                            <td><?= htmlspecialchars((string)($item['kondisi'] ?? '')) ?></td>
-                            <td>
-                                <a href="/equipment/edit/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" class="btn btn-info me-2"><i class="fas fa-edit"></i></a>
-                                <a href="/equipment/delete/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                            </td>
+                            <th>ID Equipment</th>
+                            <th>Nama Alat</th>
+                            <th>Jenis Alat</th>
+                            <th>Kondisi</th>
+                            <th>Aksi</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <!-- Back To Dashboard Button -->
+                    </thead>
+                    <tbody>
+                        <?php foreach ($equipment as $item): ?>
+                            <tr>
+                                <td><?= htmlspecialchars((string)($item['id_equipment'] ?? '')) ?></td>
+                                <td><?= htmlspecialchars((string)($item['nama_alat'] ?? '')) ?></td>
+                                <td><?= htmlspecialchars((string)($item['jenis_alat'] ?? '')) ?></td>
+                                <td><?= htmlspecialchars((string)($item['kondisi'] ?? '')) ?></td>
+                                <td>
+                                    <a href="/equipment/edit-equipment/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" class="btn btn-info me-2"><i class="fas fa-edit"></i></a>
+                                    <a href="/equipment/delete-equipment/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
             <a href="./../dashboard" class="btn btn-primary" style="background-color:rgb(130, 153, 185); color: white; border-color: navy;">
                 Back To Dashboard
             </a>
