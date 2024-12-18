@@ -84,16 +84,13 @@ mvc-sample/
         
     ## Trainer Controller
     ```php
-    
     <?php
-// app/controllers/TrainerController.php
-
-// Memuat file model Trainers untuk digunakan dalam controller ini
-require_once '../app/models/Trainers.php';
-
-// Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
-class TrainerController
-{
+    // app/controllers/TrainerController.php
+    // Memuat file model Trainers untuk digunakan dalam controller ini
+    require_once '../app/models/Trainers.php';
+    // Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
+    class TrainerController
+    {
     private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
 
     // Konstruktor untuk menginisialisasi model Trainers
