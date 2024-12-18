@@ -79,7 +79,7 @@ mvc-sample/
         Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
         <h3>Controller</h3><hr>
         
-        ```
+        ```php
         <?php
         // app/controllers/memberController.php
         require_once '../app/models/member.php';
@@ -88,14 +88,14 @@ mvc-sample/
         ````
         
 Kode ini mendefinisikan MemberController, yang mengelola logika fitur anggota dalam MVC. Model Member disertakan untuk mengakses data, dan properti $memberModel             digunakan sebagai penghubung ke model, diinisialisasi melalui konstruktor
-```
+```php
 public function __construct() {
     $this->memberModel = new Member();
 }
 
 ```
 Menginisialisasi objek model Member, yang digunakan untuk berinteraksi dengan data anggota di basis data.
-```
+```php
 public function index() {
     $member = $this->memberModel->getAllMember();
     require_once '../app/views/member/index_member.php';
@@ -104,13 +104,13 @@ public function index() {
 ```
 Mengambil seluruh data anggota menggunakan method getAllMember() dari model, dan memuat view index_member.php untuk menampilkan daftar anggota.
 
-```
+```php
 public function create() {
     require_once '../app/views/member/create_member.php';
 }
 ```
 Memuat form view create_member.php untuk menambahkan anggota baru.
-```
+```php
 public function store() {
     $id_member = $_POST['id_member'];
     $nama = $_POST['nama'];
@@ -124,14 +124,14 @@ public function store() {
 Fungsi `store()` dalam script ini bertanggung jawab untuk menangani permintaan yang mengirimkan data anggota baru melalui metode POST. Fungsi ini dimulai dengan mengambil nilai yang dikirimkan melalui form (menggunakan metode `$_POST`) untuk lima atribut data anggota, yaitu: `id_member`, `nama`, `usia`, `jenis_kelamin`, dan `paket_langganan`.
 Setelah data diperoleh, fungsi ini memanggil metode `add()` dari model `memberModel`, yang berfungsi untuk menyimpan data anggota baru ke dalam database. Data yang diambil dari form (seperti ID anggota, nama, usia, jenis kelamin, dan paket langganan) diteruskan sebagai argumen ke dalam metode `add()` tersebut.
 Setelah data berhasil disimpan, fungsi ini menggunakan perintah `header('Location: /member/index_member')` untuk mengarahkan (redirect) pengguna kembali ke halaman daftar anggota (`/member/index_member`). Hal ini memastikan pengguna melihat daftar anggota yang sudah diperbarui setelah menambahkan anggota baru.
-```
+```php
 public function edit($id_member) {
     $member = $this->memberModel->find($id_member);
     require_once __DIR__ . '/../views/member/edit_member.php';
 }
 ```
 Fungsi `edit($id_member)` mengambil data anggota berdasarkan ID yang diberikan menggunakan metode `find()` dari model `memberModel`. Setelah itu, data anggota dimuat ke dalam tampilan `edit_member.php`, yang memungkinkan pengguna untuk mengedit informasi anggota tersebut.
-```
+```php
 public function update($id_member, $data) {
     $updated = $this->memberModel->update($id_member, $data);
     if ($updated) {
@@ -142,7 +142,7 @@ public function update($id_member, $data) {
 }
 ```
 Fungsi `update($id_member, $data)` bertanggung jawab untuk memperbarui data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `update()` dari model `memberModel` untuk memperbarui data anggota di database. Jika pembaruan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
-```
+```php
 public function delete($id_member) {
     $deleted = $this->memberModel->delete($id_member);
     if ($deleted) {
@@ -155,7 +155,7 @@ public function delete($id_member) {
 Fungsi `delete($id_member)` bertugas untuk menghapus data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `delete()` dari model `memberModel` untuk menghapus anggota dari database. Jika penghapusan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
 <h3>Full Script Controller</h3><hr>
 
-```
+```php
 
 <?php
 // app/controllers/memberController.php
@@ -217,7 +217,7 @@ class MemberController {
 
 <h3>Models</h3><hr>
 
-```
+```php
 <?php
 // app/models/Member.php
 require_once '../config/database.php';
@@ -228,14 +228,14 @@ class Member {
     }
 ```
 Script ini mendefinisikan kelas `Member` yang berfungsi untuk mengelola data anggota. Di dalam kelas, ada properti `$db` untuk menyimpan koneksi database. Konstruktor kelas menginisialisasi koneksi database dengan memanggil metode `connect()` dari kelas `Database`, yang memungkinkan kelas `Member` untuk melakukan operasi database.
-```
+```php
 public function getAllMember() {
         $query = $this->db->query("SELECT * FROM member");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 ```
 Script ini digunakan untuk mengambil semua data anggota (member) dari tabel `member` dalam database. Fungsi `getAllMember()` menjalankan query SQL `SELECT * FROM member` untuk mendapatkan seluruh baris data dari tabel tersebut. Hasilnya kemudian diambil dan dikembalikan dalam bentuk array asosiatif yang bisa digunakan untuk menampilkan data anggota dalam aplikasi.
-```
+```php
  public function find($id_member) {
         $query = $this->db->prepare("SELECT * FROM member WHERE id_member = :id_member");
         $query->bindParam(':id_member', $id_member, PDO::PARAM_INT);
@@ -244,7 +244,7 @@ Script ini digunakan untuk mengambil semua data anggota (member) dari tabel `mem
     }
 ```
 Script ini digunakan untuk mencari data anggota berdasarkan `id_member`. Fungsi `find($id_member)` menyiapkan query SQL untuk memilih data anggota yang memiliki `id_member` tertentu, kemudian mengeksekusi query dan mengembalikan hasilnya dalam bentuk array asosiatif.
-```
+```php
     public function add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan) {
         $query = $this->db->prepare("INSERT INTO member (id_member, nama, usia, jenis_kelamin, paket_langganan) 
         VALUES (:id_member, :nama, :usia, :jenis_kelamin, :paket_langganan)");
@@ -257,7 +257,7 @@ Script ini digunakan untuk mencari data anggota berdasarkan `id_member`. Fungsi 
     }
 ```
 Script ini digunakan untuk menambahkan data anggota baru ke dalam tabel `member` di database. Fungsi `add()` menerima lima parameter (`id_member`, `nama`, `usia`, `jenis_kelamin`, `paket_langganan`), kemudian menyusun query `INSERT INTO` dengan parameter yang diikat menggunakan `bindParam()`. Setelah itu, query dijalankan dengan `execute()`, yang akan menyisipkan data ke dalam tabel `member` dan mengembalikan `true` jika berhasil, atau `false` jika gagal.
-```
+```php
 public function update($id_member, $data) {
         $query = "UPDATE member SET id_member = :id_member, nama = :nama, usia = :usia, 
         jenis_kelamin = :jenis_kelamin, paket_langganan = :paket_langganan
@@ -273,7 +273,7 @@ public function update($id_member, $data) {
     }
 ```
 Script ini digunakan untuk memperbarui data anggota di tabel `member` berdasarkan `id_member`. Fungsi `update()` menerima dua parameter, yaitu `id_member` yang akan diperbarui dan array `$data` yang berisi data baru. Query `UPDATE` dipersiapkan dan nilai dari `$data` diikat ke query menggunakan `bindParam()`. Setelah itu, query dieksekusi dengan `execute()` untuk memperbarui data anggota yang sesuai. Fungsi ini mengembalikan `true` jika pembaruan berhasil dan `false` jika gagal.
-```
+```php
  public function delete($id_member) {
         $query = "DELETE FROM member WHERE id_member = :id_member";
         $stmt = $this->db->prepare($query);
@@ -284,7 +284,8 @@ Script ini digunakan untuk memperbarui data anggota di tabel `member` berdasarka
 ```
 Script ini digunakan untuk menghapus data anggota dari tabel `member` berdasarkan `id_member`. Fungsi `delete()` menerima satu parameter, yaitu `id_member`, yang menunjukkan anggota yang akan dihapus. Query SQL `DELETE FROM member WHERE id_member = :id_member` dipersiapkan untuk menghapus data anggota yang memiliki `id_member` yang sesuai. Nilai `id_member` yang diterima oleh fungsi diikat ke query menggunakan `bindParam()`. Setelah itu, query dijalankan dengan metode `execute()` untuk mengeksekusi perintah penghapusan di database. Fungsi ini mengembalikan `true` jika penghapusan berhasil dan `false` jika terjadi kesalahan.
 <h3>Full Script Models Member</h3><hr>        
-                                 
+
+```php
     <?php
     // app/models/Member.php
     require_once '../config/database.php';
@@ -339,17 +340,17 @@ Script ini digunakan untuk menghapus data anggota dari tabel `member` berdasarka
         $stmt->bindParam(':id_member', $id_member);
         return $stmt->execute();
     }
-    
+```    
 <h3>Views</h3><hr>
 <h3>Create Member</h3>
 
-```
+```html
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 ```
 Script tersebut digunakan untuk mengimpor file CSS Bootstrap versi 5.3.3 dari CDN, yang berfungsi untuk memberikan styling otomatis pada halaman HTML. Dengan ini, halaman akan menggunakan desain responsif dan elemen UI yang telah disediakan oleh Bootstrap.
-```
+```html
 <div class="container mt-5">
         <div class="card mx-auto" style="max-width: 600px;">
             <div class="card-header">
@@ -358,7 +359,7 @@ Script tersebut digunakan untuk mengimpor file CSS Bootstrap versi 5.3.3 dari CD
             <div class="card-body">
 ```
 Script ini membuat sebuah **kontainer** yang berisi **card** dengan lebar maksimal 600px. Card ini memiliki **header** yang menampilkan judul "Tambah Pengguna Baru" yang diposisikan di tengah. Bagian **card-body** adalah tempat utama untuk menampilkan konten form atau elemen lainnya. 
-```
+```php
 <form action="/member/store" method="POST">
                     <table class="table table-borderless">
                         <tr>
@@ -395,7 +396,7 @@ Script ini membuat sebuah **kontainer** yang berisi **card** dengan lebar maksim
 Script ini adalah form HTML yang mengumpulkan data pengguna baru, seperti nama, usia, jenis kelamin, dan paket langganan. Form ini menggunakan metode POST untuk mengirim data ke endpoint /member/store. Setiap field memiliki atribut required untuk memastikan pengguna mengisi semua kolom sebelum mengirimkan form. Dropdown tersedia untuk memilih jenis kelamin dan paket langganan, sementara nama dan usia diinput melalui kolom teks.
 <h3>Full Script Views Create</h3>
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -457,7 +458,7 @@ Script ini adalah form HTML yang mengumpulkan data pengguna baru, seperti nama, 
 ```
 <h3>Edit Member</h3>
 
-```
+```html
 <body>
     <div class="container mt-5">
         <div class="card mx-auto" style="max-width: 600px;">
@@ -467,7 +468,7 @@ Script ini adalah form HTML yang mengumpulkan data pengguna baru, seperti nama, 
             <div class="card-body">
 ```
 Script ini membuat tampilan dengan kontainer utama yang memiliki margin atas, berisi sebuah card dengan lebar maksimal 600px yang dipusatkan. Card ini memiliki header dengan judul "Edit Member" yang diposisikan di tengah, diikuti oleh body card yang akan menampung elemen lainnya seperti form 
-```
+```php
 <form action="/member/update_member/<?php echo $member['id_member']; ?>" method="POST">
     <table class="table table-borderless">
         <tr>
@@ -510,7 +511,7 @@ Bagian berikutnya adalah dropdown untuk memilih jenis kelamin. Dropdown ini memi
 Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungkinkan pengguna kembali ke halaman daftar anggota tanpa menyimpan perubahan. Tombol kedua, "Update", digunakan untuk mengirim data yang telah diubah ke server agar dapat diperbarui di database. Seluruh data dikirim menggunakan metode POST, menjaga keamanan informasi yang dikirimkan. Formulir ini memastikan setiap kolom wajib diisi dengan menambahkan atribut `required` pada elemen input.
 <h3>Full Script Edit Member</h3>
 
-```
+```html
 <!-- app/views/user/edit.php -->
 <!DOCTYPE html>
 <html lang="en">
@@ -568,7 +569,7 @@ Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungk
 
 <h3>Index Member</h3>
 
-```
+```html
  <style>
         body {
             background-color: #f8f9fa;
@@ -608,7 +609,7 @@ Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungk
 Skrip CSS ini dirancang untuk memberikan tampilan yang modern, bersih, dan responsif pada sebuah halaman web. Warna latar belakang halaman menggunakan abu-abu terang (#f8f9fa), memberikan kesan sederhana dan nyaman bagi pengguna. Bagian header pada komponen kartu memiliki latar belakang hitam dengan teks berwarna putih, menciptakan kontras yang tegas. Untuk tabel, bagian header diberi warna abu-abu gelap (rgb(120, 125, 131)) dengan teks putih agar lebih menonjol, sementara isi tabel disejajarkan secara horizontal dan vertikal di tengah, memberikan tampilan yang rapi dan teratur.<br>
 Selain itu, tombol dengan ikon dirancang agar ikon berada tepat di tengah, memastikan estetika yang konsisten. Tabel juga dilengkapi dengan elemen gulir vertikal otomatis dan memiliki tinggi maksimal 400px, sehingga data tetap mudah dibaca pada perangkat dengan layar kecil. Footer pada kartu menggunakan warna putih untuk mempertahankan kesan bersih dan konsisten dengan latar belakang halaman.<br>
 Pada bagian input pencarian, kotak pencarian didesain dengan lebar 300px, padding yang nyaman, batas berwarna abu-abu terang, serta sudut yang melengkung. Hal ini menciptakan antarmuka yang ramah pengguna dan estetis. Skrip ini secara keseluruhan meningkatkan estetika dan pengalaman pengguna, terutama dalam navigasi elemen seperti tabel, kartu, dan fitur pencarian di dalam halaman web.
-```
+```html
 <div class="container mt-5">
         <div class="card shadow">
             <div class="card-header">
@@ -630,7 +631,7 @@ Pada bagian input pencarian, kotak pencarian didesain dengan lebar 300px, paddin
                 </div>
 ```
 Script ini menampilkan antarmuka daftar member dengan desain menggunakan komponen card yang responsif. Di dalam card, terdapat header dengan judul "Daftar Member" yang terpusat, diikuti oleh body yang memuat dua fitur utama: tombol hijau "Tambah Member Baru" di sisi kiri untuk mengarahkan pengguna ke halaman pembuatan member, dan kolom pencarian di sisi kanan untuk menyaring data secara real-time menggunakan JavaScript.
-```
+```html
 <div class="table-responsive">
                     <table id="trainerTable" class="table table-responsive table-hover table-bordered">
                         <thead>
@@ -678,10 +679,11 @@ Script ini berfungsi untuk menampilkan daftar member dalam bentuk tabel yang dat
         Tabel ini dirancang untuk memastikan semua informasi terkait pelatih kebugaran tersimpan dengan terorganisir dan mudah diakses sesuai kebutuhan. <br>
     <h3>Trainer Controller</h3>
     
-    ```php
+```php
     require_once '../app/models/Trainers.php';
-    ```
+```
 requice once untuk menyambungkan trainer controler ke trainers.php
+
 ```php
 class TrainerController
 {
@@ -689,7 +691,7 @@ class TrainerController
 }
 ```
 Properti untuk menyimpan instance dari model Trainers dan bersifat private dan hanya dapat diakses oleh class tersebut
-``php
+```php
 public function __construct()
 {
     $this->trainerModel = new Trainers();
@@ -756,7 +758,7 @@ public function update($id)
 ```
 berfungsi untuk update trainer saat proses edit terjadi
 
-```
+```php
 public function delete($id)
 {
     $deleted = $this->trainerModel->delete($id);
@@ -770,6 +772,7 @@ public function delete($id)
 berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
 
 <h3> Full Script Trainer Controller</h3>
+
 ```php
 
 <?php
@@ -849,11 +852,11 @@ class TrainerController
 <h3>Models Trainers</h3>
 
 
-```
+```php
 require_once '../config/database.php';
 ```
 mengkoneksikan trainers dengan database
-```
+```php
 class Trainers
 {
     private $db; // Properti untuk menyimpan koneksi database
@@ -861,7 +864,7 @@ class Trainers
 
 ```
 mengkoneksikan dan menyimpan koneksi database yang diakses oleh class tersebut
-```
+```php
 public function __construct()
 {
     $this->db = (new Database())->connect(); // Membuat koneksi ke database
@@ -869,7 +872,7 @@ public function __construct()
 
 ```
 pemberian nama awal dan mengkoneksikan kedatabase
-```
+```php
 public function getAllTrainers()
 {
     $query = $this->db->query("SELECT * FROM trainer"); // Query untuk mengambil semua data trainer
@@ -878,7 +881,7 @@ public function getAllTrainers()
 
 ```
 mengambil semua data trainers
-```
+```php
 public function find($id)
 {
     $query = $this->db->prepare("SELECT * FROM trainer WHERE id_trainer = :id"); // Query untuk mencari data berdasarkan ID
@@ -889,7 +892,7 @@ public function find($id)
 
 ```
 pencarian trainers berdasarkan id
-```
+```php
 public function add($name, $specialization, $schedule)
 {
     $query = $this->db->prepare("INSERT INTO trainer (nama, spesialisasi, jadwal) VALUES (:nama, :spesialisasi, :jadwal)");
@@ -901,7 +904,7 @@ public function add($name, $specialization, $schedule)
 
 ```
 menambahkan trainer baru berisi nama, spesialisasi, dan jadwal
-```
+```php
 public function update($id, $data)
 {
     $query = "UPDATE trainer SET nama = :nama, spesialisasi = :spesialisasi, jadwal = :jadwal WHERE id_trainer = :id_trainer";
@@ -916,7 +919,7 @@ public function update($id, $data)
 ```
 melakukan update data dimana saat proses update data awal tidak hilang
 
-```
+```php
 public function delete($id)
 {
     $query = "DELETE FROM trainer WHERE id_trainer = :id"; // Query untuk menghapus data
@@ -928,7 +931,8 @@ public function delete($id)
 Menghapus Trainer Berdasarkan ID
 <h3>View</h3>
 <h3>Create Trainer</h3>
-```
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1066,7 +1070,7 @@ Menghapus Trainer Berdasarkan ID
 
 <h3>Edit Trainer</h3>
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 
