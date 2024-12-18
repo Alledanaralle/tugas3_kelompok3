@@ -1,4 +1,5 @@
-# Praktikum Pemgrograman Web 2 - Politeknik Negeri Cilacap
+# tugas3_kelompok3
+## Praktikum Pemgrograman Web 2 - Politeknik Negeri Cilacap
 
 ## Informasi Umum
 
@@ -6,8 +7,7 @@ Proyek ini merupakan bagian dari Tugas Praktikum Pemrograman Web 2 pada mata kul
 
 ## Deskripsi Proyek
 
-Proyek ini merupakan bagian aplikasi web sederhana yang menerapkan arsitektur Model-View-Controller (MVC) dengan menggunakan konsep Pemrograman Berorientasi Objek (OOP). Bagian ini merupakan bagian trainer dimana trainer
-menginputkan jadwal mereka pada Aplikasi Pengelolaan Fasilitas Kebugaran.
+Proyek ini merupakan bagian aplikasi web sederhana yang menerapkan arsitektur Model-View-Controller (MVC) dengan menggunakan konsep Pemrograman Berorientasi Objek (OOP).
 
 ## Tujuan
 
@@ -71,3 +71,38 @@ mvc-sample/
     - Buka Laragon dan klik "Start All" atau restart Apache dari menu Laragon.
     - Buka browser dan akses aplikasi Anda di:
     http://tugas3_kelompok3.local
+
+# Aplikasi Pengelolaan Fasilitas Kebugaran
+<h2> 1. Member </h2>
+        Tabel Members digunakan untuk menyimpan data anggota yang terdaftar di fasilitas kebugaran. Data yang dikelola mencakup nama anggota, usia, jenis kelamin, dan jenis          paket langganan yang dipilih.
+        Fitur ini dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data anggota. Pengguna dapat menambahkan anggota baru, melihat            daftar anggota yang terdaftar, memperbarui informasi jika ada perubahan, dan menghapus data anggota yang sudah tidak aktif.
+        Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
+ <h2>2. Trainers </h2>
+        Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
+        Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru,               melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi          aktif.
+        Tabel ini dirancang untuk memastikan semua informasi terkait pelatih kebugaran tersimpan dengan terorganisir dan mudah diakses sesuai kebutuhan. <br>
+ <h2>3. Workout Classes</h2>
+        Tabel Workout Classes berfungsi untuk menyimpan data terkait kelas latihan kebugaran yang tersedia di fasilitas tersebut. Setiap baris dalam tabel ini mencatat               informasi tentang nama kelas, waktu kelas, pelatih yang bertanggung jawab, dan kuota peserta yang dapat mengikuti kelas tersebut.
+        Tabel ini dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) untuk mengelola jadwal kelas kebugaran. Pengguna dapat menambahkan kelas baru, melihat daftar           kelas yang tersedia, memperbarui jadwal atau informasi kelas, dan menghapus kelas yang sudah tidak diperlukan.
+        Ada relasi antara tabel Workout Classes dan tabel Trainers melalui kolom ID pelatih. Hubungan ini memungkinkan setiap kelas untuk dihubungkan dengan pelatih yang             mengajarnya, sehingga memudahkan pengelolaan jadwal kelas berdasarkan pelatih.
+        Dengan adanya relasi ini, sistem dapat mengatur siapa pelatih yang menangani kelas tersebut, serta memastikan bahwa kuota peserta untuk setiap kelas tercatat dengan          baik.
+<h2> 4. Equipment</h2>   
+        Tabel Gym Equipment menyimpan data alat kebugaran, seperti nama alat, jenis alat, dan kondisi (baik, rusak, perlu perbaikan). Tabel ini dilengkapi fitur CRUD untuk           mengelola inventaris alat kebugaran, memungkinkan pengguna untuk menambah, melihat, memperbarui, dan menghapus data alat.
+        Sistem ini memudahkan pengelolaan dan pemantauan kondisi alat kebugaran di fasilitas.
+
+### Fitur Utama
+1. Tambah Data: Menambahkan informasi alat kebugaran baru ke dalam sistem.
+2. Lihat Data: Menampilkan daftar alat kebugaran beserta informasi detailnya.
+3. Perbarui Data: Memperbarui informasi alat yang ada, termasuk nama, jenis, dan kondisi.
+4. Hapus Data: Menghapus data alat yang tidak lagi digunakan.
+        
+### Cara Penggunaan
+1. Masuk ke halaman utama aplikasi.
+2. Gunakan form untuk menambah data alat kebugaran.
+3. Lihat daftar alat kebugaran yang tersedia.
+4. Klik tombol Edit untuk memperbarui data alat.
+5. Klik tombol Hapus untuk menghapus alat dari inventaris.
+
+### Teknologi yang Digunakan
+* Bahasa Pemrograman: PHP, HTML, CSS
+* Database: MySQL

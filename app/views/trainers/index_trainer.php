@@ -91,6 +91,7 @@
 
         <!-- Body -->
         <div class="card-body">
+
             <!-- Tambah Pelatih Button -->
             <a href="/trainer/create_trainer" class="btn btn-success mb-3">
                 <i class="fas fa-user-plus"></i> Tambah Pelatih Baru
@@ -116,12 +117,17 @@
                             <td><?= htmlspecialchars($trainer['spesialisasi']) ?></td>
                             <td><?= htmlspecialchars($trainer['jadwal']) ?></td>
                             <td>
+
                                 <!-- Edit Button -->
-                                <a href="/trainer/edit_trainer/<?= $trainer['id_trainer']; ?>" class="btn btn-info btn-sm me-1">
+                                
+                                
+                               
+                                <a href="/trainers/edit/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info me-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <!-- Delete Button -->
-                                <a href="/trainer/delete_trainer/<?= $trainer['id_trainer']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')" class="btn btn-danger btn-sm">
+                              <!-- Delete Button -->
+                                <a href="/trainers/delete/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>

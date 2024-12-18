@@ -1,9 +1,5 @@
-
-CREATE TABLE trainer (
-    id_trainer INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(25) NOT NULL,
-    spesialisasi VARCHAR(25) NULL,
-    jadwal VARCHAR(25) NULL
-
-
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    NAME VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
 );

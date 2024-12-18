@@ -100,7 +100,7 @@
     <h2>Tambah Pelatih Baru</h2>
 
     <!-- Formulir untuk memasukkan data pelatih -->
-    <form action="/trainer/store" method="POST">
+    <form action="/trainers/store" method="POST">
         <!-- Input untuk nama pelatih -->
         <label for="nama">Nama Pelatih:</label>
         <input type="text" id="nama" name="nama" required>
@@ -124,7 +124,7 @@
 
         <!-- Tombol Simpan dan Batal -->
         <div class="button-container">
-            <button type="button" onclick="window.location.href='/trainer/index_trainer';">Batal</button>
+            <button type="button" onclick="window.location.href='/trainers/index_trainer';">Batal</button>
             <button type="submit">Simpan</button>
         </div>
     </form>
