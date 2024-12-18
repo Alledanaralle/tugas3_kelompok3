@@ -1141,6 +1141,7 @@ a:hover {
         Tabel ini dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) untuk mengelola jadwal kelas kebugaran. Pengguna dapat menambahkan kelas baru, melihat daftar           kelas yang tersedia, memperbarui jadwal atau informasi kelas, dan menghapus kelas yang sudah tidak diperlukan.
         Ada relasi antara tabel Workout Classes dan tabel Trainers melalui kolom ID pelatih. Hubungan ini memungkinkan setiap kelas untuk dihubungkan dengan pelatih yang             mengajarnya, sehingga memudahkan pengelolaan jadwal kelas berdasarkan pelatih.
         Dengan adanya relasi ini, sistem dapat mengatur siapa pelatih yang menangani kelas tersebut, serta memastikan bahwa kuota peserta untuk setiap kelas tercatat dengan          baik.
+        
 <h2> 4. Equipment</h2>   
         Tabel Gym Equipment menyimpan data alat kebugaran, seperti nama alat, jenis alat, dan kondisi (baik, rusak, perlu perbaikan). Tabel ini dilengkapi fitur CRUD untuk           mengelola inventaris alat kebugaran, memungkinkan pengguna untuk menambah, melihat, memperbarui, dan menghapus data alat.
         Sistem ini memudahkan pengelolaan dan pemantauan kondisi alat kebugaran di fasilitas.
@@ -1150,10 +1151,191 @@ a:hover {
 2. Lihat Data: Menampilkan daftar alat kebugaran beserta informasi detailnya.
 3. Perbarui Data: Memperbarui informasi alat yang ada, termasuk nama, jenis, dan kondisi.
 4. Hapus Data: Menghapus data alat yang tidak lagi digunakan.
-        
-### Cara Penggunaan
-1. Masuk ke halaman utama aplikasi.
-2. Gunakan form untuk menambah data alat kebugaran.
-3. Lihat daftar alat kebugaran yang tersedia.
-4. Klik tombol Edit untuk memperbarui data alat.
-5. Klik tombol Hapus untuk menghapus alat dari inventaris.
+
+## Penjelasan EquipmentController.php
+   1. Konstruktor : Menginisialisasi model Equipment agar bisa digunakan dalam semua metode.
+    ```
+    public function __construct() {
+    $this->equipmentModel = new Equipment();
+}
+```
+   2. index()
+    * Mengambil semua data alat dari model.
+    * Menampilkan halaman utama (index-equipment.php) untuk melihat daftar alat.
+    ```
+    public function index() {
+    $equipment = $this->equipmentModel->getAllEquipment();
+    require_once '../app/views/equipment/index-equipment.php';
+}
+```
+   3. create() : Menampilkan form untuk menambahkan alat baru.
+    ```
+    public function create() {
+    require_once '../app/views/equipment/create-equipment.php';
+}
+```
+    4. store()
+    * Memproses data dari form tambah alat.
+    * Menyimpan data ke database menggunakan metode add() dari model.
+    * Mengarahkan pengguna kembali ke daftar alat.
+    ``` 
+    public function store() {
+    $nama_alat = $_POST['nama_alat'];
+    $jenis_alat = $_POST['jenis_alat'];
+    $kondisi = $_POST['kondisi'];
+    $this->equipmentModel->add($nama_alat, $jenis_alat, $kondisi);
+    header('Location: /equipment/index-equipment');
+}
+```
+    5. edit($id_equipment)
+    * Menampilkan form edit berdasarkan ID alat.
+    * Mengambil data alat tertentu menggunakan metode find().
+    ```
+    public function edit($id_equipment) {
+    $equipment = $this->equipmentModel->find($id_equipment);
+    require_once __DIR__ . '/../views/equipment/edit-equipment.php';
+}
+```
+    6. update($id_equipment, $data)
+    * Memproses data dari form edit.
+    * Memperbarui data alat menggunakan metode update().
+    ```
+public function update($id_equipment, $data) {
+    $updated = $this->equipmentModel->update($id_equipment, $data);
+    if ($updated) {
+        header("Location: /equipment/index-equipment");
+    } else {
+        echo "Failed to update equipment.";
+    }
+}
+```
+    7. delete($id_equipment)
+    * Menghapus data alat berdasarkan ID.
+    * Mengarahkan kembali ke daftar alat setelah penghapusan berhasil.
+```
+public function delete($id_equipment) {
+    $deleted = $this->equipmentModel->delete($id_equipment);
+    if ($deleted) {
+        header("Location: /equipment/index-equipment");
+    } else {
+        echo "Failed to delete equipment.";
+    }
+}
+```
+
+### Cara Menggunakan
+1. Clone repositori ini ke server lokal Anda.
+2. Pastikan file konfigurasi database telah diatur dengan benar di model Equipment.php.
+3. Akses kontroler menggunakan URL yang sesuai:
+    /equipment/index-equipment untuk melihat daftar alat.
+    /equipment/create-equipment untuk menambah alat baru.
+    /equipment/edit-equipment?id=ID_ALAT untuk mengedit alat.
+4. Gunakan browser untuk berinteraksi dengan aplikasi.
+
+## Penjelasan create-equipment.php
+    Halaman ini merupakan bagian dari sistem manajemen alat kebugaran yang digunakan untuk menambahkan data alat baru ke dalam database. Halaman ini dirancang dengan antarmuka sederhana dan responsif untuk mempermudah pengguna.
+    
+### Penjelasan Komponen  
+1. Formulir Tambah Alat
+    * Formulir ini mengirim data ke server melalui metode POST ke URL /equipment/store.
+    * Memuat tiga input utama:
+        1. Nama Alat: Input teks untuk nama alat (wajib diisi).
+        2. Jenis Alat: Input teks untuk jenis alat (wajib diisi).
+        3. Kondisi: Dropdown untuk memilih kondisi alat.
+```
+<form action="/equipment/store" method="POST">
+```
+2. Field Input
+   * Label dan input digunakan untuk memasukkan nama alat.
+   * Atribut required memastikan pengguna mengisi data sebelum mengirim.
+```
+     <label for="nama_alat">Nama Alat:</label>
+<input type="text" name="nama_alat" id="nama_alat" required>
+```
+3. Dropdown Pilihan Kondisi
+* Memungkinkan pengguna memilih kondisi alat dari opsi yang tersedia: Baik, Perbaikan, Rusak, atau Terjual.
+* Pilihan ini wajib diisi.
+```
+<select name="kondisi" id="kondisi" required>
+    <option value="Baik">Baik</option>
+    <option value="Perbaikan">Perbaikan</option>
+    <option value="Rusak">Rusak</option>
+    <option value="Terjual">Terjual</option>
+</select>
+```
+4. Tombol Navigasi
+* Kembali: Mengarahkan pengguna kembali ke halaman daftar alat tanpa menyimpan perubahan.
+* Simpan: Mengirim data ke server untuk diproses.
+```
+<div class="button-container">
+    <a href="/equipment/index-equipment" class="btn-link">Kembali</a>
+    <button type="submit">Simpan</button>
+</div>
+```
+
+### Styling
+1. Global Styling:
+    Font default: Arial, sans-serif.
+    Warna teks: #2c3e50.
+    Latar belakang: Putih dengan margin 20px.
+2. Form Styling:
+    Formulir memiliki padding, border-radius, dan bayangan untuk tampil modern.
+3. Tombol Styling:
+    Tombol memiliki gaya konsisten, dengan warna biru navy dan efek hover lebih gelap.
+    Tombol "Kembali" memiliki tampilan transparan dengan border biru navy.
+
+### Cara Menggunakan
+1. Akses halaman ini di URL /equipment/create-equipment.
+2. Isi form dengan data alat yang sesuai:
+    * Nama Alat
+    * Jenis Alat
+    * Kondisi Alat
+3. Klik Simpan untuk menyimpan data atau Kembali untuk membatalkan.
+
+## Penjelasan edit-equipment.php
+Halaman ini digunakan untuk mengedit informasi alat kebugaran yang sudah ada. Data yang dapat diubah meliputi nama alat, jenis alat, dan kondisi alat.
+
+### Penjelasan Komponen
+1. Formulir Edit Alat
+   * Formulir ini mengirim data yang diperbarui ke server menggunakan metode POST.
+   * URL mencantumkan id_equipment untuk mengidentifikasi alat yang akan diperbarui.
+   * Memuat tiga input utama:
+        1. Nama Alat: Input teks untuk nama alat (wajib diisi).
+        2. Jenis Alat: Input teks untuk jenis alat (wajib diisi).
+        3. Kondisi: Dropdown untuk memilih kondisi alat.
+```
+<form action="/equipment/update/<?php echo $equipment['id_equipment']; ?>" method="POST">
+```
+2. Field Input
+   * Field ini menampilkan nama alat yang sudah ada dengan nilai default yang diambil dari variabel PHP $equipment.
+    * Atribut required memastikan pengguna mengisi data sebelum mengirim.
+```
+<input type="text" id="nama_alat" name="nama_alat" value="<?php echo htmlspecialchars($equipment['nama_alat'] ?? ''); ?>" required>
+```
+3. Dropdown Pilihan Kondisi
+   Dropdown ini memuat kondisi alat dengan pilihan: Baik, Perbaikan, Rusak, dan Terjual. Opsi yang sesuai dengan kondisi alat saat ini akan dipilih secara otomatis menggunakan PHP.
+```
+<select id="kondisi" name="kondisi" required>
+    <option value="Baik" <?php echo ($equipment['kondisi'] == 'Baik') ? 'selected' : ''; ?>>Baik</option>
+    <option value="Perbaikan" <?php echo ($equipment['kondisi'] == 'Perbaikan') ? 'selected' : ''; ?>>Perbaikan</option>
+    <option value="Rusak" <?php echo ($equipment['kondisi'] == 'Rusak') ? 'selected' : ''; ?>>Rusak</option>
+    <option value="Terjual" <?php echo ($equipment['kondisi'] == 'Terjual') ? 'selected' : ''; ?>>Terjual</option>
+</select>
+```
+4. Tombol Navigasi
+   * Kembali: Mengarahkan pengguna ke halaman daftar alat tanpa menyimpan perubahan.
+   * Update: Mengirimkan data yang diperbarui ke server untuk diproses.
+```
+<div class="button-container">
+    <a href="/equipment/index-equipment">Kembali</a>
+    <button type="submit">Update</button>
+</div>
+```
+### Styling
+1. Global Styling: Menggunakan font Arial, sans-serif dengan latar belakang putih dan warna teks biru navy (#2c3e50).
+2. Form Styling: Formulir memiliki padding, border-radius, dan bayangan lembut untuk estetika modern.
+3. Tombol Styling: Tombol "Kembali" dan "Update" memiliki lebar yang sama dengan efek hover untuk pengalaman pengguna yang lebih baik.
+
+## Penjelasan index-equipment.php
+    Halaman ini digunakan untuk menampilkan daftar alat kebugaran yang tersedia. Pengguna dapat mencari alat berdasarkan nama, jenis, atau kondisi, menambahkan alat baru, atau melakukan aksi seperti mengedit dan menghapus alat yang sudah ada.
+    
