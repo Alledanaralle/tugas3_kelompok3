@@ -113,7 +113,7 @@
                 <!-- Pencarian & Tambah Pelatih Container -->
                 <div class="action-container">
                     <!-- Tambah Pelatih Button -->
-                    <a href="/trainer/create_trainer" class="btn btn-success">
+                    <a href="/trainers/create_trainer" class="btn btn-success">
                         <i class="fas fa-user-plus"></i> Tambah Pelatih Baru
                     </a>
 
