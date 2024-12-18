@@ -77,7 +77,7 @@ mvc-sample/
         Tabel Members digunakan untuk menyimpan data anggota yang terdaftar di fasilitas kebugaran. Data yang dikelola mencakup nama anggota, usia, jenis kelamin, dan jenis          paket langganan yang dipilih.
         Fitur ini dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data anggota. Pengguna dapat menambahkan anggota baru, melihat            daftar anggota yang terdaftar, memperbarui informasi jika ada perubahan, dan menghapus data anggota yang sudah tidak aktif.
         Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
-        <h3>Controller</h3>
+        <h3>Controller</h3><hr>
         
         ```
         <?php
@@ -153,7 +153,7 @@ public function delete($id_member) {
 }
 ```
 Fungsi `delete($id_member)` bertugas untuk menghapus data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `delete()` dari model `memberModel` untuk menghapus anggota dari database. Jika penghapusan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
-<h3>Full Script Controller</h3>
+<h3>Full Script Controller</h3><hr>
 
 ```
 
@@ -215,7 +215,7 @@ class MemberController {
 
 ```
 
-<h3>Models</h3>
+<h3>Models</h3><hr>
 
 ```
 <?php
@@ -258,7 +258,209 @@ Script ini digunakan untuk mencari data anggota berdasarkan `id_member`. Fungsi 
 ```
 Script ini digunakan untuk menambahkan data anggota baru ke dalam tabel `member` di database. Fungsi `add()` menerima lima parameter (`id_member`, `nama`, `usia`, `jenis_kelamin`, `paket_langganan`), kemudian menyusun query `INSERT INTO` dengan parameter yang diikat menggunakan `bindParam()`. Setelah itu, query dijalankan dengan `execute()`, yang akan menyisipkan data ke dalam tabel `member` dan mengembalikan `true` jika berhasil, atau `false` jika gagal.
 ```
+public function update($id_member, $data) {
+        $query = "UPDATE member SET id_member = :id_member, nama = :nama, usia = :usia, 
+        jenis_kelamin = :jenis_kelamin, paket_langganan = :paket_langganan
+         WHERE id_member = :id_member";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id_member', $data['id_member']);
+        $stmt->bindParam(':nama', $data['nama']);
+        $stmt->bindParam(':usia', $data['usia']);
+        $stmt->bindParam(':jenis_kelamin', $data['jenis_kelamin']);
+        $stmt->bindParam(':paket_langganan', $data['paket_langganan']);
+        $stmt->bindParam(':id_member', $id_member);
+        return $stmt->execute();
+    }
 ```
+Script ini digunakan untuk memperbarui data anggota di tabel `member` berdasarkan `id_member`. Fungsi `update()` menerima dua parameter, yaitu `id_member` yang akan diperbarui dan array `$data` yang berisi data baru. Query `UPDATE` dipersiapkan dan nilai dari `$data` diikat ke query menggunakan `bindParam()`. Setelah itu, query dieksekusi dengan `execute()` untuk memperbarui data anggota yang sesuai. Fungsi ini mengembalikan `true` jika pembaruan berhasil dan `false` jika gagal.
+```
+ public function delete($id_member) {
+        $query = "DELETE FROM member WHERE id_member = :id_member";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id_member', $id_member);
+        return $stmt->execute();
+    }
+}
+```
+Script ini digunakan untuk menghapus data anggota dari tabel `member` berdasarkan `id_member`. Fungsi `delete()` menerima satu parameter, yaitu `id_member`, yang menunjukkan anggota yang akan dihapus. Query SQL `DELETE FROM member WHERE id_member = :id_member` dipersiapkan untuk menghapus data anggota yang memiliki `id_member` yang sesuai. Nilai `id_member` yang diterima oleh fungsi diikat ke query menggunakan `bindParam()`. Setelah itu, query dijalankan dengan metode `execute()` untuk mengeksekusi perintah penghapusan di database. Fungsi ini mengembalikan `true` jika penghapusan berhasil dan `false` jika terjadi kesalahan.
+<h3>Full Script Models Member</h3><hr>        
+                                 
+    <?php
+    // app/models/Member.php
+    require_once '../config/database.php';
+    class Member {
+    private $db;
+    public function __construct() {
+        $this->db = (new Database())->connect();
+    }
+
+    public function getAllMember() {
+        $query = $this->db->query("SELECT * FROM member");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function find($id_member) {
+        $query = $this->db->prepare("SELECT * FROM member WHERE id_member = :id_member");
+        $query->bindParam(':id_member', $id_member, PDO::PARAM_INT);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan) {
+        $query = $this->db->prepare("INSERT INTO member (id_member, nama, usia, jenis_kelamin, paket_langganan) 
+        VALUES (:id_member, :nama, :usia, :jenis_kelamin, :paket_langganan)");
+        $query->bindParam(':id_member', $id_member);
+        $query->bindParam(':nama', $nama);
+        $query->bindParam(':usia', $usia);
+        $query->bindParam(':jenis_kelamin', $jenis_kelamin);
+        $query->bindParam(':paket_langganan', $paket_langganan);
+        return $query->execute();
+    }
+
+    // Update member data by ID
+    public function update($id_member, $data) {
+        $query = "UPDATE member SET id_member = :id_member, nama = :nama, usia = :usia, 
+        jenis_kelamin = :jenis_kelamin, paket_langganan = :paket_langganan
+         WHERE id_member = :id_member";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id_member', $data['id_member']);
+        $stmt->bindParam(':nama', $data['nama']);
+        $stmt->bindParam(':usia', $data['usia']);
+        $stmt->bindParam(':jenis_kelamin', $data['jenis_kelamin']);
+        $stmt->bindParam(':paket_langganan', $data['paket_langganan']);
+        $stmt->bindParam(':id_member', $id_member);
+        return $stmt->execute();
+    }
+
+    // Delete member by ID
+    public function delete($id_member) {
+        $query = "DELETE FROM member WHERE id_member = :id_member";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id_member', $id_member);
+        return $stmt->execute();
+    }
+    
+<h3>Views</h3><hr>
+<h3>Create Member</h3>
+
+```
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+```
+Script tersebut digunakan untuk mengimpor file CSS Bootstrap versi 5.3.3 dari CDN, yang berfungsi untuk memberikan styling otomatis pada halaman HTML. Dengan ini, halaman akan menggunakan desain responsif dan elemen UI yang telah disediakan oleh Bootstrap.
+```
+<div class="container mt-5">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-header">
+                <h5 class="text-center">Tambah Pengguna Baru</h5>
+            </div>
+            <div class="card-body">
+```
+Script ini membuat sebuah **kontainer** yang berisi **card** dengan lebar maksimal 600px. Card ini memiliki **header** yang menampilkan judul "Tambah Pengguna Baru" yang diposisikan di tengah. Bagian **card-body** adalah tempat utama untuk menampilkan konten form atau elemen lainnya. 
+```
+<form action="/member/store" method="POST">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>Nama </td>
+                            <td><input type="text" name="nama" id="nama" required class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td> Usia </td>
+                            <td><input type="text" name="usia" id="usia" required class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td>Jenis Kelamin </td>
+                            <td>
+                                <select name="jenis_kelamin" id="" value="<?= @$x['jenis_kelamin'] ?>" class="form-select" required>
+                                    <option value="<?= @$x['jenis_kelamin'] ?>" required>--Pilih Jenis Kelamin--</option>
+                                    <option value="P"> P</option>
+                                    <option value="L"> L</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paket Langganan</td>
+                            <td>
+                                <select name="paket_langganan" id="" value="<?= @$x['paket_langganan'] ?>" class="form-select" required>
+                                    <option value="<?= @$x['paket_langganan'] ?>" required>--Pilih Paket Langganan--</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Premium">Premium</option>
+                                    <option value="VIP">VIP</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+```
+Script ini adalah form HTML yang mengumpulkan data pengguna baru, seperti nama, usia, jenis kelamin, dan paket langganan. Form ini menggunakan metode POST untuk mengirim data ke endpoint /member/store. Setiap field memiliki atribut required untuk memastikan pengguna mengisi semua kolom sebelum mengirimkan form. Dropdown tersedia untuk memilih jenis kelamin dan paket langganan, sementara nama dan usia diinput melalui kolom teks.
+<h3>Full Script Views Create</h3>
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Member Baru</title>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-header">
+                <h5 class="text-center">Tambah Pengguna Baru</h5>
+            </div>
+            <div class="card-body">
+                <form action="/member/store" method="POST">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>Nama </td>
+                            <td><input type="text" name="nama" id="nama" required class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td> Usia </td>
+                            <td><input type="text" name="usia" id="usia" required class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td>Jenis Kelamin </td>
+                            <td>
+                                <select name="jenis_kelamin" id="" value="<?= @$x['jenis_kelamin'] ?>" class="form-select" required>
+                                    <option value="<?= @$x['jenis_kelamin'] ?>" required>--Pilih Jenis Kelamin--</option>
+                                    <option value="P"> P</option>
+                                    <option value="L"> L</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paket Langganan</td>
+                            <td>
+                                <select name="paket_langganan" id="" value="<?= @$x['paket_langganan'] ?>" class="form-select" required>
+                                    <option value="<?= @$x['paket_langganan'] ?>" required>--Pilih Paket Langganan--</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Premium">Premium</option>
+                                    <option value="VIP">VIP</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="d-flex justify-content-between gap-2">
+                    <a href="/member/index_member" class="btn w-100 btn-outline-dark">Kembali</a>
+                    <button type="submit" class="btn btn-dark w-100">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+<h3>Edit Member</h3>
+
+```
+
+```
+
  <h2>2. Trainers </h2>
         Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
         Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru,               melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi          aktif.
