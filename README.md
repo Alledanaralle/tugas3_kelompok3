@@ -755,7 +755,8 @@ public function update($id)
 
 ```
 berfungsi untuk update trainer saat proses edit terjadi
-```php
+
+```
 public function delete($id)
 {
     $deleted = $this->trainerModel->delete($id);
@@ -765,19 +766,17 @@ public function delete($id)
         echo "Failed to delete trainer.";
     }
 }
-
 ```
 berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
 
 <h3> Full Script Trainer Controller</h3>
 ```php
+
 <?php
 // app/controllers/TrainerController.php
-
 // Memuat file model Trainers untuk digunakan dalam controller ini
-require_once '../app/models/Trainers.php';
+require_once '../app/models/Trainers.php';// Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
 
-// Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
 class TrainerController
 {
     private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
