@@ -679,13 +679,107 @@ Script ini berfungsi untuk menampilkan daftar member dalam bentuk tabel yang dat
     <h3>Trainer Controller</h3>
     
     ```php
-    <?php
-    // app/controllers/TrainerController.php
-    // Memuat file model Trainers untuk digunakan dalam controller ini
     require_once '../app/models/Trainers.php';
-    // Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
-    class TrainerController
-    {
+    ```
+requice once untuk menyambungkan trainer controler ke trainers.php
+```php
+class TrainerController
+{
+    private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
+}
+```
+Properti untuk menyimpan instance dari model Trainers dan bersifat private dan hanya dapat diakses oleh class tersebut
+``php
+public function __construct()
+{
+    $this->trainerModel = new Trainers();
+}
+```
+digunakan untuk isialisasi properti objek, yaitu mengisi nilai awal pada properti
+
+```php
+public function index()
+{
+    $trainers = $this->trainerModel->getAllTrainers();
+    require_once '../app/views/trainers/index_trainer.php';
+}
+
+```
+Fungsi ini mengambil data semua Trainer menggunakan metode getAllTrainers() dari model Trainers.
+Data tersebut dikirimkan ke View index_trainer.php, yang digunakan untuk menampilkan daftar trainer.
+
+```php
+public function create()
+{
+    require_once '../app/views/trainers/create_trainer.php';
+}
+
+```
+berfungsi untuk menampilkan tambah trainer
+```php
+public function store()
+{
+    $name = $_POST['nama'];
+    $specialization = $_POST['spesialisasi'];
+    $schedule = $_POST['jadwal'];
+    $this->trainerModel->add($name, $specialization, $schedule);
+    header('Location: /trainers/index_trainer');
+}
+
+```
+berfungsi  untuk menyimpan data trainer baru
+```php
+public function edit($id)
+{
+    $trainer = $this->trainerModel->find($id);
+    require_once __DIR__ . '/../views/trainers/edit_trainer.php';
+}
+
+```
+berfungsi menampilkan form edit
+```php
+public function update($id)
+{
+    $data = [
+        'nama' => $_POST['nama'],
+        'spesialisasi' => $_POST['spesialisasi'],
+        'jadwal' => $_POST['jadwal'],
+    ];
+    $updated = $this->trainerModel->update($id, $data);
+    if ($updated) {
+        header("Location: /trainers/index_trainer");
+    } else {
+        echo "Failed to update trainer.";
+    }
+}
+
+```
+berfungsi untuk update trainer saat proses edit terjadi
+```php
+public function delete($id)
+{
+    $deleted = $this->trainerModel->delete($id);
+    if ($deleted) {
+        header("Location: /trainers/index_trainer");
+    } else {
+        echo "Failed to delete trainer.";
+    }
+}
+
+```
+berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
+
+<h3> Full Script Trainer Controller</h3>
+```php
+<?php
+// app/controllers/TrainerController.php
+
+// Memuat file model Trainers untuk digunakan dalam controller ini
+require_once '../app/models/Trainers.php';
+
+// Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
+class TrainerController
+{
     private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
 
     // Konstruktor untuk menginisialisasi model Trainers
@@ -750,81 +844,91 @@ Script ini berfungsi untuk menampilkan daftar member dalam bentuk tabel yang dat
             echo "Failed to delete trainer."; // Menampilkan pesan error jika gagal
         }
     }
+}
 
+```
 <h3>Models Trainers</h3>
 
 
 ```
-<?php
-// app/models/Trainers.php
-
-// Memuat file konfigurasi database
 require_once '../config/database.php';
-
-// Deklarasi kelas Trainers yang bertanggung jawab untuk pengelolaan data pelatih
+```
+mengkoneksikan trainers dengan database
+```
 class Trainers
 {
     private $db; // Properti untuk menyimpan koneksi database
-
-    // Konstruktor untuk menginisialisasi koneksi database
-    public function __construct()
-    {
-        $this->db = (new Database())->connect(); // Membuat koneksi dengan memanfaatkan kelas Database
-    }
-
-    // Mengambil semua data pelatih
-    public function getAllTrainers()
-    {
-        $query = $this->db->query("SELECT * FROM trainer"); // Mengambil semua data dari tabel `trainer`
-        return $query->fetchAll(PDO::FETCH_ASSOC); // Mengembalikan data dalam bentuk array asosiatif
-    }
-
-    // Mencari data pelatih berdasarkan ID
-    public function find($id)
-    {
-        $query = $this->db->prepare("SELECT * FROM trainer WHERE id_trainer = :id"); // Query untuk mencari pelatih berdasarkan ID
-        $query->bindParam(':id', $id, PDO::PARAM_INT); // Mengikat parameter ID untuk menghindari SQL injection
-        $query->execute(); // Menjalankan query
-        return $query->fetch(PDO::FETCH_ASSOC); // Mengembalikan data pelatih sebagai array asosiatif
-    }
-
-    // Menambahkan pelatih baru
-    public function add($name, $specialization, $schedule)
-    {
-        $query = $this->db->prepare("INSERT INTO trainer (nama, spesialisasi, jadwal) VALUES (:nama, :spesialisasi, :jadwal)"); // Query untuk menambahkan data pelatih
-        $query->bindParam(':nama', $name); // Mengikat parameter nama
-        $query->bindParam(':spesialisasi', $specialization); // Mengikat parameter spesialisasi
-        $query->bindParam(':jadwal', $schedule); // Mengikat parameter jadwal
-        return $query->execute(); // Menjalankan query dan mengembalikan status eksekusi
-    }
-
-    // Memperbarui data pelatih berdasarkan ID
-    public function update($id, $data)
-    {
-        $query = "UPDATE trainer SET nama = :nama, spesialisasi = :spesialisasi, jadwal = :jadwal WHERE id_trainer = :id_trainer"; // Query untuk memperbarui data
-        $stmt = $this->db->prepare($query); // Mempersiapkan query
-        $stmt->bindParam(':nama', $data['nama']); // Mengikat parameter nama
-        $stmt->bindParam(':spesialisasi', $data['spesialisasi']); // Mengikat parameter spesialisasi
-        $stmt->bindParam(':jadwal', $data['jadwal']); // Mengikat parameter jadwal
-        $stmt->bindParam(':id_trainer', $id, PDO::PARAM_INT); // Mengikat parameter ID
-        return $stmt->execute(); // Menjalankan query dan mengembalikan status eksekusi
-    }
-
-    // Menghapus data pelatih berdasarkan ID
-    public function delete($id)
-    {
-        $query = "DELETE FROM trainer WHERE id_trainer = :id"; // Query untuk menghapus data pelatih
-        $stmt = $this->db->prepare($query); // Mempersiapkan query
-        $stmt->bindParam(':id', $id); // Mengikat parameter ID
-        return $stmt->execute(); // Menjalankan query dan mengembalikan status eksekusi
-    }
 }
 
 ```
+mengkoneksikan dan menyimpan koneksi database yang diakses oleh class tersebut
+```
+public function __construct()
+{
+    $this->db = (new Database())->connect(); // Membuat koneksi ke database
+}
 
+```
+pemberian nama awal dan mengkoneksikan kedatabase
+```
+public function getAllTrainers()
+{
+    $query = $this->db->query("SELECT * FROM trainer"); // Query untuk mengambil semua data trainer
+    return $query->fetchAll(PDO::FETCH_ASSOC); // Mengembalikan data dalam bentuk array asosiatif
+}
+
+```
+mengambil semua data trainers
+```
+public function find($id)
+{
+    $query = $this->db->prepare("SELECT * FROM trainer WHERE id_trainer = :id"); // Query untuk mencari data berdasarkan ID
+    $query->bindParam(':id', $id, PDO::PARAM_INT); // Mengikat parameter ID
+    $query->execute(); // Menjalankan query
+    return $query->fetch(PDO::FETCH_ASSOC); // Mengembalikan satu baris data sebagai array asosiatif
+}
+
+```
+pencarian trainers berdasarkan id
+```
+public function add($name, $specialization, $schedule)
+{
+    $query = $this->db->prepare("INSERT INTO trainer (nama, spesialisasi, jadwal) VALUES (:nama, :spesialisasi, :jadwal)");
+    $query->bindParam(':nama', $name);
+    $query->bindParam(':spesialisasi', $specialization);
+    $query->bindParam(':jadwal', $schedule);
+    return $query->execute(); // Menjalankan query dan mengembalikan status eksekusi
+}
+
+```
+menambahkan trainer baru berisi nama, spesialisasi, dan jadwal
+```
+public function update($id, $data)
+{
+    $query = "UPDATE trainer SET nama = :nama, spesialisasi = :spesialisasi, jadwal = :jadwal WHERE id_trainer = :id_trainer";
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':nama', $data['nama']);
+    $stmt->bindParam(':spesialisasi', $data['spesialisasi']);
+    $stmt->bindParam(':jadwal', $data['jadwal']);
+    $stmt->bindParam(':id_trainer', $id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+```
+melakukan update data dimana saat proses update data awal tidak hilang
+
+```
+public function delete($id)
+{
+    $query = "DELETE FROM trainer WHERE id_trainer = :id"; // Query untuk menghapus data
+    $stmt = $this->db->prepare($query); // Mempersiapkan query
+    $stmt->bindParam(':id', $id); // Mengikat parameter ID
+    return $stmt->execute(); // Menjalankan query dan mengembalikan status eksekusi
+}
+```
+Menghapus Trainer Berdasarkan ID
 <h3>View</h3>
 <h3>Create Trainer</h3>
-
 ```
 <!DOCTYPE html>
 <html lang="en">
