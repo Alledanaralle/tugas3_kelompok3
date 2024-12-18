@@ -458,8 +458,53 @@ Script ini adalah form HTML yang mengumpulkan data pengguna baru, seperti nama, 
 <h3>Edit Member</h3>
 
 ```
-
+<body>
+    <div class="container mt-5">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-header">
+                <h5 class="text-center">Edit Member</h5>
+            </div>
+            <div class="card-body">
 ```
+Script ini membuat tampilan dengan kontainer utama yang memiliki margin atas, berisi sebuah card dengan lebar maksimal 600px yang dipusatkan. Card ini memiliki header dengan judul "Edit Member" yang diposisikan di tengah, diikuti oleh body card yang akan menampung elemen lainnya seperti form 
+```
+<form action="/member/update_member/<?php echo $member['id_member']; ?>" method="POST">
+    <table class="table table-borderless">
+        <tr>
+        <td>Nama </td>
+        <td><input type="text" id="nama" name="nama" value="<?php echo $member['nama']; ?>" required></td>
+        </tr>
+        <tr>
+        <td>Usia </td>
+        <td><input type="text" id="usia" name="usia" value="<?php echo $member['usia']; ?>" required></td>
+        </tr>
+        <tr>
+        <td>Jenis Kelamin </td>
+        <td>
+        <select name="jenis_kelamin" id="jenis_kelamin" required>
+            <option value="L" <?php if ($member['jenis_kelamin'] == 'L') echo 'selected'; ?>>L</option>
+            <option value="P" <?php if ($member['jenis_kelamin'] == 'P') echo 'selected'; ?>>P</option>
+        </select>
+        </td>
+        </tr>
+        <tr>
+        <td>Paket Langganan </td>
+        <td>
+         <select name="paket_langganan" id="paket_langganan" required>
+            <option value="Standard" <?php if ($member['paket_langganan'] == 'Standard') echo 'selected'; ?>>Standard</option>
+            <option value="Premium" <?php if ($member['paket_langganan'] == 'Premium') echo 'selected'; ?>>Premium</option>
+            <option value="VIP" <?php if ($member['paket_langganan'] == 'VIP') echo 'selected'; ?>>VIP</option>
+        </select>
+        </td>
+        </tr>
+    </table>
+        <div class="d-flex justify-content-between gap-2">
+                    <a href="/member/index_member" class="btn w-100 btn-outline-dark">Kembali</a>
+                    <button type="submit" class="btn w-100 btn-dark">Update</button>
+                    </div>
+    </form>
+```
+
 
  <h2>2. Trainers </h2>
         Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
