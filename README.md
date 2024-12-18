@@ -1414,7 +1414,300 @@ a:hover {
         Tabel ini dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) untuk mengelola jadwal kelas kebugaran. Pengguna dapat menambahkan kelas baru, melihat daftar           kelas yang tersedia, memperbarui jadwal atau informasi kelas, dan menghapus kelas yang sudah tidak diperlukan.
         Ada relasi antara tabel Workout Classes dan tabel Trainers melalui kolom ID pelatih. Hubungan ini memungkinkan setiap kelas untuk dihubungkan dengan pelatih yang             mengajarnya, sehingga memudahkan pengelolaan jadwal kelas berdasarkan pelatih.
         Dengan adanya relasi ini, sistem dapat mengatur siapa pelatih yang menangani kelas tersebut, serta memastikan bahwa kuota peserta untuk setiap kelas tercatat dengan          baik.
-        
+
+<h3>Create</h3>
+
+```html
+<!DOCTYPE html>
+<html class="font-[poppins]" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Kelas Baru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+```
+1. HTML Structure
+Fungsi:
+
+    Membuat struktur dasar dari halaman web menggunakan elemen HTML.
+    Elemen-elemen ini memberikan tata letak dan penempatan elemen untuk formulir.
+   
+```
+<body class="min-h-dvh bg-[#ddd] text-black flex justify-center items-center">
+    <form class="p-4 w-[95%] max-w-[30rem] flex flex-col bg-white rounded-md" action="/user/store" method="POST">
+        <h2 class="text-center mb-10 text-2xl sm:text-3xl font-[500]">Tambah Kelas Baru</h2>
+
+```
+Membuat tata letak formulir yang terpusat dengan gaya responsif menggunakan Tailwind CSS.
+
+```
+<div class="mb-4">
+    <label for="nama_kelas">Nama kelas:</label>
+    <input type="text" name="nama_kelas" id="nama_kelas" required 
+        class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+</div>
+
+```
+Input ini berfungsi untuk mengisi nama kelas yang akan ditambahkan.
+
+```
+
+<div class="mb-4">
+    <label for="waktu">Waktu:</label>
+    <input type="text" name="waktu" id="waktu" required 
+        class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+</div>
+
+```
+Input Waktu : Input ini berfungsi untuk memasukkan jadwal waktu kelas.
+
+```
+<div class="mb-4">
+    <label for="id_trainer">Trainer:</label>
+    <select name="id_trainer" id="id_trainer" required 
+        class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        <?php foreach ($trainers as $trainer) : ?>
+            <option value="<?= $trainer['id_trainer'] ?>">
+                <?= $trainer['nama'] ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+```
+Dropdown ini akan diisi secara dinamis dengan daftar pelatih yang tersedia dari variabel PHP $trainers.
+```
+
+<div class="mb-4">
+    <label for="kuota">Kuota:</label>
+    <input type="text" name="kuota" id="kuota" required 
+        class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+</div>
+
+```
+Input ini berfungsi untuk menentukan jumlah maksimal peserta kelas.
+
+```
+
+<div class="flex gap-2">
+    <a href="./index" class="bg-white text-black font-[500] border-2 border-black text-center px-6 py-2 w-full rounded">Batal</a>
+    <button type="submit" class="bg-black text-white px-6 py-2 w-full rounded">Simpan</button>
+</div>
+</form>
+</body>
+</html>
+
+```
+Bagian ini berisi tombol untuk membatalkan dan menyimpan formulir.
+
+```
+
+<!DOCTYPE html>
+<html class="font-[poppins]" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Kelas Baru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+<body class="min-h-dvh bg-[#ddd] text-black flex justify-center items-center">
+    <form class="p-4 w-[95%] max-w-[30rem] flex flex-col bg-white rounded-md" action="/user/store" method="POST">
+        <h2 class="text-center mb-10 text-2xl sm:text-3xl font-[500]">Tambah Kelas Baru</h2>
+        <div class="mb-4">
+            <label for="nama_kelas">Nama kelas:</label>
+            <input type="text" name="nama_kelas" id="nama_kelas" required 
+                class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        </div>
+        <div class="mb-4">
+            <label for="waktu">Waktu:</label>
+            <input type="text" name="waktu" id="waktu" required 
+                class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        </div>
+        <div class="mb-4">
+            <label for="id_trainer">Trainer:</label>
+            <select name="id_trainer" id="id_trainer" required 
+                class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+                <?php foreach ($trainers as $trainer) : ?>
+                    <option value="<?= $trainer['id_trainer'] ?>">
+                        <?= $trainer['nama'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="kuota">Kuota:</label>
+            <input type="text" name="kuota" id="kuota" required 
+                class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        </div>
+        <div class="flex gap-2">
+            <a href="./index" class="bg-white text-black font-[500] border-2 border-black text-center px-6 py-2 w-full rounded">Batal</a>
+            <button
+
+```
+
+<h3> Edit </h3>
+
+```
+
+<!DOCTYPE html>
+<html class="font-[poppins]" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Kelas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+```
+Bagian ini mendefinisikan elemen dasar seperti tipe dokumen, bahasa, metadata, dan sumber daya eksternal (Tailwind CSS, font).
+
+```
+
+<body class="min-h-screen bg-[#ddd] text-black flex justify-center items-center">
+    <form class="p-4 w-[95%] max-w-[30rem] flex flex-col bg-white rounded-md" 
+          action="/user/update/<?php echo $user['id_class']; ?>" method="POST">
+        <h2 class="text-center mb-10 text-2xl sm:text-3xl font-[500]">Edit Kelas</h2>
+
+```
+
+Bagian ini membuat tata letak halaman dan formulir untuk edit kelas. Formulir ini menggunakan metode POST untuk mengirimkan data ke URL endpoint update.
+
+```
+
+<div class="mb-4">
+    <label for="nama_kelas">Nama kelas:</label>
+    <input type="text" id="nama_kelas" name="nama_kelas" value="<?php echo $user['nama_kelas']; ?>" 
+           required class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+</div>
+
+```
+
+Input ini menampilkan nama kelas yang sudah ada untuk diedit.
+
+```
+
+<div class="mb-4">
+    <label for="waktu">Waktu:</label>
+    <input type="text" id="waktu" name="waktu" value="<?php echo $user['waktu']; ?>" 
+           required class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+</div>
+
+```
+
+Input ini menampilkan waktu kelas yang sudah ada untuk diedit.
+
+```
+
+<div class="mb-4">
+    <label for="id_trainer">Trainer:</label>
+    <select name="id_trainer" id="id_trainer" required 
+            class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        <?php foreach ($trainers as $trainer) : ?>
+            <option value="<?= $trainer['id_trainer'] ?>" <?php echo ($trainer['id_trainer'] == $user['id_trainer']) ? 'selected' : ''; ?>>
+                <?= $trainer['nama'] ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+```
+
+Dropdown ini memungkinkan pengguna untuk memilih pelatih, dengan opsi yang sudah terpilih sesuai data yang ada.
+
+```
+
+<div class="mb-4">
+    <label for="kuota">Kuota:</label>
+    <input type="text" id="kuota" name="kuota" value="<?php echo $user['kuota']; ?>" 
+           required class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+</div>
+
+```
+Input ini digunakan untuk mengedit jumlah maksimal peserta kelas.
+
+```
+
+<div class="flex gap-2">
+    <a href="/user/index" class="bg-white text-black font-[500] border-2 border-black text-center px-6 py-2 w-full rounded">Batal</a>
+    <button type="submit" class="bg-black text-white px-6 py-2 w-full rounded">Update</button>
+</div>
+ </form>
+</body>
+</html>
+
+```
+
+Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
+
+```
+
+<!DOCTYPE html>
+<html class="font-[poppins]" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Kelas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body class="min-h-screen bg-[#ddd] text-black flex justify-center items-center">
+    <form class="p-4 w-[95%] max-w-[30rem] flex flex-col bg-white rounded-md" 
+          action="/user/update/<?php echo $user['id_class']; ?>" method="POST">
+        <h2 class="text-center mb-10 text-2xl sm:text-3xl font-[500]">Edit Kelas</h2>
+        <div class="mb-4">
+            <label for="nama_kelas">Nama kelas:</label>
+            <input type="text" id="nama_kelas" name="nama_kelas" value="<?php echo $user['nama_kelas']; ?>" 
+                   required class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        </div>
+        <div class="mb-4">
+            <label for="waktu">Waktu:</label>
+            <input type="text" id="waktu" name="waktu" value="<?php echo $user['waktu']; ?>" 
+                   required class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        </div>
+        <div class="mb-4">
+            <label for="id_trainer">Trainer:</label>
+            <select name="id_trainer" id="id_trainer" required 
+                    class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+                <?php foreach ($trainers as $trainer) : ?>
+                    <option value="<?= $trainer['id_trainer'] ?>" <?php echo ($trainer['id_trainer'] == $user['id_trainer']) ? 'selected' : ''; ?>>
+                        <?= $trainer['nama'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="kuota">Kuota:</label>
+            <input type="text" id="kuota" name="kuota" value="<?php echo $user['kuota']; ?>" 
+                   required class="border-2 border-[#3b3b3b2e] transition-all duration-200 hover:border-blue-600 outline-none focus:border-blue-600 rounded px-2 py-[.35rem] w-full">
+        </div>
+        <div class="flex gap-2">
+            <a href="/user/index" class="bg-white text-black font-[500] border-2 border-black text-center px-6 py-2 w-full rounded">Batal</a>
+            <button type="submit" class="bg-black text-white px-6 py-2 w-full rounded">Update</button>
+        </div>
+    </form>
+</body>
+
+</html>
+
+```
 <h2> 4. Equipment</h2>   
         Tabel Gym Equipment menyimpan data alat kebugaran, seperti nama alat, jenis alat, dan kondisi (baik, rusak, perlu perbaikan). Tabel ini dilengkapi fitur CRUD untuk           mengelola inventaris alat kebugaran, memungkinkan pengguna untuk menambah, melihat, memperbarui, dan menghapus data alat.
         Sistem ini memudahkan pengelolaan dan pemantauan kondisi alat kebugaran di fasilitas.
