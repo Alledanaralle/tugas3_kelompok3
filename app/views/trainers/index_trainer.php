@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pelatih</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,7 +27,8 @@
             border: 1px solid #dcdcdc;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 85%;
+            width: 100%;
+            max-width: 1200px;
             margin: 20px auto;
             overflow: hidden;
         }
@@ -39,18 +42,8 @@
             text-align: center;
         }
 
-        .card-body {
-            padding: 20px;
-            background-color: #FDFEFE;
-        }
-
         table {
             width: 100%;
-            border-collapse: collapse;
-            background-color: #FDFEFE;
-            color: #333;
-            border-radius: 8px;
-            overflow: hidden;
             text-align: center;
         }
 
@@ -66,20 +59,15 @@
             color: #2C3E50;
         }
 
-        tr:nth-child(even) {
-            background-color: rgb(255, 255, 255);
-        }
-
         tr:hover {
             background-color: rgb(243, 243, 243);
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        /* Tombol Custom */
+        /* Tombol Kustom */
         .btn-custom {
             background-color: #A6C0E4;
-            /* Biru Soft */
             color: #2C3E50;
             font-weight: bold;
             border: none;
@@ -87,56 +75,65 @@
 
         .btn-custom:hover {
             background-color: #7FA9D5;
-            /* Biru Lebih Gelap */
             color: #fff;
+        }
+
+        /* Responsif untuk tabel */
+        .table-responsive {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
     </style>
 </head>
 
 <body>
     <div class="card">
-        <!-- Card Header -->
+        <!-- Header Card -->
         <div class="card-header">Daftar Pelatih</div>
 
-        <!-- Card Body -->
+        <!-- Body Card -->
         <div class="card-body">
-            <!-- Tombol Tambah Pelatih Baru -->
+            <!-- Tombol Tambah Pelatih -->
             <a href="/trainer/create_trainer" class="btn btn-success mb-3">
                 <i class="fas fa-user-plus"></i> Tambah Pelatih Baru
             </a>
 
-            <!-- Tabel Daftar Pelatih -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id Trainer</th>
-                        <th>Nama</th>
-                        <th>Spesialisasi</th>
-                        <th>Jadwal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($trainers as $trainer): ?>
+            <!-- Tabel Responsif -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Id Trainer</th>
+                            <th>Nama</th>
+                            <th>Spesialisasi</th>
+                            <th>Jadwal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($trainers as $trainer): ?>
                         <tr>
                             <td><?= htmlspecialchars($trainer['id_trainer'] ?? '') ?></td>
                             <td><?= htmlspecialchars($trainer['nama']) ?></td>
                             <td><?= htmlspecialchars($trainer['spesialisasi']) ?></td>
                             <td><?= htmlspecialchars($trainer['jadwal']) ?></td>
                             <td>
-                                <a href="/trainer/edit_trainer/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info me-2">
+                                <a href="/trainer/edit_trainer/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info btn-sm me-1">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="/trainer/delete_trainer/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                                <a href="/trainer/delete_trainer/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-            <!-- Tombol Back to Dashboard -->
+            <!-- Tombol Kembali ke Dashboard -->
             <div class="mt-3">
                 <a href="/dashboard" class="btn btn-custom">
                     <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -144,6 +141,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
