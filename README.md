@@ -71,3 +71,6 @@ mvc-sample/
     - Buka Laragon dan klik "Start All" atau restart Apache dari menu Laragon.
     - Buka browser dan akses aplikasi Anda di:
     http://tugas3_kelompok3.local
+
+# Aplikasi Pengelolaan Fasilitas Kebugaran
+
