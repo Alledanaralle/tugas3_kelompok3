@@ -79,13 +79,13 @@ mvc-sample/
         Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
         <h3>Controller</h3><hr>
         
-        ```php
+```php
         <?php
         // app/controllers/memberController.php
         require_once '../app/models/member.php';
         class MemberController {
         private $memberModel;
-        ````
+ ````
         
 Kode ini mendefinisikan MemberController, yang mengelola logika fitur anggota dalam MVC. Model Member disertakan untuk mengakses data, dan properti $memberModel             digunakan sebagai penghubung ke model, diinisialisasi melalui konstruktor
 ```php
@@ -359,7 +359,7 @@ Script tersebut digunakan untuk mengimpor file CSS Bootstrap versi 5.3.3 dari CD
             <div class="card-body">
 ```
 Script ini membuat sebuah **kontainer** yang berisi **card** dengan lebar maksimal 600px. Card ini memiliki **header** yang menampilkan judul "Tambah Pengguna Baru" yang diposisikan di tengah. Bagian **card-body** adalah tempat utama untuk menampilkan konten form atau elemen lainnya. 
-```php
+```html
 <form action="/member/store" method="POST">
                     <table class="table table-borderless">
                         <tr>
@@ -468,7 +468,7 @@ Script ini adalah form HTML yang mengumpulkan data pengguna baru, seperti nama, 
             <div class="card-body">
 ```
 Script ini membuat tampilan dengan kontainer utama yang memiliki margin atas, berisi sebuah card dengan lebar maksimal 600px yang dipusatkan. Card ini memiliki header dengan judul "Edit Member" yang diposisikan di tengah, diikuti oleh body card yang akan menampung elemen lainnya seperti form 
-```php
+```html and php
 <form action="/member/update_member/<?php echo $member['id_member']; ?>" method="POST">
     <table class="table table-borderless">
         <tr>
@@ -569,7 +569,7 @@ Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungk
 
 <h3>Index Member</h3>
 
-```html
+```css
  <style>
         body {
             background-color: #f8f9fa;
@@ -1220,7 +1220,7 @@ a:hover {
 
 <h3>Index Pelatih</h3>
 
-```php
+```html
 <!DOCTYPE html>
 <html lang="id">
 
@@ -1414,7 +1414,96 @@ a:hover {
         Tabel ini dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) untuk mengelola jadwal kelas kebugaran. Pengguna dapat menambahkan kelas baru, melihat daftar           kelas yang tersedia, memperbarui jadwal atau informasi kelas, dan menghapus kelas yang sudah tidak diperlukan.
         Ada relasi antara tabel Workout Classes dan tabel Trainers melalui kolom ID pelatih. Hubungan ini memungkinkan setiap kelas untuk dihubungkan dengan pelatih yang             mengajarnya, sehingga memudahkan pengelolaan jadwal kelas berdasarkan pelatih.
         Dengan adanya relasi ini, sistem dapat mengatur siapa pelatih yang menangani kelas tersebut, serta memastikan bahwa kuota peserta untuk setiap kelas tercatat dengan          baik.
+<h3>Controllers</h3><hr>
 
+```php
+require_once '../app/models/User.php';
+```
+Mengimpor file User.php, yang berisi definisi model User. File ini digunakan untuk berinteraksi dengan data (misalnya, mengakses database).
+```php
+class UserController {
+    private $userModel;
+```
+Mendefinisikan kelas UserController, yang bertanggung jawab menangani logika aplikasi (Controller dalam MVC) dan $userModel Properti private yang digunakan untuk mengakses model Workout_Classes.
+```php
+public function __construct() {
+    $this->userModel = new Workout_Classes();
+}
+```
+Konstruktor ini dijalankan otomatis saat objek UserController dibuat dan Menginisialisasi properti $userModel dengan instance dari Workout_Classes.
+```php
+public function index() {
+    $users = $this->userModel->getAllClasses();
+    require_once '../app/views/user/index.php';
+}
+```
+Mengambil semua data kelas menggunakan getAllClasses dari model dan Menampilkan halaman index.php yang ada di folder views/user dengan data kelas.
+```php
+public function dashboard() {
+    $totalClasses = $this->userModel->getTotalClass();
+    $totalTrainers = $this->userModel->getTotalTrainers();
+    $totalMembers = $this->userModel->getTotalMembers();
+    $totalEquipments = $this->userModel->getTotalEquipment();
+    $latestMembers = $this->userModel->getLatestMembers();
+    $popularClasses = $this->userModel->getPopularClasses();
+    $equipmentStatus = $this->userModel->getEquipmentStatus();
+    require_once '../app/views/dashboard.php';
+}
+```
+Mengambil berbagai data statistik (kelas, pelatih, anggota, peralatan) dari model Workout_Classes dan
+Menampilkan data tersebut pada halaman dashboard.php.
+```php
+public function create() {
+    $trainers = $this->userModel->getAllTrainers();
+    require_once '../app/views/user/create.php';
+}
+```
+Mengambil daftar pelatih dari model Workout_Classes menggunakan getAllTrainers dan Menampilkan form pembuatan kelas pada halaman create.php.
+```php
+public function store() {
+    $nama_kelas = $_POST['nama_kelas'];
+    $id_class = $_POST['id_class'];
+    $waktu = $_POST['waktu'];
+    $id_trainer = $_POST['id_trainer'];
+    $kuota = $_POST['kuota'];
+    $this->userModel->add($id_class,$nama_kelas, $waktu, $id_trainer, $kuota);
+    header('Location: /user/index');
+}
+```
+Mengambil data dari form (POST), kemudian menyimpan data ke database dengan memanggil method add pada model dan
+mengarahkan pengguna ke halaman daftar user (/user/index) setelah data berhasil disimpan.
+```php
+public function edit($id_class) {
+    $user = $this->userModel->find($id_class); 
+    $trainers = $this->userModel->getAllTrainers();
+    require_once __DIR__ . '/../views/user/edit.php';
+}
+```
+Mengambil data kelas berdasarkan id_class menggunakan method find, dan mengambil daftar pelatih untuk ditampilkan di form edit. Kemudian, menampilkan halaman edit.php dengan data kelas dan pelatih.
+```php
+public function update($id_class, $data) {
+    $updated = $this->userModel->update($id_class, $data);
+    if ($updated) {
+        header("Location: /user/index");
+    } else {
+        echo "Failed to update user.";
+    }
+}
+```
+Memperbarui data kelas berdasarkan id_class menggunakan method update pada model dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
+```php
+public function delete($id_class) {
+    $deleted = $this->userModel->delete($id_class);
+    if ($deleted) {
+        header("Location: /user/index");
+    } else {
+        echo "Failed to delete user.";
+    }
+}
+```
+Menghapus data kelas berdasarkan id_class menggunakan method delete dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
+<h3>Models</h3><hr>
+<h3>Views</h3><hr>
 <h3>Create</h3>
 
 ```html
@@ -1446,7 +1535,7 @@ Fungsi:
 ```
 Membuat tata letak formulir yang terpusat dengan gaya responsif menggunakan Tailwind CSS.
 
-```
+```html
 <div class="mb-4">
     <label for="nama_kelas">Nama kelas:</label>
     <input type="text" name="nama_kelas" id="nama_kelas" required 
@@ -1467,7 +1556,7 @@ Input ini berfungsi untuk mengisi nama kelas yang akan ditambahkan.
 ```
 Input Waktu : Input ini berfungsi untuk memasukkan jadwal waktu kelas.
 
-```
+```html
 <div class="mb-4">
     <label for="id_trainer">Trainer:</label>
     <select name="id_trainer" id="id_trainer" required 
@@ -1482,7 +1571,7 @@ Input Waktu : Input ini berfungsi untuk memasukkan jadwal waktu kelas.
 
 ```
 Dropdown ini akan diisi secara dinamis dengan daftar pelatih yang tersedia dari variabel PHP $trainers.
-```
+```html
 
 <div class="mb-4">
     <label for="kuota">Kuota:</label>
@@ -1493,7 +1582,7 @@ Dropdown ini akan diisi secara dinamis dengan daftar pelatih yang tersedia dari 
 ```
 Input ini berfungsi untuk menentukan jumlah maksimal peserta kelas.
 
-```
+```html
 
 <div class="flex gap-2">
     <a href="./index" class="bg-white text-black font-[500] border-2 border-black text-center px-6 py-2 w-full rounded">Batal</a>
@@ -1506,7 +1595,7 @@ Input ini berfungsi untuk menentukan jumlah maksimal peserta kelas.
 ```
 Bagian ini berisi tombol untuk membatalkan dan menyimpan formulir.
 
-```
+```html
 
 <!DOCTYPE html>
 <html class="font-[poppins]" lang="en">
@@ -1557,7 +1646,7 @@ Bagian ini berisi tombol untuk membatalkan dan menyimpan formulir.
 
 <h3> Edit </h3>
 
-```
+```html
 
 <!DOCTYPE html>
 <html class="font-[poppins]" lang="en">
@@ -1575,7 +1664,7 @@ Bagian ini berisi tombol untuk membatalkan dan menyimpan formulir.
 ```
 Bagian ini mendefinisikan elemen dasar seperti tipe dokumen, bahasa, metadata, dan sumber daya eksternal (Tailwind CSS, font).
 
-```
+```html
 
 <body class="min-h-screen bg-[#ddd] text-black flex justify-center items-center">
     <form class="p-4 w-[95%] max-w-[30rem] flex flex-col bg-white rounded-md" 
@@ -1586,7 +1675,7 @@ Bagian ini mendefinisikan elemen dasar seperti tipe dokumen, bahasa, metadata, d
 
 Bagian ini membuat tata letak halaman dan formulir untuk edit kelas. Formulir ini menggunakan metode POST untuk mengirimkan data ke URL endpoint update.
 
-```
+```html
 
 <div class="mb-4">
     <label for="nama_kelas">Nama kelas:</label>
@@ -1598,7 +1687,7 @@ Bagian ini membuat tata letak halaman dan formulir untuk edit kelas. Formulir in
 
 Input ini menampilkan nama kelas yang sudah ada untuk diedit.
 
-```
+```html
 
 <div class="mb-4">
     <label for="waktu">Waktu:</label>
@@ -1610,7 +1699,7 @@ Input ini menampilkan nama kelas yang sudah ada untuk diedit.
 
 Input ini menampilkan waktu kelas yang sudah ada untuk diedit.
 
-```
+```html
 
 <div class="mb-4">
     <label for="id_trainer">Trainer:</label>
@@ -1628,7 +1717,7 @@ Input ini menampilkan waktu kelas yang sudah ada untuk diedit.
 
 Dropdown ini memungkinkan pengguna untuk memilih pelatih, dengan opsi yang sudah terpilih sesuai data yang ada.
 
-```
+```html
 
 <div class="mb-4">
     <label for="kuota">Kuota:</label>
@@ -1639,7 +1728,7 @@ Dropdown ini memungkinkan pengguna untuk memilih pelatih, dengan opsi yang sudah
 ```
 Input ini digunakan untuk mengedit jumlah maksimal peserta kelas.
 
-```
+```html
 
 <div class="flex gap-2">
     <a href="/user/index" class="bg-white text-black font-[500] border-2 border-black text-center px-6 py-2 w-full rounded">Batal</a>
@@ -1653,7 +1742,7 @@ Input ini digunakan untuk mengedit jumlah maksimal peserta kelas.
 
 Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
 
-```
+```html
 
 <!DOCTYPE html>
 <html class="font-[poppins]" lang="en">
