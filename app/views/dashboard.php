@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amba Gym</title>
+    <title>Aplikasi Gym</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,6 @@
 
 <body class="bg-white text-black min-h-dvh">
     <header class="w-full px-[7%] py-3 z-20 fixed top-0 left-0 shadow border-b-[1px] border-[#3b3b3b2e] flex justify-between items-center bg-white">
-        <!--<button type="button" onclick="openSidebar()" class="ri-menu-line"></button>-->
         <h2 class="text-2xl sm:text-3xl font-medium">
             Amba Gym
         </h2>
@@ -24,10 +23,10 @@
     <section class="pt-20 gap-4 grid px-[2%] z-10 h-auto grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
         <?php
         $menuDash = [
-            ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => '#'],
-            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => '#'],
+            ['title' => 'Total Member', 'value' => $totalMembers, 'icon' => 'ri-user-line', 'link' => './member/index_member'],
+            ['title' => 'Pelatih Aktif', 'value' => $totalTrainers, 'icon' => 'ri-user-star-line', 'link' => './trainers/index_trainer'],
             ['title' => 'Kelas Tersedia', 'value' => $totalClasses, 'icon' => 'ri-calendar-line', 'link' => './user/index'],
-            ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => '#'],
+            ['title' => 'Equipment Items', 'value' => $totalEquipments, 'icon' => 'ri-pen-nib-fill', 'link' => './equipment/index-equipment'],
         ];
 
         foreach ($menuDash as $menu) {
@@ -116,7 +115,7 @@
             <h2 class="text-2xl sm:text-3xl font-medium">
                 Equipment Status
             </h2>
-            <div class="overflow-x-auto mt-6">
+            <div class="overflow-auto max-h-[20rem] mt-6">
                 <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead class="border-b">
                         <tr class="font-[500]">

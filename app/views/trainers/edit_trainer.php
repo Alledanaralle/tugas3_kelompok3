@@ -112,7 +112,7 @@ a:hover {
     <h2>Edit Trainer</h2>
 
     <!-- Formulir untuk mengedit data pelatih -->
-    <form action="/trainer/update/<?php echo $trainer['id_trainer']; ?>" method="POST">
+    <form action="/trainers/update/<?php echo $trainer['id_trainer']; ?>" method="POST">
         <!-- Input Nama -->
         <label for="nama">Nama Pelatih:</label>
         <input type="text" id="nama" name="nama" value="<?php echo $trainer['nama']; ?>" required>
@@ -135,7 +135,7 @@ a:hover {
 
         <!-- Tombol Update dan Back to List -->
         <div class="button-container">
-        <a href="/trainer/index_trainer">Kembali</a>
+        <a href="/trainers/index_trainer">Kembali</a>
             <button type="submit">Update</button>
         </div>
     </form>
