@@ -608,8 +608,70 @@ Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungk
 Skrip CSS ini dirancang untuk memberikan tampilan yang modern, bersih, dan responsif pada sebuah halaman web. Warna latar belakang halaman menggunakan abu-abu terang (#f8f9fa), memberikan kesan sederhana dan nyaman bagi pengguna. Bagian header pada komponen kartu memiliki latar belakang hitam dengan teks berwarna putih, menciptakan kontras yang tegas. Untuk tabel, bagian header diberi warna abu-abu gelap (rgb(120, 125, 131)) dengan teks putih agar lebih menonjol, sementara isi tabel disejajarkan secara horizontal dan vertikal di tengah, memberikan tampilan yang rapi dan teratur.<br>
 Selain itu, tombol dengan ikon dirancang agar ikon berada tepat di tengah, memastikan estetika yang konsisten. Tabel juga dilengkapi dengan elemen gulir vertikal otomatis dan memiliki tinggi maksimal 400px, sehingga data tetap mudah dibaca pada perangkat dengan layar kecil. Footer pada kartu menggunakan warna putih untuk mempertahankan kesan bersih dan konsisten dengan latar belakang halaman.<br>
 Pada bagian input pencarian, kotak pencarian didesain dengan lebar 300px, padding yang nyaman, batas berwarna abu-abu terang, serta sudut yang melengkung. Hal ini menciptakan antarmuka yang ramah pengguna dan estetis. Skrip ini secara keseluruhan meningkatkan estetika dan pengalaman pengguna, terutama dalam navigasi elemen seperti tabel, kartu, dan fitur pencarian di dalam halaman web.
+```
+<div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header">
+                <h2 class="text-center">Daftar Member</h2>
+            </div>
+            <div class="card-body">
 
-
+                <div class="row align-items-center mb-3">
+                    <!-- Kolom kiri: tombol tambah member -->
+                    <div class="col-md-6 d-flex align-items-center">
+                        <a href="/member/create_member" class="btn btn-success">
+                            <i class="fas fa-user-plus"></i> Tambah Member Baru
+                        </a>
+                    </div>
+                    <!-- Kolom kanan: input pencarian -->
+                    <div class="col-md-6 text-end">
+                        <input type="text" id="searchInput" placeholder="Cari Member..." onkeyup="searchTable()" class="form-control d-inline-block">
+                    </div>
+                </div>
+```
+Script ini menampilkan antarmuka daftar member dengan desain menggunakan komponen card yang responsif. Di dalam card, terdapat header dengan judul "Daftar Member" yang terpusat, diikuti oleh body yang memuat dua fitur utama: tombol hijau "Tambah Member Baru" di sisi kiri untuk mengarahkan pengguna ke halaman pembuatan member, dan kolom pencarian di sisi kanan untuk menyaring data secara real-time menggunakan JavaScript.
+```
+<div class="table-responsive">
+                    <table id="trainerTable" class="table table-responsive table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID Member</th>
+                                <th>Nama</th>
+                                <th>Usia</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Paket Langganan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($member as $member): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars((string)($member['id_member'] ?? '')) ?></td>
+                                    <td><?= htmlspecialchars((string)($member['nama'] ?? '')) ?></td>
+                                    <td><?= htmlspecialchars((string)($member['usia'] ?? '')) ?></td>
+                                    <td><?= htmlspecialchars((string)($member['jenis_kelamin'] ?? '')) ?></td>
+                                    <td><?= htmlspecialchars((string)($member['paket_langganan'] ?? '')) ?></td>
+                                    <td>
+                                        <a href="/member/edit/<?php echo $member['id_member']; ?>" class="btn btn-info me-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="/member/delete/<?php echo $member['id_member']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer warna-card-footer">
+                    <a href="./../dashboard" class="btn btn-dark">Kembali ke Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+```
+Script ini berfungsi untuk menampilkan daftar member dalam bentuk tabel yang datanya diambil secara dinamis menggunakan PHP melalui loop foreach. Setiap baris tabel merepresentasikan satu member, dengan informasi yang meliputi ID Member, Nama, Usia, Jenis Kelamin, dan Paket Langganan. Di kolom terakhir, terdapat dua tombol aksi: tombol edit yang mengarahkan ke halaman pengeditan member berdasarkan ID-nya dan tombol hapus yang disertai konfirmasi untuk menghindari penghapusan yang tidak disengaja. Tabel ini dirancang responsif agar tetap mudah diakses pada berbagai ukuran layar, dan di bagian bawah terdapat tombol navigasi untuk kembali ke dashboard utama.
  <h2>2. Trainers </h2>
         Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
         Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru,               melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi          aktif.
