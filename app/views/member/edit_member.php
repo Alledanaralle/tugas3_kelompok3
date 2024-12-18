@@ -26,11 +26,22 @@
         </tr>
         <tr>
         <td>Jenis Kelamin </td>
-        <td><input type="text" id="jenis_kelamin" name="jenis_kelamin" value="<?php echo $member['jenis_kelamin']; ?>" required></td>
+        <td>
+        <select name="jenis_kelamin" id="jenis_kelamin" required>
+            <option value="L" <?php if ($member['jenis_kelamin'] == 'L') echo 'selected'; ?>>L</option>
+            <option value="P" <?php if ($member['jenis_kelamin'] == 'P') echo 'selected'; ?>>P</option>
+        </select>
+        </td>
         </tr>
         <tr>
         <td>Paket Langganan </td>
-        <td><input type="text" id="paket_langganan" name="paket_langganan" value="<?php echo $member['paket_langganan']; ?>" required></td>
+        <td>
+         <select name="paket_langganan" id="paket_langganan" required>
+            <option value="Standard" <?php if ($member['paket_langganan'] == 'Standard') echo 'selected'; ?>>Standard</option>
+            <option value="Premium" <?php if ($member['paket_langganan'] == 'Premium') echo 'selected'; ?>>Premium</option>
+            <option value="VIP" <?php if ($member['paket_langganan'] == 'VIP') echo 'selected'; ?>>VIP</option>
+        </select>
+        </td>
         </tr>
     </table>
         <div class="d-flex justify-content-between gap-2">
