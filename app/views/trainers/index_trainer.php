@@ -38,6 +38,8 @@
             background-color: #2C3E50;
             color: #ffffff;
             font-size: 1.5rem;
+            color: #ffffff;
+            font-size: 1.5rem;
             font-weight: bold;
             text-align: center;
             padding: 15px;
@@ -49,6 +51,8 @@
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
+            overflow-y: auto;
+            max-height: 400px;
         }
 
         th {
