@@ -115,7 +115,7 @@
             <h2 class="text-2xl sm:text-3xl font-medium">
                 Equipment Status
             </h2>
-            <div class="overflow-x-auto mt-6">
+            <div class="overflow-auto max-h-[20rem] mt-6">
                 <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead class="border-b">
                         <tr class="font-[500]">
