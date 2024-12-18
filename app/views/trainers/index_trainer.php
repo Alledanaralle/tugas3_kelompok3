@@ -38,17 +38,19 @@
             background-color: #2C3E50;
             color: #ffffff;
             font-size: 1.5rem;
+            color: #ffffff;
+            font-size: 1.5rem;
             font-weight: bold;
             text-align: center;
             padding: 15px;
         }
 
-        /* Table Styling */
-        .table-responsive {
+        /* Table Container Styling */
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
-            overflow-y: auto;
-            max-height: 400px;
         }
 
         th {
@@ -80,74 +82,105 @@
             background-color: #7FA9D5;
             color: #ffffff;
         }
+
+        /* Flex Container */
+        .action-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Input Search Styling */
+        #searchInput {
+            width: 300px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
     <!-- Card Container -->
-    <div class="card">
-        <!-- Header -->
-        <div class="card-header">Daftar Pelatih</div>
+    <div class="container">
+        <div class="card">
+            <!-- Header -->
+            <div class="card-header">Daftar Pelatih</div>
 
-        <!-- Body -->
-        <div class="card-body">
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Pencarian & Tambah Pelatih Container -->
+                <div class="action-container">
+                    <!-- Tambah Pelatih Button -->
+                    <a href="/trainer/create_trainer" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Tambah Pelatih Baru
+                    </a>
 
-            <!-- Tambah Pelatih Button -->
-            <a href="/trainer/create_trainer" class="btn btn-success mb-3">
-                <i class="fas fa-user-plus"></i> Tambah Pelatih Baru
-            </a>
+                    <!-- Input Pencarian -->
+                    <input type="text" id="searchInput" placeholder="Cari Pelatih..." onkeyup="searchTable()" class="form-control ms-3">
+                </div>
 
-            <!-- Tabel -->
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead>
-                        <tr>
-                            <th>Id Trainer</th>
-                            <th>Nama</th>
-                            <th>Spesialisasi</th>
-                            <th>Jadwal</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($trainers as $trainer): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($trainer['id_trainer'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($trainer['nama']) ?></td>
-                            <td><?= htmlspecialchars($trainer['spesialisasi']) ?></td>
-                            <td><?= htmlspecialchars($trainer['jadwal']) ?></td>
-                            <td>
+                <!-- Tabel -->
+                <div class="table-container table-responsive">
+                    <table class="table table-hover align-middle" id="trainerTable">
+                        <thead>
+                            <tr>
+                                <th>Id Trainer</th>
+                                <th>Nama</th>
+                                <th>Spesialisasi</th>
+                                <th>Jadwal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($trainers as $trainer): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($trainer['id_trainer'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($trainer['nama']) ?></td>
+                                <td><?= htmlspecialchars($trainer['spesialisasi']) ?></td>
+                                <td><?= htmlspecialchars($trainer['jadwal']) ?></td>
+                                <td>
+                                    <!-- Edit Button -->
+                                    <a href="/trainers/edit/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info me-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <!-- Delete Button -->
+                                    <a href="/trainers/delete/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
 
-                                <!-- Edit Button -->
-                                
-                                
-                               
-                                <a href="/trainers/edit/<?php echo $trainer['id_trainer']; ?>" class="btn btn-info me-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                              <!-- Delete Button -->
-                                <a href="/trainers/delete/<?php echo $trainer['id_trainer']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
-
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Back to Dashboard -->
-            <div class="mt-3">
-                <a href="/dashboard" class="btn btn-custom">
-                    <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
-                </a>
+                <!-- Back to Dashboard -->
+                <div class="mt-3">
+                    <a href="/dashboard" class="btn btn-custom">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Script Pencarian -->
+    <script>
+        function searchTable() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let rows = document.querySelectorAll('#trainerTable tbody tr');
+
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
 </body>
 
 </html>
