@@ -73,4 +73,23 @@ mvc-sample/
     http://tugas3_kelompok3.local
 
 # Aplikasi Pengelolaan Fasilitas Kebugaran
+<h2> 1. Member </h2>
+        Tabel Members digunakan untuk menyimpan data anggota yang terdaftar di fasilitas kebugaran. Data yang dikelola mencakup nama anggota, usia, jenis kelamin, dan jenis paket langganan yang dipilih.
+        Fitur ini dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data anggota. Pengguna dapat menambahkan anggota baru, melihat daftar anggota yang terdaftar, memperbarui informasi jika ada perubahan, dan menghapus data anggota yang sudah tidak aktif.
+        Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
+ <h2>2. Trainers </h2>
+        Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
+        Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru, melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi aktif.
+        Tabel ini dirancang untuk memastikan semua informasi terkait pelatih kebugaran tersimpan dengan terorganisir dan mudah diakses sesuai kebutuhan. <br>
+ <h2>3. Workout Classes</h2>
+        Tabel Workout Classes berfungsi untuk menyimpan data terkait kelas latihan kebugaran yang tersedia di fasilitas tersebut. Setiap baris dalam tabel ini mencatat informasi tentang nama kelas, waktu kelas, pelatih yang bertanggung jawab, dan kuota peserta yang dapat mengikuti kelas tersebut.
+        Tabel ini dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) untuk mengelola jadwal kelas kebugaran. Pengguna dapat menambahkan kelas baru, melihat daftar kelas yang tersedia, memperbarui jadwal atau informasi kelas, dan menghapus kelas yang sudah tidak diperlukan.
+        Ada relasi antara tabel Workout Classes dan tabel Trainers melalui kolom ID pelatih. Hubungan ini memungkinkan setiap kelas untuk dihubungkan dengan pelatih yang mengajarnya, sehingga memudahkan pengelolaan jadwal kelas berdasarkan pelatih.
+        Dengan adanya relasi ini, sistem dapat mengatur siapa pelatih yang menangani kelas tersebut, serta memastikan bahwa kuota peserta untuk setiap kelas tercatat dengan baik.
+<h2> 4. Equipment</h2>   
+        Tabel **Gym Equipment** menyimpan data alat kebugaran, seperti **nama alat**, **jenis alat**, dan **kondisi** (baik, rusak, perlu perbaikan). Tabel ini dilengkapi fitur **CRUD** untuk mengelola inventaris alat kebugaran, memungkinkan pengguna untuk menambah, melihat, memperbarui, dan menghapus data alat.
+        Sistem ini memudahkan pengelolaan dan pemantauan kondisi alat kebugaran di fasilitas.
+        
+        
+        
 
