@@ -1336,6 +1336,94 @@ Halaman ini digunakan untuk mengedit informasi alat kebugaran yang sudah ada. Da
 2. Form Styling: Formulir memiliki padding, border-radius, dan bayangan lembut untuk estetika modern.
 3. Tombol Styling: Tombol "Kembali" dan "Update" memiliki lebar yang sama dengan efek hover untuk pengalaman pengguna yang lebih baik.
 
+### Cara Menggunakan
+1. Akses halaman ini di URL /equipment/edit/<id_equipment> dengan mengganti <id_equipment> sesuai dengan ID alat yang ingin diedit.
+2. Perbarui informasi alat:
+    * Nama Alat: Perbarui nama alat jika diperlukan.
+    * Jenis Alat: Ubah jenis alat sesuai kebutuhan.
+    * Kondisi: Pilih kondisi terbaru dari dropdown.
+3. Klik Update untuk menyimpan perubahan atau Kembali untuk membatalkan.
+
 ## Penjelasan index-equipment.php
     Halaman ini digunakan untuk menampilkan daftar alat kebugaran yang tersedia. Pengguna dapat mencari alat berdasarkan nama, jenis, atau kondisi, menambahkan alat baru, atau melakukan aksi seperti mengedit dan menghapus alat yang sudah ada.
     
+### Penjelasan Komponen
+1. Header Halaman: Menampilkan judul halaman dengan latar belakang biru gelap dan teks putih.
+```
+<div class="card-header">Daftar Alat Kebugaran</div>
+```
+2. Tombol Tambah Alat Baru: Mengarahkan pengguna ke halaman untuk menambahkan alat kebugaran baru.
+```
+<a href="/equipment/create-equipment" class="btn btn-success">
+    <i class="fas fa-user-plus"></i> Tambah Alat Baru
+</a>
+```
+3. Input Pencarian: Menggunakan JavaScript untuk menyaring hasil tabel secara langsung saat pengguna mengetikkan kata kunci.
+```
+<input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan Nama Alat, Jenis, atau Kondisi...">
+```
+4. Tabel Data: Tabel ini menampilkan data alat kebugaran, termasuk ID, nama, jenis, kondisi, dan tombol aksi untuk mengedit atau menghapus alat.
+```
+<table class="table table-bordered" id="dataTable">
+    <thead>
+        <tr>
+            <th>ID Equipment</th>
+            <th>Nama Alat</th>
+            <th>Jenis Alat</th>
+            <th>Kondisi</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($equipment as $item): ?>
+            <tr>
+                <td><?= htmlspecialchars((string)($item['id_equipment'] ?? '')) ?></td>
+                <td><?= htmlspecialchars((string)($item['nama_alat'] ?? '')) ?></td>
+                <td><?= htmlspecialchars((string)($item['jenis_alat'] ?? '')) ?></td>
+                <td><?= htmlspecialchars((string)($item['kondisi'] ?? '')) ?></td>
+                <td>
+                    <a href="/equipment/edit/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" class="btn btn-info me-2"><i class="fas fa-edit"></i></a>
+                    <a href="/equipment/delete/<?php echo htmlspecialchars($item['id_equipment'] ?? ''); ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+```
+5. Navigasi Kembali: Tombol ini mengarahkan pengguna kembali ke halaman dashboard utama.
+```
+<a href="./../dashboard" class="btn btn-primary" style="background-color:rgb(130, 153, 185); color: white; border-color: navy;">
+    Back To Dashboard
+</a>
+```
+6. Fungsi Pencarian: Fungsi JavaScript ini memfilter baris tabel berdasarkan teks yang dimasukkan pengguna pada kolom pencarian.
+```
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#dataTable tbody tr');
+
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const match = Array.from(cells).some(cell => 
+            cell.textContent.toLowerCase().includes(filter)
+        );
+
+        row.style.display = match ? '' : 'none';
+    });
+});
+```
+
+### Fitur Utama
+1. Tombol Aksi:
+    * Tambah Alat Baru: Membuka formulir untuk menambahkan data alat kebugaran.
+    * Edit: Mengarahkan ke halaman edit untuk memperbarui informasi alat.
+    * Hapus: Menghapus data alat setelah konfirmasi.
+2. Pencarian Dinamis: Fitur pencarian memungkinkan pengguna mencari alat secara real-time berdasarkan nama, jenis, atau kondisi.
+3. Tabel Responsif: Tabel mendukung tampilan yang optimal di berbagai perangkat.
+
+### Cara Menggunakan
+1. Buka halaman daftar alat kebugaran di URL /equipment/index-equipment.
+2. Gunakan input pencarian untuk menemukan alat tertentu.
+3. Pilih tombol Edit untuk memperbarui alat atau Hapus untuk menghapus alat yang tidak dibutuhkan.
+4. Klik tombol Tambah Alat Baru untuk menambahkan data alat baru.
+5. Gunakan tombol Back To Dashboard untuk kembali ke halaman utama.
