@@ -51,8 +51,6 @@
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
-            overflow-y: auto;
-            max-height: 400px;
         }
 
         th {
