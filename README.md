@@ -102,7 +102,3 @@ mvc-sample/
 3. Lihat daftar alat kebugaran yang tersedia.
 4. Klik tombol Edit untuk memperbarui data alat.
 5. Klik tombol Hapus untuk menghapus alat dari inventaris.
-
-### Teknologi yang Digunakan
-* Bahasa Pemrograman: PHP, HTML, CSS
-* Database: MySQL
