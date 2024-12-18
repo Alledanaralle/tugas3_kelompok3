@@ -97,7 +97,7 @@
                     </table>
                 </div>
                 <div class="card-footer warna-card-footer">
-                    <a href="/dashboard" class="btn btn-dark">Kembali ke Dashboard</a>
+                    <a href="/dashboard" class="btn btn-dark">Back to Dashboard</a>
                 </div>
             </div>
         </div>
