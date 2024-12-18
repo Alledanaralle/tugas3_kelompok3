@@ -155,6 +155,47 @@ public function delete($id_member) {
 Fungsi `delete($id_member)` bertugas untuk menghapus data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `delete()` dari model `memberModel` untuk menghapus anggota dari database. Jika penghapusan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
 
 <h3>Models</h3>
+
+```
+<?php
+// app/models/Member.php
+require_once '../config/database.php';
+class Member {
+    private $db;
+    public function __construct() {
+        $this->db = (new Database())->connect();
+    }
+```
+Script ini mendefinisikan kelas `Member` yang berfungsi untuk mengelola data anggota. Di dalam kelas, ada properti `$db` untuk menyimpan koneksi database. Konstruktor kelas menginisialisasi koneksi database dengan memanggil metode `connect()` dari kelas `Database`, yang memungkinkan kelas `Member` untuk melakukan operasi database.
+```
+public function getAllMember() {
+        $query = $this->db->query("SELECT * FROM member");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+```
+Script ini digunakan untuk mengambil semua data anggota (member) dari tabel `member` dalam database. Fungsi `getAllMember()` menjalankan query SQL `SELECT * FROM member` untuk mendapatkan seluruh baris data dari tabel tersebut. Hasilnya kemudian diambil dan dikembalikan dalam bentuk array asosiatif yang bisa digunakan untuk menampilkan data anggota dalam aplikasi.
+```
+ public function find($id_member) {
+        $query = $this->db->prepare("SELECT * FROM member WHERE id_member = :id_member");
+        $query->bindParam(':id_member', $id_member, PDO::PARAM_INT);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+```
+Script ini digunakan untuk mencari data anggota berdasarkan `id_member`. Fungsi `find($id_member)` menyiapkan query SQL untuk memilih data anggota yang memiliki `id_member` tertentu, kemudian mengeksekusi query dan mengembalikan hasilnya dalam bentuk array asosiatif.
+```
+    public function add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan) {
+        $query = $this->db->prepare("INSERT INTO member (id_member, nama, usia, jenis_kelamin, paket_langganan) 
+        VALUES (:id_member, :nama, :usia, :jenis_kelamin, :paket_langganan)");
+        $query->bindParam(':id_member', $id_member);
+        $query->bindParam(':nama', $nama);
+        $query->bindParam(':usia', $usia);
+        $query->bindParam(':jenis_kelamin', $jenis_kelamin);
+        $query->bindParam(':paket_langganan', $paket_langganan);
+        return $query->execute();
+    }
+```
+Script ini digunakan untuk menambahkan data anggota baru ke dalam tabel `member` di database. Fungsi `add()` menerima lima parameter (`id_member`, `nama`, `usia`, `jenis_kelamin`, `paket_langganan`), kemudian menyusun query `INSERT INTO` dengan parameter yang diikat menggunakan `bindParam()`. Setelah itu, query dijalankan dengan `execute()`, yang akan menyisipkan data ke dalam tabel `member` dan mengembalikan `true` jika berhasil, atau `false` jika gagal.
 ```
 ```
  <h2>2. Trainers </h2>
