@@ -44,6 +44,17 @@
             background-color: #FDFEFE;
         }
 
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        #searchInput {
+            width: 300px;
+        }
+
         .table-container {
             max-height: 400px; /* Set tinggi maksimal */
             overflow-y: auto; /* Aktifkan scroll secara vertikal */
@@ -93,11 +104,16 @@
     <div class="card">
         <div class="card-header">Daftar Alat Kebugaran</div>
         <div class="card-body">
-            <a href="/equipment/create-equipment" class="btn btn-success mb-3">
-                <i class="fas fa-user-plus"></i> Tambah Alat Baru
-            </a>
+            <!-- Tombol dan Input Cari -->
+            <div class="actions">
+                <a href="/equipment/create-equipment" class="btn btn-success">
+                    <i class="fas fa-user-plus"></i> Tambah Alat Baru
+                </a>
+                <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan Nama Alat, Jenis, atau Kondisi...">
+            </div>
+
             <div class="table-container table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
                             <th>ID Equipment</th>
@@ -128,5 +144,22 @@
             </a>
         </div>
     </div>
+
+    <script>
+        // Fungsi Pencarian
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const match = Array.from(cells).some(cell => 
+                    cell.textContent.toLowerCase().includes(filter)
+                );
+
+                row.style.display = match ? '' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
