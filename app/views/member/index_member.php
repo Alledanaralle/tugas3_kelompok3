@@ -85,10 +85,10 @@
                                     <td><?= htmlspecialchars((string)($member['jenis_kelamin'] ?? '')) ?></td>
                                     <td><?= htmlspecialchars((string)($member['paket_langganan'] ?? '')) ?></td>
                                     <td>
-                                        <a href="/member/edit_member/<?php echo $member['id_member']; ?>" class="btn btn-info me-2">
+                                        <a href="/member/edit/<?php echo $member['id_member']; ?>" class="btn btn-info me-2">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="/member/delete_member/<?php echo $member['id_member']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                                        <a href="/member/delete/<?php echo $member['id_member']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
