@@ -77,12 +77,92 @@ mvc-sample/
         Tabel Members digunakan untuk menyimpan data anggota yang terdaftar di fasilitas kebugaran. Data yang dikelola mencakup nama anggota, usia, jenis kelamin, dan jenis          paket langganan yang dipilih.
         Fitur ini dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data anggota. Pengguna dapat menambahkan anggota baru, melihat            daftar anggota yang terdaftar, memperbarui informasi jika ada perubahan, dan menghapus data anggota yang sudah tidak aktif.
         Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
+        <h3>Controller</h3>
+        
+        ```
+        <?php
+        // app/controllers/memberController.php
+        require_once '../app/models/member.php';
+        class MemberController {
+        private $memberModel;
+        ````
+        
+Kode ini mendefinisikan MemberController, yang mengelola logika fitur anggota dalam MVC. Model Member disertakan untuk mengakses data, dan properti $memberModel             digunakan sebagai penghubung ke model, diinisialisasi melalui konstruktor
+```
+public function __construct() {
+    $this->memberModel = new Member();
+}
+
+```
+Menginisialisasi objek model Member, yang digunakan untuk berinteraksi dengan data anggota di basis data.
+```
+public function index() {
+    $member = $this->memberModel->getAllMember();
+    require_once '../app/views/member/index_member.php';
+}
+
+```
+Mengambil seluruh data anggota menggunakan method getAllMember() dari model, dan memuat view index_member.php untuk menampilkan daftar anggota.
+
+```
+public function create() {
+    require_once '../app/views/member/create_member.php';
+}
+```
+Memuat form view create_member.php untuk menambahkan anggota baru.
+```
+public function store() {
+    $id_member = $_POST['id_member'];
+    $nama = $_POST['nama'];
+    $usia = $_POST['usia'];
+    $jenis_kelamin = $_POST['jenis_kelamin'];
+    $paket_langganan = $_POST['paket_langganan'];
+    $this->memberModel->add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan);
+    header('Location: /member/index_member');
+}
+```
+Fungsi `store()` dalam script ini bertanggung jawab untuk menangani permintaan yang mengirimkan data anggota baru melalui metode POST. Fungsi ini dimulai dengan mengambil nilai yang dikirimkan melalui form (menggunakan metode `$_POST`) untuk lima atribut data anggota, yaitu: `id_member`, `nama`, `usia`, `jenis_kelamin`, dan `paket_langganan`.
+Setelah data diperoleh, fungsi ini memanggil metode `add()` dari model `memberModel`, yang berfungsi untuk menyimpan data anggota baru ke dalam database. Data yang diambil dari form (seperti ID anggota, nama, usia, jenis kelamin, dan paket langganan) diteruskan sebagai argumen ke dalam metode `add()` tersebut.
+Setelah data berhasil disimpan, fungsi ini menggunakan perintah `header('Location: /member/index_member')` untuk mengarahkan (redirect) pengguna kembali ke halaman daftar anggota (`/member/index_member`). Hal ini memastikan pengguna melihat daftar anggota yang sudah diperbarui setelah menambahkan anggota baru.
+```
+public function edit($id_member) {
+    $member = $this->memberModel->find($id_member);
+    require_once __DIR__ . '/../views/member/edit_member.php';
+}
+```
+Fungsi `edit($id_member)` mengambil data anggota berdasarkan ID yang diberikan menggunakan metode `find()` dari model `memberModel`. Setelah itu, data anggota dimuat ke dalam tampilan `edit_member.php`, yang memungkinkan pengguna untuk mengedit informasi anggota tersebut.
+```
+public function update($id_member, $data) {
+    $updated = $this->memberModel->update($id_member, $data);
+    if ($updated) {
+        header("Location: /member/index_member");
+    } else {
+        echo "Failed to update member.";
+    }
+}
+```
+Fungsi `update($id_member, $data)` bertanggung jawab untuk memperbarui data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `update()` dari model `memberModel` untuk memperbarui data anggota di database. Jika pembaruan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
+```
+public function delete($id_member) {
+    $deleted = $this->memberModel->delete($id_member);
+    if ($deleted) {
+        header("Location: /member/index_member");
+    } else {
+        echo "Failed to delete member.";
+    }
+}
+```
+Fungsi `delete($id_member)` bertugas untuk menghapus data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `delete()` dari model `memberModel` untuk menghapus anggota dari database. Jika penghapusan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
+
+<h3>Models</h3>
+```
+```
  <h2>2. Trainers </h2>
         Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
         Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru,               melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi          aktif.
         Tabel ini dirancang untuk memastikan semua informasi terkait pelatih kebugaran tersimpan dengan terorganisir dan mudah diakses sesuai kebutuhan. <br>
-        
-    ## Trainer Controller
+    <h3>Trainer Controller</h3>
+    
     ```php
     <?php
     // app/controllers/TrainerController.php
@@ -155,12 +235,11 @@ mvc-sample/
             echo "Failed to delete trainer."; // Menampilkan pesan error jika gagal
         }
     }
-}
+
+<h3>Models Trainers</h3>
+
+
 ```
-
-    ## Models Trainers
-
-```php
 <?php
 // app/models/Trainers.php
 
@@ -228,9 +307,10 @@ class Trainers
 
 ```
 
-## View
-### Create Trainer
-```php
+<h3>View</h3>
+<h3>Create Trainer</h3>
+
+```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -364,10 +444,11 @@ class Trainers
 </body>
 
 </html>
+```
+
+<h3>Edit Trainer</h3>
 
 ```
-### Edit Trainer
-```php
 <!DOCTYPE html>
 <html lang="en">
 
@@ -515,7 +596,8 @@ a:hover {
 
 ```
 
-### Index Trainer
+<h3>Index Pelatih</h3>
+
 ```php
 <!DOCTYPE html>
 <html lang="id">
