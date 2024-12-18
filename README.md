@@ -90,19 +90,19 @@ mvc-sample/
         Tabel Gym Equipment menyimpan data alat kebugaran, seperti nama alat, jenis alat, dan kondisi (baik, rusak, perlu perbaikan). Tabel ini dilengkapi fitur CRUD untuk           mengelola inventaris alat kebugaran, memungkinkan pengguna untuk menambah, melihat, memperbarui, dan menghapus data alat.
         Sistem ini memudahkan pengelolaan dan pemantauan kondisi alat kebugaran di fasilitas.
 
-## Fitur Utama
+### Fitur Utama
 1. Tambah Data: Menambahkan informasi alat kebugaran baru ke dalam sistem.
 2. Lihat Data: Menampilkan daftar alat kebugaran beserta informasi detailnya.
 3. Perbarui Data: Memperbarui informasi alat yang ada, termasuk nama, jenis, dan kondisi.
 4. Hapus Data: Menghapus data alat yang tidak lagi digunakan.
         
-## Cara Penggunaan
+### Cara Penggunaan
 1. Masuk ke halaman utama aplikasi.
 2. Gunakan form untuk menambah data alat kebugaran.
 3. Lihat daftar alat kebugaran yang tersedia.
 4. Klik tombol Edit untuk memperbarui data alat.
 5. Klik tombol Hapus untuk menghapus alat dari inventaris.
 
-## Teknologi yang Digunakan
+### Teknologi yang Digunakan
 * Bahasa Pemrograman: PHP, HTML, CSS
 * Database: MySQL
