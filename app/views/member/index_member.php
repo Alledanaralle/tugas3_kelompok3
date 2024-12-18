@@ -49,6 +49,7 @@
                 <h2 class="text-center">Daftar Member</h2>
             </div>
             <div class="card-body">
+
                 <div class="row align-items-center mb-3">
                     <!-- Kolom kiri: tombol tambah member -->
                     <div class="col-md-6 d-flex align-items-center">
@@ -99,6 +100,9 @@
                 <div class="card-footer warna-card-footer">
                     <a href="/dashboard" class="btn btn-dark">Back to Dashboard</a>
                 </div>
+
+                
+
             </div>
         </div>
     </div>
