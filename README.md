@@ -504,6 +504,71 @@ Script ini membuat tampilan dengan kontainer utama yang memiliki margin atas, be
                     </div>
     </form>
 ```
+Formulir ini dirancang untuk mengedit data anggota (member) dalam sebuah sistem. Data yang akan diedit mencakup nama, usia, jenis kelamin, dan paket langganan. Aksi formulir diarahkan ke URL `/member/update_member/{id_member}`, di mana `{id_member}` adalah ID anggota yang datanya sedang diedit. ID tersebut diambil secara dinamis menggunakan PHP, memastikan bahwa data yang diedit sesuai dengan anggota yang dipilih.<br>
+Formulir menggunakan tabel untuk menyusun elemen-elemen input dengan rapi. Input pertama adalah kolom teks untuk nama anggota yang diisi secara otomatis dengan nama dari database, ditampilkan melalui variabel `$member['nama']`. Input kedua adalah kolom teks untuk usia anggota yang juga diisi otomatis dari data yang tersimpan, melalui variabel `$member['usia']`.<br>
+Bagian berikutnya adalah dropdown untuk memilih jenis kelamin. Dropdown ini memiliki dua opsi, yaitu "L" untuk Laki-laki dan "P" untuk Perempuan. PHP memeriksa data dari `$member['jenis_kelamin']` untuk menentukan opsi yang aktif (selected) secara otomatis. Setelah itu, terdapat dropdown lain untuk memilih paket langganan anggota. Pilihan yang tersedia adalah "Standard", "Premium", dan "VIP". Sama seperti sebelumnya, PHP memeriksa data dari `$member['paket_langganan']` untuk menentukan paket yang aktif secara default.<br>
+Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungkinkan pengguna kembali ke halaman daftar anggota tanpa menyimpan perubahan. Tombol kedua, "Update", digunakan untuk mengirim data yang telah diubah ke server agar dapat diperbarui di database. Seluruh data dikirim menggunakan metode POST, menjaga keamanan informasi yang dikirimkan. Formulir ini memastikan setiap kolom wajib diisi dengan menambahkan atribut `required` pada elemen input.
+<h3>Full Script Edit Member</h3>
+
+```
+<!-- app/views/user/edit.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Member</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <!-- <h2>Edit Member</h2> -->
+    <div class="container mt-5">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-header">
+                <h5 class="text-center">Edit Member</h5>
+            </div>
+            <div class="card-body">
+    <form action="/member/update/<?php echo $member['id_member']; ?>" method="POST">
+    <table class="table table-borderless">
+        <tr>
+        <td>Nama </td>
+        <td><input type="text" id="nama" name="nama" value="<?php echo $member['nama']; ?>" required></td>
+        </tr>
+        <tr>
+        <td>Usia </td>
+        <td><input type="text" id="usia" name="usia" value="<?php echo $member['usia']; ?>" required></td>
+        </tr>
+        <tr>
+        <td>Jenis Kelamin </td>
+        <td>
+        <select name="jenis_kelamin" id="jenis_kelamin" required>
+            <option value="L" <?php if ($member['jenis_kelamin'] == 'L') echo 'selected'; ?>>L</option>
+            <option value="P" <?php if ($member['jenis_kelamin'] == 'P') echo 'selected'; ?>>P</option>
+        </select>
+        </td>
+        </tr>
+        <tr>
+        <td>Paket Langganan </td>
+        <td>
+         <select name="paket_langganan" id="paket_langganan" required>
+            <option value="Standard" <?php if ($member['paket_langganan'] == 'Standard') echo 'selected'; ?>>Standard</option>
+            <option value="Premium" <?php if ($member['paket_langganan'] == 'Premium') echo 'selected'; ?>>Premium</option>
+            <option value="VIP" <?php if ($member['paket_langganan'] == 'VIP') echo 'selected'; ?>>VIP</option>
+        </select>
+        </td>
+        </tr>
+    </table>
+        <div class="d-flex justify-content-between gap-2">
+                    <a href="/member/index_member" class="btn w-100 btn-outline-dark">Kembali</a>
+                    <button type="submit" class="btn w-100 btn-dark">Update</button>
+                    </div>
+    </form>
+</body>
+</html>
+```
+
+<h3>Index Member</h3>
+```
+```
 
 
  <h2>2. Trainers </h2>
