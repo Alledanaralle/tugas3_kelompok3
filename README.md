@@ -567,8 +567,47 @@ Di bagian bawah formulir terdapat dua tombol. Tombol pertama, "Kembali", memungk
 ```
 
 <h3>Index Member</h3>
+
 ```
+ <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card-header {
+            background: rgb(0, 0, 0);
+            color: white;
+        }
+        .table thead th {
+            background-color: rgb(120, 125, 131);
+            color: white;
+        }
+        .table td, .table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn i {
+            margin: 0 auto;
+        }
+        .table-responsive {
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        .warna-card-footer {
+            background-color: white;
+        }
+        /* Input Search Styling */
+        #searchInput {
+            width: 300px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
 ```
+
+Skrip CSS ini dirancang untuk memberikan tampilan yang modern, bersih, dan responsif pada sebuah halaman web. Warna latar belakang halaman menggunakan abu-abu terang (#f8f9fa), memberikan kesan sederhana dan nyaman bagi pengguna. Bagian header pada komponen kartu memiliki latar belakang hitam dengan teks berwarna putih, menciptakan kontras yang tegas. Untuk tabel, bagian header diberi warna abu-abu gelap (rgb(120, 125, 131)) dengan teks putih agar lebih menonjol, sementara isi tabel disejajarkan secara horizontal dan vertikal di tengah, memberikan tampilan yang rapi dan teratur.<br>
+Selain itu, tombol dengan ikon dirancang agar ikon berada tepat di tengah, memastikan estetika yang konsisten. Tabel juga dilengkapi dengan elemen gulir vertikal otomatis dan memiliki tinggi maksimal 400px, sehingga data tetap mudah dibaca pada perangkat dengan layar kecil. Footer pada kartu menggunakan warna putih untuk mempertahankan kesan bersih dan konsisten dengan latar belakang halaman.<br>
+Pada bagian input pencarian, kotak pencarian didesain dengan lebar 300px, padding yang nyaman, batas berwarna abu-abu terang, serta sudut yang melengkung. Hal ini menciptakan antarmuka yang ramah pengguna dan estetis. Skrip ini secara keseluruhan meningkatkan estetika dan pengalaman pengguna, terutama dalam navigasi elemen seperti tabel, kartu, dan fitur pencarian di dalam halaman web.
 
 
  <h2>2. Trainers </h2>
