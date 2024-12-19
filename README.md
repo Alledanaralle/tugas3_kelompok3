@@ -2201,7 +2201,8 @@ elseif (preg_match('/\/equipment\/delete\/(\d+)/', $url, $matches) && $requestMe
     http_response_code(404);
     echo "404 Not Found";
 }
-```
+    ```
+    
 <h2>Cara Penggunaan</h2>
 1. Tempatkan file routes.php ini di direktori root proyek Anda.
 2. Pastikan Anda memiliki file controller yang sesuai (EquipmentController.php) di direktori app/controllers/.
