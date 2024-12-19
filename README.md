@@ -1865,7 +1865,7 @@ Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
 
 ## Penjelasan EquipmentController.php
    1. Konstruktor : Menginisialisasi model Equipment agar bisa digunakan dalam semua metode.
-    ```
+    ```php
     public function __construct() {
     $this->equipmentModel = new Equipment();
 }
@@ -1873,14 +1873,14 @@ Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
    2. index()
     * Mengambil semua data alat dari model.
     * Menampilkan halaman utama (index-equipment.php) untuk melihat daftar alat.
-    ```
+    ```php
     public function index() {
     $equipment = $this->equipmentModel->getAllEquipment();
     require_once '../app/views/equipment/index-equipment.php';
 }
 ```
    3. create() : Menampilkan form untuk menambahkan alat baru.
-    ```
+    ```php
     public function create() {
     require_once '../app/views/equipment/create-equipment.php';
 }
@@ -1889,7 +1889,7 @@ Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
     * Memproses data dari form tambah alat.
     * Menyimpan data ke database menggunakan metode add() dari model.
     * Mengarahkan pengguna kembali ke daftar alat.
-    ``` 
+    ```php
     public function store() {
     $nama_alat = $_POST['nama_alat'];
     $jenis_alat = $_POST['jenis_alat'];
@@ -1901,7 +1901,7 @@ Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
     5. edit($id_equipment)
     * Menampilkan form edit berdasarkan ID alat.
     * Mengambil data alat tertentu menggunakan metode find().
-    ```
+    ```php
     public function edit($id_equipment) {
     $equipment = $this->equipmentModel->find($id_equipment);
     require_once __DIR__ . '/../views/equipment/edit-equipment.php';
@@ -1910,7 +1910,7 @@ Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
     6. update($id_equipment, $data)
     * Memproses data dari form edit.
     * Memperbarui data alat menggunakan metode update().
-    ```
+    ```php
 public function update($id_equipment, $data) {
     $updated = $this->equipmentModel->update($id_equipment, $data);
     if ($updated) {
@@ -1923,7 +1923,7 @@ public function update($id_equipment, $data) {
     7. delete($id_equipment)
     * Menghapus data alat berdasarkan ID.
     * Mengarahkan kembali ke daftar alat setelah penghapusan berhasil.
-```
+```php
 public function delete($id_equipment) {
     $deleted = $this->equipmentModel->delete($id_equipment);
     if ($deleted) {
@@ -1953,20 +1953,20 @@ public function delete($id_equipment) {
         1. Nama Alat: Input teks untuk nama alat (wajib diisi).
         2. Jenis Alat: Input teks untuk jenis alat (wajib diisi).
         3. Kondisi: Dropdown untuk memilih kondisi alat.
-```
+```php
 <form action="/equipment/store" method="POST">
 ```
 2. Field Input
    * Label dan input digunakan untuk memasukkan nama alat.
    * Atribut required memastikan pengguna mengisi data sebelum mengirim.
-```
+```php
      <label for="nama_alat">Nama Alat:</label>
 <input type="text" name="nama_alat" id="nama_alat" required>
 ```
 3. Dropdown Pilihan Kondisi
 * Memungkinkan pengguna memilih kondisi alat dari opsi yang tersedia: Baik, Perbaikan, Rusak, atau Terjual.
 * Pilihan ini wajib diisi.
-```
+```php
 <select name="kondisi" id="kondisi" required>
     <option value="Baik">Baik</option>
     <option value="Perbaikan">Perbaikan</option>
@@ -1977,7 +1977,7 @@ public function delete($id_equipment) {
 4. Tombol Navigasi
 * Kembali: Mengarahkan pengguna kembali ke halaman daftar alat tanpa menyimpan perubahan.
 * Simpan: Mengirim data ke server untuk diproses.
-```
+```php
 <div class="button-container">
     <a href="/equipment/index-equipment" class="btn-link">Kembali</a>
     <button type="submit">Simpan</button>
@@ -2014,18 +2014,18 @@ Halaman ini digunakan untuk mengedit informasi alat kebugaran yang sudah ada. Da
         1. Nama Alat: Input teks untuk nama alat (wajib diisi).
         2. Jenis Alat: Input teks untuk jenis alat (wajib diisi).
         3. Kondisi: Dropdown untuk memilih kondisi alat.
-```
+```php
 <form action="/equipment/update/<?php echo $equipment['id_equipment']; ?>" method="POST">
 ```
 2. Field Input
    * Field ini menampilkan nama alat yang sudah ada dengan nilai default yang diambil dari variabel PHP $equipment.
     * Atribut required memastikan pengguna mengisi data sebelum mengirim.
-```
+```php
 <input type="text" id="nama_alat" name="nama_alat" value="<?php echo htmlspecialchars($equipment['nama_alat'] ?? ''); ?>" required>
 ```
 3. Dropdown Pilihan Kondisi
    Dropdown ini memuat kondisi alat dengan pilihan: Baik, Perbaikan, Rusak, dan Terjual. Opsi yang sesuai dengan kondisi alat saat ini akan dipilih secara otomatis menggunakan PHP.
-```
+```php
 <select id="kondisi" name="kondisi" required>
     <option value="Baik" <?php echo ($equipment['kondisi'] == 'Baik') ? 'selected' : ''; ?>>Baik</option>
     <option value="Perbaikan" <?php echo ($equipment['kondisi'] == 'Perbaikan') ? 'selected' : ''; ?>>Perbaikan</option>
@@ -2036,7 +2036,7 @@ Halaman ini digunakan untuk mengedit informasi alat kebugaran yang sudah ada. Da
 4. Tombol Navigasi
    * Kembali: Mengarahkan pengguna ke halaman daftar alat tanpa menyimpan perubahan.
    * Update: Mengirimkan data yang diperbarui ke server untuk diproses.
-```
+```php
 <div class="button-container">
     <a href="/equipment/index-equipment">Kembali</a>
     <button type="submit">Update</button>
@@ -2060,21 +2060,21 @@ Halaman ini digunakan untuk mengedit informasi alat kebugaran yang sudah ada. Da
     
 ### Penjelasan Komponen
 1. Header Halaman: Menampilkan judul halaman dengan latar belakang biru gelap dan teks putih.
-```
+```php
 <div class="card-header">Daftar Alat Kebugaran</div>
 ```
 2. Tombol Tambah Alat Baru: Mengarahkan pengguna ke halaman untuk menambahkan alat kebugaran baru.
-```
+```php
 <a href="/equipment/create-equipment" class="btn btn-success">
     <i class="fas fa-user-plus"></i> Tambah Alat Baru
 </a>
 ```
 3. Input Pencarian: Menggunakan JavaScript untuk menyaring hasil tabel secara langsung saat pengguna mengetikkan kata kunci.
-```
+```php
 <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan Nama Alat, Jenis, atau Kondisi...">
 ```
 4. Tabel Data: Tabel ini menampilkan data alat kebugaran, termasuk ID, nama, jenis, kondisi, dan tombol aksi untuk mengedit atau menghapus alat.
-```
+```php
 <table class="table table-bordered" id="dataTable">
     <thead>
         <tr>
@@ -2102,13 +2102,13 @@ Halaman ini digunakan untuk mengedit informasi alat kebugaran yang sudah ada. Da
 </table>
 ```
 5. Navigasi Kembali: Tombol ini mengarahkan pengguna kembali ke halaman dashboard utama.
-```
+```php
 <a href="./../dashboard" class="btn btn-primary" style="background-color:rgb(130, 153, 185); color: white; border-color: navy;">
     Back To Dashboard
 </a>
 ```
 6. Fungsi Pencarian: Fungsi JavaScript ini memfilter baris tabel berdasarkan teks yang dimasukkan pengguna pada kolom pencarian.
-```
+```php
 document.getElementById('searchInput').addEventListener('keyup', function () {
     const filter = this.value.toLowerCase();
     const rows = document.querySelectorAll('#dataTable tbody tr');
@@ -2138,3 +2138,71 @@ document.getElementById('searchInput').addEventListener('keyup', function () {
 3. Pilih tombol Edit untuk memperbarui alat atau Hapus untuk menghapus alat yang tidak dibutuhkan.
 4. Klik tombol Tambah Alat Baru untuk menambahkan data alat baru.
 5. Gunakan tombol Back To Dashboard untuk kembali ke halaman utama.
+
+## Penjelasan routes.php
+Digunakan untuk mengatur rute (routing) dalam aplikasi web berbasis PHP. Kode ini memetakan URL tertentu ke metode dalam EquipmentController, memungkinkan aplikasi untuk menampilkan halaman daftar alat kebugaran (index), menambah alat baru (create dan store), mengedit alat (edit dan update), dan menghapus alat (delete). Jika URL yang diminta tidak cocok dengan rute yang ditentukan, aplikasi akan memberikan respons "404 Not Found".
+
+### Penjelasan Komponen
+1. Membuat Instansi Controller
+   Membuat instansi dari kelas EquipmentController yang akan digunakan untuk memanggil metode-metode sesuai dengan permintaan yang datang.
+   ```php
+   $controller = new EquipmentController();
+```
+2. Menangani URL dan Metode Permintaan
+    Script ini memeriksa URL yang masuk dan metode HTTP (GET atau POST) untuk menentukan metode controller mana yang akan dipanggil. $url diambil dari URI permintaan, dan $requestMethod menangkap metode HTTP.
+```php
+$url = $_SERVER['REQUEST_URI'];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+```
+3. Menentukan Logika Routing
+   * Halaman Utama dan Daftar Alat Kebugaran : Jika URL adalah /equipment/index atau /, maka metode index dari controller dipanggil untuk menampilkan daftar alat kebugaran.
+     ```php
+     if ($url == '/equipment/index' || $url == '/') {
+    $controller->index();
+}
+```
+    * Menambah Alat Kebugaran (Permintaan GET): Jika URL adalah /equipment/create dan metode yang digunakan adalah GET, maka metode create dipanggil untuk menampilkan formulir untuk menambah alat baru.
+```php
+elseif ($url == '/equipment/create' && $requestMethod == 'GET') {
+    $controller->create();
+}
+```
+    * Menyimpan Alat Kebugaran Baru (Permintaan POST): Jika URL adalah /equipment/store dan metode yang digunakan adalah POST, maka metode store dipanggil untuk menyimpan data alat kebugaran yang baru.
+```php
+elseif ($url == '/equipment/store' && $requestMethod == 'POST') {
+    $controller->store();
+}
+```
+    * Mengedit Alat Kebugaran (Permintaan GET): Jika URL sesuai dengan /equipment/edit/{id}, di mana {id} adalah nilai numerik, maka metode edit dipanggil dengan ID alat untuk menampilkan form edit alat tersebut.
+    ```php
+    elseif (preg_match('/\/equipment\/edit\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+    $equipmentId = $matches[1];
+    $controller->edit($equipmentId);
+}
+```
+    * Memperbarui Alat Kebugaran (Permintaan POST): Jika URL sesuai dengan /equipment/update/{id} dan metode yang digunakan adalah POST, maka metode update dipanggil dengan ID alat dan data yang diperbarui.
+```php
+elseif (preg_match('/\/equipment\/update\/(\d+)/', $url, $matches) && $requestMethod == 'POST') {
+    $equipmentId = $matches[1];
+    $controller->update($equipmentId, $_POST);
+}
+```
+    * Menghapus Alat Kebugaran (Permintaan GET): Jika URL sesuai dengan /equipment/delete/{id}, di mana {id} adalah nilai numerik, maka metode delete dipanggil dengan ID alat untuk menghapus alat tersebut.
+```php
+elseif (preg_match('/\/equipment\/delete\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+    $equipmentId = $matches[1];
+    $controller->delete($equipmentId);
+}
+```
+4. 404 Not Found
+   Jika URL tidak cocok dengan salah satu rute yang telah didefinisikan, maka script ini akan mengembalikan kode status 404 dan menampilkan pesan "404 Not Found".
+   ```php
+   else {
+    http_response_code(404);
+    echo "404 Not Found";
+}
+```
+<h2>Cara Penggunaan</h2>
+1. Tempatkan file routes.php ini di direktori root proyek Anda.
+2. Pastikan Anda memiliki file controller yang sesuai (EquipmentController.php) di direktori app/controllers/.
+3. Definisikan metode-metode yang diperlukan (index, create, store, edit, update, dan delete) di dalam kelas EquipmentController.
