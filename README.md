@@ -934,6 +934,7 @@ Menghapus Trainer Berdasarkan ID
 <h3>Create Trainer</h3>
 
 ```html
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -941,7 +942,9 @@ Menghapus Trainer Berdasarkan ID
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Pelatih Baru</title>
+
 ```
+
 <!DOCTYPE html>: Menentukan bahwa dokumen ini menggunakan HTML5.
 
 <html lang="en">: Menandakan bahwa bahasa utama dokumen ini adalah Bahasa Inggris.
@@ -952,7 +955,8 @@ Menghapus Trainer Berdasarkan ID
 
 <title>: Judul halaman, ditampilkan di tab browser.
     
-```css
+```
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -1045,12 +1049,14 @@ Menghapus Trainer Berdasarkan ID
 
 ```
 
-Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan font, serta mengatur elemen seperti:
+
+<h4>Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan font, serta mengatur elemen seperti:
         Body: Warna latar belakang, font, margin, dan padding.
         h2: Heading utama dengan teks di tengah, ukuran, dan warna.
-        Form: Memberikan gaya pada formulir, seperti lebar maksimum, padding, dan bayangan.
+        Form: Memberikan gaya pada formulir, seperti lebar maksimum, padding, dan bayangan.</h4>
         
-`` 
+```
+
 <body>
     <!-- Halaman untuk menambahkan pelatih baru -->
     <h2>Tambah Pelatih Baru</h2>
@@ -1059,6 +1065,7 @@ Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan 
         <!-- Input untuk nama pelatih -->
         <label for="nama">Nama Pelatih:</label>
         <input type="text" id="nama" name="nama" required>
+
 ```
         
 <label>: Memberikan deskripsi untuk input.
@@ -1066,7 +1073,8 @@ Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan 
 required: Membuat kolom input wajib diisi sebelum dikirim.
 merupakan form untuk memasukan nama pelatih
 
-``
+```
+
         <!-- Dropdown untuk spesialisasimemilih spesialisasi dari pelatih -->
         <label for="spesialisasi">Spesialisasi:</label>
         <select name="spesialisasi" id="spesialisasi" required>
@@ -1079,6 +1087,7 @@ merupakan form untuk memasukan nama pelatih
             <option value="Strength Training">Strength Training</option>
             <option value="Personal Training">Personal Training</option>
         </select>
+
     ```
     
     <select>: Membuat dropdown menu untuk memilih spesialisasi.
@@ -1087,11 +1096,15 @@ merupakan form untuk memasukan nama pelatih
     required: Wajib memilih salah satu opsi.
 
 ```php
+
         <!-- Input untuk jadwal -->
         <label for="jadwal">Jadwal Pelatih:</label>
         <input type="text" id="jadwal" name="jadwal" required>
+
 ```
+
 menambahkan jadwal pelatih
+
 ``
         <!-- Tombol Simpan dan Batal -->
         <div class="button-container">
@@ -1102,8 +1115,11 @@ menambahkan jadwal pelatih
 </body>
 
 </html>
+
 ```
+
 button untuk menyimpan dan membatalkan dalam form input pelatih
+
 <h3>Edit Trainer</h3>
 
 ```html
