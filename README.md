@@ -682,7 +682,7 @@ Script ini berfungsi untuk menampilkan daftar member dalam bentuk tabel yang dat
 ```php
     require_once '../app/models/Trainers.php';
 ```
-requice once untuk menyambungkan trainer controler ke trainers.php
+Requice once untuk menyambungkan trainer controler ke trainers.php
 
 ```php
 class TrainerController
@@ -697,7 +697,7 @@ public function __construct()
     $this->trainerModel = new Trainers();
 }
 ```
-digunakan untuk isialisasi properti objek, yaitu mengisi nilai awal pada properti
+Digunakan untuk isialisasi properti objek, yaitu mengisi nilai awal pada properti
 
 ```php
 public function index()
@@ -717,7 +717,7 @@ public function create()
 }
 
 ```
-berfungsi untuk menampilkan tambah trainer
+Berfungsi untuk menampilkan tambah trainer
 ```php
 public function store()
 {
@@ -729,7 +729,7 @@ public function store()
 }
 
 ```
-berfungsi  untuk menyimpan data trainer baru
+Berfungsi  untuk menyimpan data trainer baru
 ```php
 public function edit($id)
 {
@@ -738,7 +738,7 @@ public function edit($id)
 }
 
 ```
-berfungsi menampilkan form edit
+Berfungsi menampilkan form edit
 ```php
 public function update($id)
 {
@@ -756,7 +756,7 @@ public function update($id)
 }
 
 ```
-berfungsi untuk update trainer saat proses edit terjadi
+Berfungsi untuk update trainer saat proses edit terjadi
 
 ```php
 public function delete($id)
@@ -769,7 +769,7 @@ public function delete($id)
     }
 }
 ```
-berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
+Berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
 
 <h3> Full Script Trainer Controller</h3>
 
@@ -855,7 +855,7 @@ class TrainerController
 ```php
 require_once '../config/database.php';
 ```
-mengkoneksikan trainers dengan database
+Script diatas untuk Mengkoneksikan trainers dengan database
 ```php
 class Trainers
 {
@@ -863,7 +863,7 @@ class Trainers
 }
 
 ```
-mengkoneksikan dan menyimpan koneksi database yang diakses oleh class tersebut
+Script diatas mengkoneksikan dan menyimpan koneksi database yang diakses oleh class tersebut
 ```php
 public function __construct()
 {
@@ -871,7 +871,7 @@ public function __construct()
 }
 
 ```
-pemberian nama awal dan mengkoneksikan kedatabase
+Script diatas merupakan pemberian nama awal dan mengkoneksikan kedatabase
 ```php
 public function getAllTrainers()
 {
@@ -880,7 +880,7 @@ public function getAllTrainers()
 }
 
 ```
-mengambil semua data trainers
+Script diatas digunakan mengambil semua data trainers
 ```php
 public function find($id)
 {
