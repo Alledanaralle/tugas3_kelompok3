@@ -941,14 +941,13 @@ Menghapus Trainer Berdasarkan ID
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Pelatih Baru</title>
-
 ```
 
-<!DOCTYPE html>: Menentukan bahwa dokumen ini menggunakan HTML5.
-<html lang="en">: Menandakan bahwa bahasa utama dokumen ini adalah Bahasa Inggris.
-    <meta charset="UTF-8">: Menentukan encoding karakter menjadi UTF-8.
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">: Mengoptimalkan tampilan untuk perangkat seluler dengan skala awal 1.0.
-    <title>: Judul halaman, ditampilkan di tab browser.
+1. !DOCTYPE html: Menentukan bahwa dokumen ini menggunakan HTML5.
+2. html lang="en": Menandakan bahwa bahasa utama dokumen ini adalah Bahasa Inggris.
+3. meta charset="UTF-8" : Menentukan encoding karakter menjadi UTF-8.
+4. meta name="viewport" content="width=device-width, initial-scale=1.0": Mengoptimalkan tampilan untuk perangkat seluler dengan skala awal 1.0.
+5. title: Judul halaman, ditampilkan di tab browser.
     
 ```css
 
@@ -1061,13 +1060,13 @@ Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan 
         <input type="text" id="nama" name="nama" required>
 
 ```
-       
-<label>: Memberikan deskripsi untuk input.
-<input type="text">: Input teks untuk memasukkan nama pelatih.
-required: Membuat kolom input wajib diisi sebelum dikirim.
-merupakan form untuk memasukan nama pelatih
 
-```
+Merupakan form untuk memasukan nama pelatih      
+1. < label >: Memberikan deskripsi untuk input.
+2. < input type="text" >: Input teks untuk memasukkan nama pelatih.
+3. required: Membuat kolom input wajib diisi sebelum dikirim.
+
+```html
 
         <!-- Dropdown untuk spesialisasimemilih spesialisasi dari pelatih -->
         <label for="spesialisasi">Spesialisasi:</label>
@@ -1082,12 +1081,12 @@ merupakan form untuk memasukan nama pelatih
             <option value="Personal Training">Personal Training</option>
         </select>
 
-    ```
+```
 
-    <select>: Membuat dropdown menu untuk memilih spesialisasi.
-    <option>: Memberikan opsi yang dapat dipilih pengguna.
-    disabled selected: Menandai opsi pertama sebagai default (tidak bisa dipilih).
-    required: Wajib memilih salah satu opsi.
+1. < select >: Membuat dropdown menu untuk memilih spesialisasi.
+2. < option >: Memberikan opsi yang dapat dipilih pengguna.
+3. disabled selected: Menandai opsi pertama sebagai default (tidak bisa dipilih).
+4. required: Wajib memilih salah satu opsi.
 
 ```php
 
@@ -1097,9 +1096,9 @@ merupakan form untuk memasukan nama pelatih
 
 ```
 
-menambahkan jadwal pelatih
+Script diatas digunakan untuk menambahkan jadwal pelatih
 
-``
+```html
         <!-- Tombol Simpan dan Batal -->
         <div class="button-container">
             <button type="button" onclick="window.location.href='/trainers/index_trainer';">Batal</button>
