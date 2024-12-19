@@ -2148,62 +2148,64 @@ Digunakan untuk mengatur rute (routing) dalam aplikasi web berbasis PHP. Kode in
    ```php
    $controller = new EquipmentController();
     ```
+   
 2. Menangani URL dan Metode Permintaan
     Script ini memeriksa URL yang masuk dan metode HTTP (GET atau POST) untuk menentukan metode controller mana yang akan dipanggil. $url diambil dari URI permintaan, dan $requestMethod menangkap metode HTTP.
     ```php
-$url = $_SERVER['REQUEST_URI'];
-$requestMethod = $_SERVER['REQUEST_METHOD'];
+    $url = $_SERVER['REQUEST_URI'];
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
     ```
+    
 3. Menentukan Logika Routing
    * Halaman Utama dan Daftar Alat Kebugaran : Jika URL adalah /equipment/index atau /, maka metode index dari controller dipanggil untuk menampilkan daftar alat kebugaran.
      ```php
      if ($url == '/equipment/index' || $url == '/') {
     $controller->index();
-}
+    }
     ```
     * Menambah Alat Kebugaran (Permintaan GET): Jika URL adalah /equipment/create dan metode yang digunakan adalah GET, maka metode create dipanggil untuk menampilkan formulir untuk menambah alat baru.
     ```php
-elseif ($url == '/equipment/create' && $requestMethod == 'GET') {
+    elseif ($url == '/equipment/create' && $requestMethod == 'GET') {
     $controller->create();
-}
+    }
     ```
     * Menyimpan Alat Kebugaran Baru (Permintaan POST): Jika URL adalah /equipment/store dan metode yang digunakan adalah POST, maka metode store dipanggil untuk menyimpan data alat kebugaran yang baru.
-```php
-elseif ($url == '/equipment/store' && $requestMethod == 'POST') {
+    ```php
+    elseif ($url == '/equipment/store' && $requestMethod == 'POST') {
     $controller->store();
-}
-```
+    }
+    ```
     * Mengedit Alat Kebugaran (Permintaan GET): Jika URL sesuai dengan /equipment/edit/{id}, di mana {id} adalah nilai numerik, maka metode edit dipanggil dengan ID alat untuk menampilkan form edit alat tersebut.
     ```php
     elseif (preg_match('/\/equipment\/edit\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $equipmentId = $matches[1];
     $controller->edit($equipmentId);
-}
-```
+    }
+    ```
     * Memperbarui Alat Kebugaran (Permintaan POST): Jika URL sesuai dengan /equipment/update/{id} dan metode yang digunakan adalah POST, maka metode update dipanggil dengan ID alat dan data yang diperbarui.
-```php
-elseif (preg_match('/\/equipment\/update\/(\d+)/', $url, $matches) && $requestMethod == 'POST') {
+    ```php
+    elseif (preg_match('/\/equipment\/update\/(\d+)/', $url, $matches) && $requestMethod == 'POST') {
     $equipmentId = $matches[1];
     $controller->update($equipmentId, $_POST);
-}
-```
+    }
+    ```
     * Menghapus Alat Kebugaran (Permintaan GET): Jika URL sesuai dengan /equipment/delete/{id}, di mana {id} adalah nilai numerik, maka metode delete dipanggil dengan ID alat untuk menghapus alat tersebut.
-```php
-elseif (preg_match('/\/equipment\/delete\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
+    ```php
+    elseif (preg_match('/\/equipment\/delete\/(\d+)/', $url, $matches) && $requestMethod == 'GET') {
     $equipmentId = $matches[1];
     $controller->delete($equipmentId);
-}
-```
+    }
+    ```
+    
 4. 404 Not Found
    Jika URL tidak cocok dengan salah satu rute yang telah didefinisikan, maka script ini akan mengembalikan kode status 404 dan menampilkan pesan "404 Not Found".
    ```php
    else {
     http_response_code(404);
     echo "404 Not Found";
-}
+    }
     ```
-    
-<h2>Cara Penggunaan</h2>
+### Cara Penggunaan
 1. Tempatkan file routes.php ini di direktori root proyek Anda.
 2. Pastikan Anda memiliki file controller yang sesuai (EquipmentController.php) di direktori app/controllers/.
 3. Definisikan metode-metode yang diperlukan (index, create, store, edit, update, dan delete) di dalam kelas EquipmentController.
