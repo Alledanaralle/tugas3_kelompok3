@@ -937,7 +937,6 @@ Menghapus Trainer Berdasarkan ID
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -946,16 +945,12 @@ Menghapus Trainer Berdasarkan ID
 ```
 
 <!DOCTYPE html>: Menentukan bahwa dokumen ini menggunakan HTML5.
-
 <html lang="en">: Menandakan bahwa bahasa utama dokumen ini adalah Bahasa Inggris.
+    <meta charset="UTF-8">: Menentukan encoding karakter menjadi UTF-8.
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">: Mengoptimalkan tampilan untuk perangkat seluler dengan skala awal 1.0.
+    <title>: Judul halaman, ditampilkan di tab browser.
     
-<meta charset="UTF-8">: Menentukan encoding karakter menjadi UTF-8.
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">: Mengoptimalkan tampilan untuk perangkat seluler dengan skala awal 1.0.
-
-<title>: Judul halaman, ditampilkan di tab browser.
-    
-```
+```css
 
     <style>
         body {
@@ -1049,13 +1044,12 @@ Menghapus Trainer Berdasarkan ID
 
 ```
 
-
-<h4>Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan font, serta mengatur elemen seperti:
+Gaya di atas mencakup tampilan halaman, seperti latar belakang, warna teks, dan font, serta mengatur elemen seperti:
         Body: Warna latar belakang, font, margin, dan padding.
         h2: Heading utama dengan teks di tengah, ukuran, dan warna.
-        Form: Memberikan gaya pada formulir, seperti lebar maksimum, padding, dan bayangan.</h4>
+        Form: Memberikan gaya pada formulir, seperti lebar maksimum, padding, dan bayangan.
         
-```
+```html
 
 <body>
     <!-- Halaman untuk menambahkan pelatih baru -->
@@ -1067,7 +1061,7 @@ Menghapus Trainer Berdasarkan ID
         <input type="text" id="nama" name="nama" required>
 
 ```
-        
+       
 <label>: Memberikan deskripsi untuk input.
 <input type="text">: Input teks untuk memasukkan nama pelatih.
 required: Membuat kolom input wajib diisi sebelum dikirim.
@@ -1089,7 +1083,7 @@ merupakan form untuk memasukan nama pelatih
         </select>
 
     ```
-    
+
     <select>: Membuat dropdown menu untuk memilih spesialisasi.
     <option>: Memberikan opsi yang dapat dipilih pengguna.
     disabled selected: Menandai opsi pertama sebagai default (tidak bisa dipilih).
