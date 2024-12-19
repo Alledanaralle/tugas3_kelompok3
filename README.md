@@ -2147,26 +2147,26 @@ Digunakan untuk mengatur rute (routing) dalam aplikasi web berbasis PHP. Kode in
    Membuat instansi dari kelas EquipmentController yang akan digunakan untuk memanggil metode-metode sesuai dengan permintaan yang datang.
    ```php
    $controller = new EquipmentController();
-```
+    ```
 2. Menangani URL dan Metode Permintaan
     Script ini memeriksa URL yang masuk dan metode HTTP (GET atau POST) untuk menentukan metode controller mana yang akan dipanggil. $url diambil dari URI permintaan, dan $requestMethod menangkap metode HTTP.
-```php
+    ```php
 $url = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
-```
+    ```
 3. Menentukan Logika Routing
    * Halaman Utama dan Daftar Alat Kebugaran : Jika URL adalah /equipment/index atau /, maka metode index dari controller dipanggil untuk menampilkan daftar alat kebugaran.
      ```php
      if ($url == '/equipment/index' || $url == '/') {
     $controller->index();
 }
-```
+    ```
     * Menambah Alat Kebugaran (Permintaan GET): Jika URL adalah /equipment/create dan metode yang digunakan adalah GET, maka metode create dipanggil untuk menampilkan formulir untuk menambah alat baru.
-```php
+    ```php
 elseif ($url == '/equipment/create' && $requestMethod == 'GET') {
     $controller->create();
 }
-```
+    ```
     * Menyimpan Alat Kebugaran Baru (Permintaan POST): Jika URL adalah /equipment/store dan metode yang digunakan adalah POST, maka metode store dipanggil untuk menyimpan data alat kebugaran yang baru.
 ```php
 elseif ($url == '/equipment/store' && $requestMethod == 'POST') {
