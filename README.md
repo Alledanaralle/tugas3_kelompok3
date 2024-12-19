@@ -1,6 +1,10 @@
 # tugas3_kelompok3
 ## Praktikum Pemgrograman Web 2 - Politeknik Negeri Cilacap
-
+Nama kelompok : <br>
+1. Christian Raditya Danaralle (230202056)
+2. Eka Wulan Yuniarsih (230202059)
+3. Luthfiana Putri Salsabila (230302066)
+4. Mayang Maharani (230202067)
 ## Informasi Umum
 
 Proyek ini merupakan bagian dari Tugas Praktikum Pemrograman Web 2 pada mata kuliah Praktikum Pemgrograman Web 2
@@ -77,144 +81,8 @@ mvc-sample/
         Tabel Members digunakan untuk menyimpan data anggota yang terdaftar di fasilitas kebugaran. Data yang dikelola mencakup nama anggota, usia, jenis kelamin, dan jenis          paket langganan yang dipilih.
         Fitur ini dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data anggota. Pengguna dapat menambahkan anggota baru, melihat            daftar anggota yang terdaftar, memperbarui informasi jika ada perubahan, dan menghapus data anggota yang sudah tidak aktif.
         Tabel ini dirancang untuk mendukung pengelolaan data secara efisien dan memastikan semua informasi terkait anggota tercatat dengan baik. <br>
-        <h3>Controller</h3><hr>
-        
-```php
-        <?php
-        // app/controllers/memberController.php
-        require_once '../app/models/member.php';
-        class MemberController {
-        private $memberModel;
- ````
-        
-Kode ini mendefinisikan MemberController, yang mengelola logika fitur anggota dalam MVC. Model Member disertakan untuk mengakses data, dan properti $memberModel             digunakan sebagai penghubung ke model, diinisialisasi melalui konstruktor
-```php
-public function __construct() {
-    $this->memberModel = new Member();
-}
-
-```
-Menginisialisasi objek model Member, yang digunakan untuk berinteraksi dengan data anggota di basis data.
-```php
-public function index() {
-    $member = $this->memberModel->getAllMember();
-    require_once '../app/views/member/index_member.php';
-}
-
-```
-Mengambil seluruh data anggota menggunakan method getAllMember() dari model, dan memuat view index_member.php untuk menampilkan daftar anggota.
-
-```php
-public function create() {
-    require_once '../app/views/member/create_member.php';
-}
-```
-Memuat form view create_member.php untuk menambahkan anggota baru.
-```php
-public function store() {
-    $id_member = $_POST['id_member'];
-    $nama = $_POST['nama'];
-    $usia = $_POST['usia'];
-    $jenis_kelamin = $_POST['jenis_kelamin'];
-    $paket_langganan = $_POST['paket_langganan'];
-    $this->memberModel->add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan);
-    header('Location: /member/index_member');
-}
-```
-Fungsi `store()` dalam script ini bertanggung jawab untuk menangani permintaan yang mengirimkan data anggota baru melalui metode POST. Fungsi ini dimulai dengan mengambil nilai yang dikirimkan melalui form (menggunakan metode `$_POST`) untuk lima atribut data anggota, yaitu: `id_member`, `nama`, `usia`, `jenis_kelamin`, dan `paket_langganan`.
-Setelah data diperoleh, fungsi ini memanggil metode `add()` dari model `memberModel`, yang berfungsi untuk menyimpan data anggota baru ke dalam database. Data yang diambil dari form (seperti ID anggota, nama, usia, jenis kelamin, dan paket langganan) diteruskan sebagai argumen ke dalam metode `add()` tersebut.
-Setelah data berhasil disimpan, fungsi ini menggunakan perintah `header('Location: /member/index_member')` untuk mengarahkan (redirect) pengguna kembali ke halaman daftar anggota (`/member/index_member`). Hal ini memastikan pengguna melihat daftar anggota yang sudah diperbarui setelah menambahkan anggota baru.
-```php
-public function edit($id_member) {
-    $member = $this->memberModel->find($id_member);
-    require_once __DIR__ . '/../views/member/edit_member.php';
-}
-```
-Fungsi `edit($id_member)` mengambil data anggota berdasarkan ID yang diberikan menggunakan metode `find()` dari model `memberModel`. Setelah itu, data anggota dimuat ke dalam tampilan `edit_member.php`, yang memungkinkan pengguna untuk mengedit informasi anggota tersebut.
-```php
-public function update($id_member, $data) {
-    $updated = $this->memberModel->update($id_member, $data);
-    if ($updated) {
-        header("Location: /member/index_member");
-    } else {
-        echo "Failed to update member.";
-    }
-}
-```
-Fungsi `update($id_member, $data)` bertanggung jawab untuk memperbarui data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `update()` dari model `memberModel` untuk memperbarui data anggota di database. Jika pembaruan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
-```php
-public function delete($id_member) {
-    $deleted = $this->memberModel->delete($id_member);
-    if ($deleted) {
-        header("Location: /member/index_member");
-    } else {
-        echo "Failed to delete member.";
-    }
-}
-```
-Fungsi `delete($id_member)` bertugas untuk menghapus data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `delete()` dari model `memberModel` untuk menghapus anggota dari database. Jika penghapusan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
-<h3>Full Script Controller</h3><hr>
-
-```php
-
-<?php
-// app/controllers/memberController.php
-require_once '../app/models/member.php';
-
-class MemberController {
-    private $memberModel;
-
-    public function __construct() {
-        $this->memberModel = new Member();
-    }
-
-    public function index() {
-        $member = $this->memberModel->getAllMember();
-        require_once '../app/views/member/index_member.php';
-
-    }
-
-    public function create() {
-        require_once '../app/views/member/create_member.php';
-    }
-
-    public function store() {
-        $id_member = $_POST['id_member'];
-        $nama = $_POST['nama'];
-        $usia = $_POST['usia'];
-        $jenis_kelamin = $_POST['jenis_kelamin'];
-        $paket_langganan = $_POST['paket_langganan'];
-        $this->memberModel->add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan);
-        header('Location: /member/index_member');
-    }
-    // Show the edit form with the member data
-    public function edit($id_member) {
-        $member = $this->memberModel->find($id_member); // Assume find() gets member by ID
-        require_once __DIR__ . '/../views/member/edit_member.php';
-    }
-
-    // Process the update request
-    public function update($id_member, $data) {
-        $updated = $this->memberModel->update($id_member, $data);
-        if ($updated) {
-            header("Location: /member/index_member"); // Redirect to member list
-        } else {
-            echo "Failed to update member.";
-        }
-    }
-
-    // Process delete request
-    public function delete($id_member) {
-        $deleted = $this->memberModel->delete($id_member);
-        if ($deleted) {
-            header("Location: /member/index_member"); // Redirect to member list
-        } else {
-            echo "Failed to delete member.";
-        }
-    }
-
-```
-
+       
+<h3>Konsep MVC</h3>
 <h3>Models</h3><hr>
 
 ```php
@@ -673,184 +541,150 @@ Script ini menampilkan antarmuka daftar member dengan desain menggunakan kompone
     </div>
 ```
 Script ini berfungsi untuk menampilkan daftar member dalam bentuk tabel yang datanya diambil secara dinamis menggunakan PHP melalui loop foreach. Setiap baris tabel merepresentasikan satu member, dengan informasi yang meliputi ID Member, Nama, Usia, Jenis Kelamin, dan Paket Langganan. Di kolom terakhir, terdapat dua tombol aksi: tombol edit yang mengarahkan ke halaman pengeditan member berdasarkan ID-nya dan tombol hapus yang disertai konfirmasi untuk menghindari penghapusan yang tidak disengaja. Tabel ini dirancang responsif agar tetap mudah diakses pada berbagai ukuran layar, dan di bagian bawah terdapat tombol navigasi untuk kembali ke dashboard utama.
- <h2>2. Trainers </h2>
-        Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
-        Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru,               melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi          aktif.
-        Tabel ini dirancang untuk memastikan semua informasi terkait pelatih kebugaran tersimpan dengan terorganisir dan mudah diakses sesuai kebutuhan. <br>
-    <h3>Trainer Controller</h3>
-    
+ <h3>Controller</h3><hr>
+        
 ```php
-    require_once '../app/models/Trainers.php';
-```
-Requice once untuk menyambungkan trainer controler ke trainers.php
-
+        <?php
+        // app/controllers/memberController.php
+        require_once '../app/models/member.php';
+        class MemberController {
+        private $memberModel;
+ ````
+        
+Kode ini mendefinisikan MemberController, yang mengelola logika fitur anggota dalam MVC. Model Member disertakan untuk mengakses data, dan properti $memberModel             digunakan sebagai penghubung ke model, diinisialisasi melalui konstruktor
 ```php
-class TrainerController
-{
-    private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
-}
-```
-Properti untuk menyimpan instance dari model Trainers dan bersifat private dan hanya dapat diakses oleh class tersebut
-```php
-public function __construct()
-{
-    $this->trainerModel = new Trainers();
-}
-```
-Digunakan untuk isialisasi properti objek, yaitu mengisi nilai awal pada properti
-
-```php
-public function index()
-{
-    $trainers = $this->trainerModel->getAllTrainers();
-    require_once '../app/views/trainers/index_trainer.php';
+public function __construct() {
+    $this->memberModel = new Member();
 }
 
 ```
-Fungsi ini mengambil data semua Trainer menggunakan metode getAllTrainers() dari model Trainers.
-Data tersebut dikirimkan ke View index_trainer.php, yang digunakan untuk menampilkan daftar trainer.
-
+Menginisialisasi objek model Member, yang digunakan untuk berinteraksi dengan data anggota di basis data.
 ```php
-public function create()
-{
-    require_once '../app/views/trainers/create_trainer.php';
+public function index() {
+    $member = $this->memberModel->getAllMember();
+    require_once '../app/views/member/index_member.php';
 }
 
 ```
-Berfungsi untuk menampilkan tambah trainer
-```php
-public function store()
-{
-    $name = $_POST['nama'];
-    $specialization = $_POST['spesialisasi'];
-    $schedule = $_POST['jadwal'];
-    $this->trainerModel->add($name, $specialization, $schedule);
-    header('Location: /trainers/index_trainer');
-}
+Mengambil seluruh data anggota menggunakan method getAllMember() dari model, dan memuat view index_member.php untuk menampilkan daftar anggota.
 
-```
-Berfungsi  untuk menyimpan data trainer baru
 ```php
-public function edit($id)
-{
-    $trainer = $this->trainerModel->find($id);
-    require_once __DIR__ . '/../views/trainers/edit_trainer.php';
+public function create() {
+    require_once '../app/views/member/create_member.php';
 }
-
 ```
-Berfungsi menampilkan form edit
+Memuat form view create_member.php untuk menambahkan anggota baru.
 ```php
-public function update($id)
-{
-    $data = [
-        'nama' => $_POST['nama'],
-        'spesialisasi' => $_POST['spesialisasi'],
-        'jadwal' => $_POST['jadwal'],
-    ];
-    $updated = $this->trainerModel->update($id, $data);
+public function store() {
+    $id_member = $_POST['id_member'];
+    $nama = $_POST['nama'];
+    $usia = $_POST['usia'];
+    $jenis_kelamin = $_POST['jenis_kelamin'];
+    $paket_langganan = $_POST['paket_langganan'];
+    $this->memberModel->add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan);
+    header('Location: /member/index_member');
+}
+```
+Fungsi `store()` dalam script ini bertanggung jawab untuk menangani permintaan yang mengirimkan data anggota baru melalui metode POST. Fungsi ini dimulai dengan mengambil nilai yang dikirimkan melalui form (menggunakan metode `$_POST`) untuk lima atribut data anggota, yaitu: `id_member`, `nama`, `usia`, `jenis_kelamin`, dan `paket_langganan`.
+Setelah data diperoleh, fungsi ini memanggil metode `add()` dari model `memberModel`, yang berfungsi untuk menyimpan data anggota baru ke dalam database. Data yang diambil dari form (seperti ID anggota, nama, usia, jenis kelamin, dan paket langganan) diteruskan sebagai argumen ke dalam metode `add()` tersebut.
+Setelah data berhasil disimpan, fungsi ini menggunakan perintah `header('Location: /member/index_member')` untuk mengarahkan (redirect) pengguna kembali ke halaman daftar anggota (`/member/index_member`). Hal ini memastikan pengguna melihat daftar anggota yang sudah diperbarui setelah menambahkan anggota baru.
+```php
+public function edit($id_member) {
+    $member = $this->memberModel->find($id_member);
+    require_once __DIR__ . '/../views/member/edit_member.php';
+}
+```
+Fungsi `edit($id_member)` mengambil data anggota berdasarkan ID yang diberikan menggunakan metode `find()` dari model `memberModel`. Setelah itu, data anggota dimuat ke dalam tampilan `edit_member.php`, yang memungkinkan pengguna untuk mengedit informasi anggota tersebut.
+```php
+public function update($id_member, $data) {
+    $updated = $this->memberModel->update($id_member, $data);
     if ($updated) {
-        header("Location: /trainers/index_trainer");
+        header("Location: /member/index_member");
     } else {
-        echo "Failed to update trainer.";
+        echo "Failed to update member.";
     }
 }
-
 ```
-Berfungsi untuk update trainer saat proses edit terjadi
-
+Fungsi `update($id_member, $data)` bertanggung jawab untuk memperbarui data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `update()` dari model `memberModel` untuk memperbarui data anggota di database. Jika pembaruan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
 ```php
-public function delete($id)
-{
-    $deleted = $this->trainerModel->delete($id);
+public function delete($id_member) {
+    $deleted = $this->memberModel->delete($id_member);
     if ($deleted) {
-        header("Location: /trainers/index_trainer");
+        header("Location: /member/index_member");
     } else {
-        echo "Failed to delete trainer.";
+        echo "Failed to delete member.";
     }
 }
 ```
-Berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
-
-<h3> Full Script Trainer Controller</h3>
+Fungsi `delete($id_member)` bertugas untuk menghapus data anggota berdasarkan ID yang diberikan. Fungsi ini memanggil metode `delete()` dari model `memberModel` untuk menghapus anggota dari database. Jika penghapusan berhasil, pengguna akan diarahkan kembali ke halaman daftar anggota. Jika gagal, pesan error akan ditampilkan.
+<h3>Full Script Controller</h3><hr>
 
 ```php
 
 <?php
-// app/controllers/TrainerController.php
-// Memuat file model Trainers untuk digunakan dalam controller ini
-require_once '../app/models/Trainers.php';// Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
+// app/controllers/memberController.php
+require_once '../app/models/member.php';
 
-class TrainerController
-{
-    private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
+class MemberController {
+    private $memberModel;
 
-    // Konstruktor untuk menginisialisasi model Trainers
-    public function __construct()
-    {
-        $this->trainerModel = new Trainers();
+    public function __construct() {
+        $this->memberModel = new Member();
     }
 
-    // Metode untuk menampilkan daftar semua trainer
-    public function index()
-    {
-        $trainers = $this->trainerModel->getAllTrainers(); // Mengambil semua data trainer dari model
-        require_once '../app/views/trainers/index_trainer.php'; // Memuat view untuk menampilkan daftar trainer
+    public function index() {
+        $member = $this->memberModel->getAllMember();
+        require_once '../app/views/member/index_member.php';
+
     }
 
-    // Metode untuk menampilkan form tambah trainer
-    public function create()
-    {
-        require_once '../app/views/trainers/create_trainer.php'; // Memuat view form untuk menambahkan trainer baru
+    public function create() {
+        require_once '../app/views/member/create_member.php';
     }
 
-    // Metode untuk memproses data dari form tambah trainer dan menyimpannya ke database
-    public function store()
-    {
-        $name = $_POST['nama']; // Mengambil data nama dari form
-        $specialization = $_POST['spesialisasi']; // Mengambil data spesialisasi dari form
-        $schedule = $_POST['jadwal']; // Mengambil data jadwal dari form
-        $this->trainerModel->add($name, $specialization, $schedule); // Menambahkan data trainer ke database melalui model
-        header('Location: /trainers/index_trainer'); // Mengarahkan kembali ke halaman daftar trainer
+    public function store() {
+        $id_member = $_POST['id_member'];
+        $nama = $_POST['nama'];
+        $usia = $_POST['usia'];
+        $jenis_kelamin = $_POST['jenis_kelamin'];
+        $paket_langganan = $_POST['paket_langganan'];
+        $this->memberModel->add($id_member, $nama, $usia, $jenis_kelamin, $paket_langganan);
+        header('Location: /member/index_member');
+    }
+    // Show the edit form with the member data
+    public function edit($id_member) {
+        $member = $this->memberModel->find($id_member); // Assume find() gets member by ID
+        require_once __DIR__ . '/../views/member/edit_member.php';
     }
 
-    // Menampilkan form edit dengan data trainer berdasarkan ID
-    public function edit($id)
-    {
-        $trainer = $this->trainerModel->find($id); // Mengambil data trainer berdasarkan ID
-        require_once __DIR__ . '/../views/trainers/edit_trainer.php'; // Memuat view form edit
-    }
-
-    // Memproses permintaan update data trainer
-    public function update($id)
-    {
-        $data = [
-            'nama' => $_POST['nama'], // Mengambil data nama dari form
-            'spesialisasi' => $_POST['spesialisasi'], // Mengambil data spesialisasi dari form
-            'jadwal' => $_POST['jadwal'], // Mengambil data jadwal dari form
-        ];
-        $updated = $this->trainerModel->update($id, $data); // Mengupdate data trainer melalui model
+    // Process the update request
+    public function update($id_member, $data) {
+        $updated = $this->memberModel->update($id_member, $data);
         if ($updated) {
-            header("Location: /trainers/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
+            header("Location: /member/index_member"); // Redirect to member list
         } else {
-            echo "Failed to update trainer."; // Menampilkan pesan error jika gagal
+            echo "Failed to update member.";
         }
     }
 
-    // Memproses permintaan untuk menghapus data trainer
-    public function delete($id)
-    {
-        $deleted = $this->trainerModel->delete($id); // Menghapus data trainer berdasarkan ID melalui model
+    // Process delete request
+    public function delete($id_member) {
+        $deleted = $this->memberModel->delete($id_member);
         if ($deleted) {
-            header("Location: /trainers/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
+            header("Location: /member/index_member"); // Redirect to member list
         } else {
-            echo "Failed to delete trainer."; // Menampilkan pesan error jika gagal
+            echo "Failed to delete member.";
         }
     }
-}
 
 ```
-<h3>Models Trainers</h3>
+ <h2>2. Trainers </h2>
+        Tabel Trainers digunakan untuk menyimpan data pelatih kebugaran yang bekerja di fasilitas tersebut. Informasi yang dicatat meliputi nama pelatih, spesialisasi yang           dimiliki (misalnya yoga, angkat beban, atau kardio), dan jadwal kerja mereka.
+        Fitur ini juga dilengkapi dengan fungsi CRUD (Create, Read, Update, Delete) untuk memudahkan pengelolaan data pelatih. Pengguna dapat menambahkan pelatih baru,               melihat daftar pelatih yang sudah terdaftar, memperbarui informasi seperti spesialisasi atau jadwal jika ada perubahan, serta menghapus data pelatih yang tidak lagi          aktif.
+        Tabel ini dirancang untuk memastikan semua informasi terkait pelatih kebugaran tersimpan dengan terorganisir dan mudah diakses sesuai kebutuhan. <br>
 
+<h3>Konsep MVC</h3>
+<h3>Models Trainers</h3>
 
 ```php
 require_once '../config/database.php';
@@ -891,7 +725,7 @@ public function find($id)
 }
 
 ```
-pencarian trainers berdasarkan id
+Script diatas merupakan pencarian trainers berdasarkan id
 ```php
 public function add($name, $specialization, $schedule)
 {
@@ -903,7 +737,7 @@ public function add($name, $specialization, $schedule)
 }
 
 ```
-menambahkan trainer baru berisi nama, spesialisasi, dan jadwal
+Script diatas menambahkan trainer baru berisi nama, spesialisasi, dan jadwal
 ```php
 public function update($id, $data)
 {
@@ -917,7 +751,7 @@ public function update($id, $data)
 }
 
 ```
-melakukan update data dimana saat proses update data awal tidak hilang
+Script diatas melakukan update data dimana saat proses update data awal tidak hilang
 
 ```php
 public function delete($id)
@@ -928,8 +762,8 @@ public function delete($id)
     return $stmt->execute(); // Menjalankan query dan mengembalikan status eksekusi
 }
 ```
+Script diatas berfungsi menghapus Trainer Berdasarkan ID
 
-Menghapus Trainer Berdasarkan ID
 <h3>View</h3>
 <h3>Create Trainer</h3>
 
@@ -1454,99 +1288,184 @@ a:hover {
 </html>
 
 ```
+<h3>Trainer Controller</h3>
+    
+```php
+    require_once '../app/models/Trainers.php';
+```
+Requice once untuk menyambungkan trainer controler ke trainers.php
+
+```php
+class TrainerController
+{
+    private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
+}
+```
+Properti untuk menyimpan instance dari model Trainers dan bersifat private dan hanya dapat diakses oleh class tersebut
+```php
+public function __construct()
+{
+    $this->trainerModel = new Trainers();
+}
+```
+Digunakan untuk isialisasi properti objek, yaitu mengisi nilai awal pada properti
+
+```php
+public function index()
+{
+    $trainers = $this->trainerModel->getAllTrainers();
+    require_once '../app/views/trainers/index_trainer.php';
+}
+
+```
+Fungsi ini mengambil data semua Trainer menggunakan metode getAllTrainers() dari model Trainers.
+Data tersebut dikirimkan ke View index_trainer.php, yang digunakan untuk menampilkan daftar trainer.
+
+```php
+public function create()
+{
+    require_once '../app/views/trainers/create_trainer.php';
+}
+
+```
+Berfungsi untuk menampilkan tambah trainer
+```php
+public function store()
+{
+    $name = $_POST['nama'];
+    $specialization = $_POST['spesialisasi'];
+    $schedule = $_POST['jadwal'];
+    $this->trainerModel->add($name, $specialization, $schedule);
+    header('Location: /trainers/index_trainer');
+}
+
+```
+Berfungsi  untuk menyimpan data trainer baru
+```php
+public function edit($id)
+{
+    $trainer = $this->trainerModel->find($id);
+    require_once __DIR__ . '/../views/trainers/edit_trainer.php';
+}
+
+```
+Berfungsi menampilkan form edit
+```php
+public function update($id)
+{
+    $data = [
+        'nama' => $_POST['nama'],
+        'spesialisasi' => $_POST['spesialisasi'],
+        'jadwal' => $_POST['jadwal'],
+    ];
+    $updated = $this->trainerModel->update($id, $data);
+    if ($updated) {
+        header("Location: /trainers/index_trainer");
+    } else {
+        echo "Failed to update trainer.";
+    }
+}
+
+```
+Berfungsi untuk update trainer saat proses edit terjadi
+
+```php
+public function delete($id)
+{
+    $deleted = $this->trainerModel->delete($id);
+    if ($deleted) {
+        header("Location: /trainers/index_trainer");
+    } else {
+        echo "Failed to delete trainer.";
+    }
+}
+```
+Berfungsi menghapus trainers apabila pelatih sudah tidak aktif atau keluar
+
+<h3> Full Script Trainer Controller</h3>
+
+```php
+
+<?php
+// app/controllers/TrainerController.php
+// Memuat file model Trainers untuk digunakan dalam controller ini
+require_once '../app/models/Trainers.php';// Deklarasi kelas TrainerController yang bertanggung jawab untuk mengatur logika aplikasi terkait trainer
+
+class TrainerController
+{
+    private $trainerModel; // Properti untuk menyimpan instance dari model Trainers
+
+    // Konstruktor untuk menginisialisasi model Trainers
+    public function __construct()
+    {
+        $this->trainerModel = new Trainers();
+    }
+
+    // Metode untuk menampilkan daftar semua trainer
+    public function index()
+    {
+        $trainers = $this->trainerModel->getAllTrainers(); // Mengambil semua data trainer dari model
+        require_once '../app/views/trainers/index_trainer.php'; // Memuat view untuk menampilkan daftar trainer
+    }
+
+    // Metode untuk menampilkan form tambah trainer
+    public function create()
+    {
+        require_once '../app/views/trainers/create_trainer.php'; // Memuat view form untuk menambahkan trainer baru
+    }
+
+    // Metode untuk memproses data dari form tambah trainer dan menyimpannya ke database
+    public function store()
+    {
+        $name = $_POST['nama']; // Mengambil data nama dari form
+        $specialization = $_POST['spesialisasi']; // Mengambil data spesialisasi dari form
+        $schedule = $_POST['jadwal']; // Mengambil data jadwal dari form
+        $this->trainerModel->add($name, $specialization, $schedule); // Menambahkan data trainer ke database melalui model
+        header('Location: /trainers/index_trainer'); // Mengarahkan kembali ke halaman daftar trainer
+    }
+
+    // Menampilkan form edit dengan data trainer berdasarkan ID
+    public function edit($id)
+    {
+        $trainer = $this->trainerModel->find($id); // Mengambil data trainer berdasarkan ID
+        require_once __DIR__ . '/../views/trainers/edit_trainer.php'; // Memuat view form edit
+    }
+
+    // Memproses permintaan update data trainer
+    public function update($id)
+    {
+        $data = [
+            'nama' => $_POST['nama'], // Mengambil data nama dari form
+            'spesialisasi' => $_POST['spesialisasi'], // Mengambil data spesialisasi dari form
+            'jadwal' => $_POST['jadwal'], // Mengambil data jadwal dari form
+        ];
+        $updated = $this->trainerModel->update($id, $data); // Mengupdate data trainer melalui model
+        if ($updated) {
+            header("Location: /trainers/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
+        } else {
+            echo "Failed to update trainer."; // Menampilkan pesan error jika gagal
+        }
+    }
+
+    // Memproses permintaan untuk menghapus data trainer
+    public function delete($id)
+    {
+        $deleted = $this->trainerModel->delete($id); // Menghapus data trainer berdasarkan ID melalui model
+        if ($deleted) {
+            header("Location: /trainers/index_trainer"); // Mengarahkan kembali ke halaman daftar trainer jika berhasil
+        } else {
+            echo "Failed to delete trainer."; // Menampilkan pesan error jika gagal
+        }
+    }
+}
+
+```
  <h2>3. Workout Classes</h2>
         Tabel Workout Classes berfungsi untuk menyimpan data terkait kelas latihan kebugaran yang tersedia di fasilitas tersebut. Setiap baris dalam tabel ini mencatat               informasi tentang nama kelas, waktu kelas, pelatih yang bertanggung jawab, dan kuota peserta yang dapat mengikuti kelas tersebut.
         Tabel ini dilengkapi dengan fitur CRUD (Create, Read, Update, Delete) untuk mengelola jadwal kelas kebugaran. Pengguna dapat menambahkan kelas baru, melihat daftar           kelas yang tersedia, memperbarui jadwal atau informasi kelas, dan menghapus kelas yang sudah tidak diperlukan.
         Ada relasi antara tabel Workout Classes dan tabel Trainers melalui kolom ID pelatih. Hubungan ini memungkinkan setiap kelas untuk dihubungkan dengan pelatih yang             mengajarnya, sehingga memudahkan pengelolaan jadwal kelas berdasarkan pelatih.
         Dengan adanya relasi ini, sistem dapat mengatur siapa pelatih yang menangani kelas tersebut, serta memastikan bahwa kuota peserta untuk setiap kelas tercatat dengan          baik.
-<h3>Controllers</h3><hr>
-
-```php
-require_once '../app/models/User.php';
-```
-Mengimpor file User.php, yang berisi definisi model User. File ini digunakan untuk berinteraksi dengan data (misalnya, mengakses database).
-```php
-class UserController {
-    private $userModel;
-```
-Mendefinisikan kelas UserController, yang bertanggung jawab menangani logika aplikasi (Controller dalam MVC) dan $userModel Properti private yang digunakan untuk mengakses model Workout_Classes.
-```php
-public function __construct() {
-    $this->userModel = new Workout_Classes();
-}
-```
-Konstruktor ini dijalankan otomatis saat objek UserController dibuat dan Menginisialisasi properti $userModel dengan instance dari Workout_Classes.
-```php
-public function index() {
-    $users = $this->userModel->getAllClasses();
-    require_once '../app/views/user/index.php';
-}
-```
-Mengambil semua data kelas menggunakan getAllClasses dari model dan Menampilkan halaman index.php yang ada di folder views/user dengan data kelas.
-```php
-public function dashboard() {
-    $totalClasses = $this->userModel->getTotalClass();
-    $totalTrainers = $this->userModel->getTotalTrainers();
-    $totalMembers = $this->userModel->getTotalMembers();
-    $totalEquipments = $this->userModel->getTotalEquipment();
-    $latestMembers = $this->userModel->getLatestMembers();
-    $popularClasses = $this->userModel->getPopularClasses();
-    $equipmentStatus = $this->userModel->getEquipmentStatus();
-    require_once '../app/views/dashboard.php';
-}
-```
-Mengambil berbagai data statistik (kelas, pelatih, anggota, peralatan) dari model Workout_Classes dan
-Menampilkan data tersebut pada halaman dashboard.php.
-```php
-public function create() {
-    $trainers = $this->userModel->getAllTrainers();
-    require_once '../app/views/user/create.php';
-}
-```
-Mengambil daftar pelatih dari model Workout_Classes menggunakan getAllTrainers dan Menampilkan form pembuatan kelas pada halaman create.php.
-```php
-public function store() {
-    $nama_kelas = $_POST['nama_kelas'];
-    $id_class = $_POST['id_class'];
-    $waktu = $_POST['waktu'];
-    $id_trainer = $_POST['id_trainer'];
-    $kuota = $_POST['kuota'];
-    $this->userModel->add($id_class,$nama_kelas, $waktu, $id_trainer, $kuota);
-    header('Location: /user/index');
-}
-```
-Mengambil data dari form (POST), kemudian menyimpan data ke database dengan memanggil method add pada model dan
-mengarahkan pengguna ke halaman daftar user (/user/index) setelah data berhasil disimpan.
-```php
-public function edit($id_class) {
-    $user = $this->userModel->find($id_class); 
-    $trainers = $this->userModel->getAllTrainers();
-    require_once __DIR__ . '/../views/user/edit.php';
-}
-```
-Mengambil data kelas berdasarkan id_class menggunakan method find, dan mengambil daftar pelatih untuk ditampilkan di form edit. Kemudian, menampilkan halaman edit.php dengan data kelas dan pelatih.
-```php
-public function update($id_class, $data) {
-    $updated = $this->userModel->update($id_class, $data);
-    if ($updated) {
-        header("Location: /user/index");
-    } else {
-        echo "Failed to update user.";
-    }
-}
-```
-Memperbarui data kelas berdasarkan id_class menggunakan method update pada model dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
-```php
-public function delete($id_class) {
-    $deleted = $this->userModel->delete($id_class);
-    if ($deleted) {
-        header("Location: /user/index");
-    } else {
-        echo "Failed to delete user.";
-    }
-}
-```
-Menghapus data kelas berdasarkan id_class menggunakan method delete dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
+<h3>Konsep MVC </h3>
 <h3>Models</h3><hr>
 
 ```php
@@ -1862,6 +1781,94 @@ Dua tombol untuk membatalkan perubahan atau menyimpan perubahan yang dilakukan.
 </html>
 
 ```
+<h3>Controllers</h3><hr>
+
+```php
+require_once '../app/models/User.php';
+```
+Mengimpor file User.php, yang berisi definisi model User. File ini digunakan untuk berinteraksi dengan data (misalnya, mengakses database).
+```php
+class UserController {
+    private $userModel;
+```
+Mendefinisikan kelas UserController, yang bertanggung jawab menangani logika aplikasi (Controller dalam MVC) dan $userModel Properti private yang digunakan untuk mengakses model Workout_Classes.
+```php
+public function __construct() {
+    $this->userModel = new Workout_Classes();
+}
+```
+Konstruktor ini dijalankan otomatis saat objek UserController dibuat dan Menginisialisasi properti $userModel dengan instance dari Workout_Classes.
+```php
+public function index() {
+    $users = $this->userModel->getAllClasses();
+    require_once '../app/views/user/index.php';
+}
+```
+Mengambil semua data kelas menggunakan getAllClasses dari model dan Menampilkan halaman index.php yang ada di folder views/user dengan data kelas.
+```php
+public function dashboard() {
+    $totalClasses = $this->userModel->getTotalClass();
+    $totalTrainers = $this->userModel->getTotalTrainers();
+    $totalMembers = $this->userModel->getTotalMembers();
+    $totalEquipments = $this->userModel->getTotalEquipment();
+    $latestMembers = $this->userModel->getLatestMembers();
+    $popularClasses = $this->userModel->getPopularClasses();
+    $equipmentStatus = $this->userModel->getEquipmentStatus();
+    require_once '../app/views/dashboard.php';
+}
+```
+Mengambil berbagai data statistik (kelas, pelatih, anggota, peralatan) dari model Workout_Classes dan
+Menampilkan data tersebut pada halaman dashboard.php.
+```php
+public function create() {
+    $trainers = $this->userModel->getAllTrainers();
+    require_once '../app/views/user/create.php';
+}
+```
+Mengambil daftar pelatih dari model Workout_Classes menggunakan getAllTrainers dan Menampilkan form pembuatan kelas pada halaman create.php.
+```php
+public function store() {
+    $nama_kelas = $_POST['nama_kelas'];
+    $id_class = $_POST['id_class'];
+    $waktu = $_POST['waktu'];
+    $id_trainer = $_POST['id_trainer'];
+    $kuota = $_POST['kuota'];
+    $this->userModel->add($id_class,$nama_kelas, $waktu, $id_trainer, $kuota);
+    header('Location: /user/index');
+}
+```
+Mengambil data dari form (POST), kemudian menyimpan data ke database dengan memanggil method add pada model dan
+mengarahkan pengguna ke halaman daftar user (/user/index) setelah data berhasil disimpan.
+```php
+public function edit($id_class) {
+    $user = $this->userModel->find($id_class); 
+    $trainers = $this->userModel->getAllTrainers();
+    require_once __DIR__ . '/../views/user/edit.php';
+}
+```
+Mengambil data kelas berdasarkan id_class menggunakan method find, dan mengambil daftar pelatih untuk ditampilkan di form edit. Kemudian, menampilkan halaman edit.php dengan data kelas dan pelatih.
+```php
+public function update($id_class, $data) {
+    $updated = $this->userModel->update($id_class, $data);
+    if ($updated) {
+        header("Location: /user/index");
+    } else {
+        echo "Failed to update user.";
+    }
+}
+```
+Memperbarui data kelas berdasarkan id_class menggunakan method update pada model dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
+```php
+public function delete($id_class) {
+    $deleted = $this->userModel->delete($id_class);
+    if ($deleted) {
+        header("Location: /user/index");
+    } else {
+        echo "Failed to delete user.";
+    }
+}
+```
+Menghapus data kelas berdasarkan id_class menggunakan method delete dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
 <h2> 4. Equipment</h2>   
         Tabel Gym Equipment menyimpan data alat kebugaran, seperti nama alat, jenis alat, dan kondisi (baik, rusak, perlu perbaikan). Tabel ini dilengkapi fitur CRUD untuk           mengelola inventaris alat kebugaran, memungkinkan pengguna untuk menambah, melihat, memperbarui, dan menghapus data alat.
         Sistem ini memudahkan pengelolaan dan pemantauan kondisi alat kebugaran di fasilitas.
