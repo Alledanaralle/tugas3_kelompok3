@@ -1614,6 +1614,7 @@ public function delete($id_class)
 ```
 Script diatas digunakan untuk menghapus data kelas berdasarkan id_class.
 <h3>Full Script Models Workut Class</h3>
+
 ```php
 <?php
 // app/models/User.php
