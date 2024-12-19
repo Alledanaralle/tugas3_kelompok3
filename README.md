@@ -1503,6 +1503,26 @@ public function delete($id_class) {
 ```
 Menghapus data kelas berdasarkan id_class menggunakan method delete dan jika berhasil, pengguna diarahkan ke halaman daftar user. Jika gagal, menampilkan pesan kesalahan.
 <h3>Models</h3><hr>
+
+```php
+require_once '../config/database.php';
+
+```
+File ini memuat ../config/database.php, yang berisi konfigurasi untuk koneksi ke database.
+
+```php
+class Workout_Classes
+{
+    private $db;
+```
+Workout_Classes: Class ini bertanggung jawab untuk mengelola data terkait kelas workout dan $db: Properti privat untuk menyimpan objek koneksi ke database.
+```php
+public function __construct()
+{
+    $this->db = (new Database())->connect();
+}
+```
+Fungsi konstruktor yang secara otomatis memanggil metode connect() dari class Database untuk membuat koneksi ke database dan menyimpannya dalam properti $db.
 <h3>Views</h3><hr>
 <h3>Create</h3>
 
